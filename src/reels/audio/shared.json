@@ -1,0 +1,58 @@
+{
+  "id": "shared",
+  "voice": null,
+  "scenes": [],
+  "music": null,
+  "sfx": {
+    "whoosh": {
+      "file": "audio/shared/sfx-whoosh.mp3",
+      "duration": 0.8,
+      "hash": "3ceab115903c"
+    },
+    "pop": {
+      "file": "audio/shared/sfx-pop.mp3",
+      "duration": 0.5,
+      "hash": "d283501eb453"
+    },
+    "tick": {
+      "file": "audio/shared/sfx-tick.mp3",
+      "duration": 0.5,
+      "hash": "2a292cf6daab"
+    },
+    "typing": {
+      "file": "audio/shared/sfx-typing.mp3",
+      "duration": 1.5,
+      "hash": "104015295e0a"
+    },
+    "error": {
+      "file": "audio/shared/sfx-error.mp3",
+      "duration": 0.7,
+      "hash": "4f0563a41a2c"
+    },
+    "success": {
+      "file": "audio/shared/sfx-success.mp3",
+      "duration": 1,
+      "hash": "3bcdd6292bf0"
+    },
+    "glitch": {
+      "file": "audio/shared/sfx-glitch.mp3",
+      "duration": 0.8,
+      "hash": "3fd9ff6b36c8"
+    },
+    "riser": {
+      "file": "audio/shared/sfx-riser.mp3",
+      "duration": 2,
+      "hash": "1216ef63d6fb"
+    },
+    "impact": {
+      "file": "audio/shared/sfx-impact.mp3",
+      "duration": 1.2,
+      "hash": "04dee1c26a12"
+    },
+    "ding": {
+      "file": "audio/shared/sfx-ding.mp3",
+      "duration": 0.8,
+      "hash": "7bfebd406eca"
+    }
+  }
+}

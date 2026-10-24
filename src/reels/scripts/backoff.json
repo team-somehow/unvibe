@@ -1,0 +1,13 @@
+{
+  "id": "backoff",
+  "voice": null,
+  "music": null,
+  "sfx": [],
+  "scenes": [
+    {
+      "id": "todo",
+      "text": "",
+      "minSeconds": 5
+    }
+  ]
+}

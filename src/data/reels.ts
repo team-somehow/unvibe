@@ -29,6 +29,10 @@ export type Reel = {
   comments: Comment[]
   poll?: Poll
   props?: SessionReelProps
+  /** Short subject label shown on the reel, e.g. "Databases" */
+  topic?: string
+  /** Suggested questions shown above the comment box */
+  suggestions?: string[]
 }
 
 export const ME: Person = { handle: 'you', color: '#F4D35E' }
@@ -42,6 +46,7 @@ const tom: Person = { handle: 'tomhacks', color: '#FC6255' }
 export const SEED_REELS: Reel[] = [
   {
     id: 'r-index',
+    topic: 'Databases',
     kind: 'index',
     author: ME,
     caption: 'Claude added one line to a migration and my orders page got 400x faster. Here is why.',
@@ -56,6 +61,7 @@ export const SEED_REELS: Reel[] = [
   },
   {
     id: 'r-poll',
+    topic: 'Architecture',
     kind: 'poll',
     author: ME,
     caption: 'Claude paused my auth-service session to ask this. Vote and it carries on.',
@@ -78,6 +84,7 @@ export const SEED_REELS: Reel[] = [
   },
   {
     id: 'r-injection',
+    topic: 'Security',
     kind: 'injection',
     author: priya,
     caption: 'My login lookup was one quote away from dumping every user. Claude caught it during a refactor.',
@@ -92,6 +99,7 @@ export const SEED_REELS: Reel[] = [
   },
   {
     id: 'r-race',
+    topic: 'Concurrency',
     kind: 'race',
     author: dev,
     caption: 'A user double-tapped Pay and we charged them once but shipped twice. The bug was a race condition.',
@@ -104,6 +112,7 @@ export const SEED_REELS: Reel[] = [
   },
   {
     id: 'r-jwt',
+    topic: 'Auth',
     kind: 'jwt',
     author: mira,
     caption: 'I stored the user role in a JWT and assumed nobody could read it. Wrong on one count.',

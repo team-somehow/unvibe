@@ -1,0 +1,15 @@
+{
+  "id": "shared",
+  "sfx": [
+    { "id": "whoosh", "prompt": "quick soft airy whoosh transition, clean, modern UI", "duration": 0.8, "promptInfluence": 0.6 },
+    { "id": "pop", "prompt": "single soft bubbly pop, satisfying UI element appearing", "duration": 0.5, "promptInfluence": 0.7 },
+    { "id": "tick", "prompt": "single crisp tiny mechanical click tick, very short", "duration": 0.5, "promptInfluence": 0.8 },
+    { "id": "typing", "prompt": "fast quiet mechanical keyboard typing, a short burst", "duration": 1.5, "promptInfluence": 0.6 },
+    { "id": "error", "prompt": "low digital error buzz, short, warning tone", "duration": 0.7, "promptInfluence": 0.7 },
+    { "id": "success", "prompt": "bright two-note success chime, pleasant, short", "duration": 1.0, "promptInfluence": 0.7 },
+    { "id": "glitch", "prompt": "short digital glitch stutter, data corruption sound", "duration": 0.8, "promptInfluence": 0.6 },
+    { "id": "riser", "prompt": "short tense cinematic riser building suspense", "duration": 2.0, "promptInfluence": 0.5 },
+    { "id": "impact", "prompt": "deep cinematic boom impact hit with short tail", "duration": 1.2, "promptInfluence": 0.6 },
+    { "id": "ding", "prompt": "clear single bell ding, notification", "duration": 0.8, "promptInfluence": 0.7 }
+  ]
+}

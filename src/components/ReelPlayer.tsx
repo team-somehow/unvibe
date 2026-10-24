@@ -8,11 +8,13 @@ type Props = {
   active: boolean
   paused?: boolean
   loop?: boolean
+  /** Reels start muted so autoplay is allowed; unmute only after a user gesture. */
+  muted?: boolean
   onProgress?: (p: number) => void
   onEnded?: () => void
 }
 
-export function ReelPlayer({ reel, active, paused = false, loop = true, onProgress, onEnded }: Props) {
+export function ReelPlayer({ reel, active, paused = false, loop = true, muted = true, onProgress, onEnded }: Props) {
   const ref = useRef<PlayerRef>(null)
   const { component, frames } = COMPOSITIONS[reel.kind]
 
@@ -26,6 +28,13 @@ export function ReelPlayer({ reel, active, paused = false, loop = true, onProgre
   useEffect(() => {
     if (!active) ref.current?.seekTo(0)
   }, [active])
+
+  useEffect(() => {
+    const p = ref.current
+    if (!p) return
+    if (muted) p.mute()
+    else p.unmute()
+  }, [muted])
 
   useEffect(() => {
     const p = ref.current
@@ -54,6 +63,8 @@ export function ReelPlayer({ reel, active, paused = false, loop = true, onProgre
       clickToPlay={false}
       doubleClickToFullscreen={false}
       spaceKeyToPlayOrPause={false}
+      initiallyMuted={muted}
+      numberOfSharedAudioTags={8}
       acknowledgeRemotionLicense
       style={{ width: '100%', height: '100%', background: '#000' }}
     />
