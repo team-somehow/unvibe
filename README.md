@@ -2,6 +2,12 @@
 
 Understand what your coding agent shipped, in a feed you already know how to use.
 
+<p align="center">
+  <a href="demo/demo.mp4"><img src="demo/demo-poster.jpg" alt="Unvibe demo: agents explain their work as reels, ask decisions in-feed, and act on your choice" width="300"></a>
+  <br>
+  <sub>▶ <a href="demo/demo.mp4">Watch the 1-minute demo</a></sub>
+</p>
+
 This repository includes both the original curated Instagram-style demo and a real local workflow: select a saved Claude Code transcript, review its redacted contents, generate a lesson with the installed Claude CLI, optionally narrate it with ElevenLabs, render a vertical MP4, and save the lesson in your browser's private feed.
 
 ## Firebase deployment

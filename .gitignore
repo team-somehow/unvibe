@@ -32,3 +32,6 @@ output/
 # Firebase local deployment state
 .firebase/
 firebase-debug.log
+
+# Full-quality demo master (README uses the compressed demo/demo.mp4)
+demo/demo-hq.mp4
