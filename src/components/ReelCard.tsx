@@ -93,7 +93,7 @@ function Rail({ reel, liked, saved, commentsOpen, onLike, onSave, onComments, on
       <button
         type="button"
         onClick={() => onComments(reel.id)}
-        aria-label={`Ask Claude about the ${reel.session.repo} session`}
+        aria-label={reel.kind === 'generated' ? `Open lesson notes for the ${reel.session.repo} session` : `Ask Claude about the ${reel.session.repo} session`}
         title={`${reel.session.title} in ${reel.session.repo}`}
         className="mt-1 grid size-11 place-items-center rounded-xl transition-transform active:scale-90"
       >

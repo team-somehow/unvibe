@@ -25,3 +25,10 @@ dist-ssr
 
 # Other sessions' git worktrees
 .claude/worktrees/
+
+# Generated local videos and smoke-test artifacts
+output/
+
+# Firebase local deployment state
+.firebase/
+firebase-debug.log

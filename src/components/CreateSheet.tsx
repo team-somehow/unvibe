@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowRight, Check, ChevronLeft, Loader2, Sparkles, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { CONCEPTS_FOR, FAKE_SESSION_LOG, ME, REPOS, SESSION_SUGGESTIONS, type Reel } from '../data/reels'
 import { ReelPlayer } from './ReelPlayer'
 
@@ -147,7 +148,7 @@ export function CreateSheet({ open, muted = true, onClose, onPublish }: { open: 
                 >
                   {stage === 'preview' ? <ChevronLeft size={24} /> : <X size={22} />}
                 </button>
-                <h2 className="text-[16px] font-semibold">{stage === 'preview' ? 'New reel' : 'New post'}</h2>
+                <h2 className="text-[16px] font-semibold">{stage === 'preview' ? 'Sample reel preview' : 'Sample session demo'}</h2>
                 <span className="size-11" />
               </div>
               <ol className="flex items-center gap-1.5 px-2 pb-3" aria-label="Progress">
@@ -182,12 +183,16 @@ export function CreateSheet({ open, muted = true, onClose, onPublish }: { open: 
                   }}
                 >
                   <div className="no-scrollbar flex-1 overflow-y-auto px-4 py-5">
+                    <Link to="/connect" onClick={onClose} className="mb-5 flex items-center justify-between gap-3 rounded-xl border border-mblue/25 bg-mblue/[0.06] p-3.5 text-[13px] font-medium text-mblue">
+                      <span>Connect local sessions <span className="mt-1 block text-[11px] font-normal text-white/50">Make a real reel from your own Claude Code session.</span></span>
+                      <ArrowRight size={18} className="shrink-0" />
+                    </Link>
                     <div className="flex items-center justify-between">
                       <span className="text-[13px] font-medium text-white/55" id="repo-label">
                         Repository
                       </span>
                       <span className="flex items-center gap-1.5 text-[12px] text-white/45">
-                        <span className="size-1.5 rounded-full bg-mgreen" /> Claude Code connected
+                        <span className="size-1.5 rounded-full bg-white/35" /> Sample session demo
                       </span>
                     </div>
                     <div role="radiogroup" aria-labelledby="repo-label" className="no-scrollbar -mx-4 mt-2.5 flex gap-2 overflow-x-auto px-4 pb-1">
@@ -243,9 +248,9 @@ export function CreateSheet({ open, muted = true, onClose, onPublish }: { open: 
                       disabled={!prompt.trim()}
                       className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-mblue text-[15px] font-semibold text-black transition enabled:hover:brightness-110 enabled:active:scale-[0.98] disabled:opacity-35"
                     >
-                      Start session
+                      Try the sample session
                     </button>
-                    <p className="mt-2.5 text-center text-[12px] text-white/45">Runs in Claude Code on your machine. When it finishes, the session becomes reels.</p>
+                    <p className="mt-2.5 text-center text-[12px] text-white/45">A simulated session with a sample reel. No code runs on your machine in this demo.</p>
                   </div>
                 </motion.form>
               )}
@@ -266,7 +271,7 @@ export function CreateSheet({ open, muted = true, onClose, onPublish }: { open: 
                         {stage === 'running' && <span className="absolute inline-flex size-full animate-ping rounded-full bg-mgreen opacity-60" />}
                         <span className={`relative inline-flex size-2 rounded-full ${stage === 'running' ? 'bg-mgreen' : 'bg-white/30'}`} />
                       </span>
-                      {stage === 'running' ? 'Claude is working' : 'Session finished'}
+                      {stage === 'running' ? 'Playing the sample session' : 'Sample session finished'}
                     </span>
                     <Elapsed running={stage === 'running'} />
                   </div>
@@ -340,7 +345,7 @@ export function CreateSheet({ open, muted = true, onClose, onPublish }: { open: 
                       rows={2}
                       className="w-full resize-none rounded-xl border border-white/12 bg-white/[0.03] px-3.5 py-2.5 text-[14px] leading-snug outline-none focus:border-mblue/60"
                     />
-                    <p className="mt-2 mb-3 text-center text-[12.5px] text-white/50">3 more deep-dive reels are rendering and will post on their own.</p>
+                    <p className="mt-2 mb-3 text-center text-[12.5px] text-white/50">This sample reel is added to your current demo feed.</p>
                     <button
                       type="button"
                       onClick={() => onPublish({ ...draft, id: `r-new-${Date.now()}`, caption: caption.trim() || draft.caption })}

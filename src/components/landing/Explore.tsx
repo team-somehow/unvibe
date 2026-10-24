@@ -98,7 +98,7 @@ export function Explore({ open, setOpen }: { open: number | null; setOpen: (i: n
   )
 }
 
-function Viewer({ index, setIndex, onClose }: { index: number; setIndex: (i: number) => void; onClose: () => void }) {
+export function Viewer({ index, setIndex, onClose }: { index: number; setIndex: (i: number) => void; onClose: () => void }) {
   const reduce = !!useReducedMotion()
   const sound = useLandingSound()
   const playerRef = useRef<PlayerRef>(null)

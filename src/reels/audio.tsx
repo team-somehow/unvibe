@@ -108,12 +108,13 @@ export function ReelAudio({ t, musicVolume = 0.18, duck = 0.4, voiceVolume = 1 }
       {t.scenes.map((s) =>
         s.file ? (
           <Sequence key={s.id} from={s.voiceFrom} durationInFrames={Math.ceil(s.duration * FPS) + 6} layout="none" name={`voice:${s.id}`}>
-            <Audio src={staticFile(s.file)} volume={voiceVolume} />
+            <Audio crossOrigin="anonymous" src={staticFile(s.file)} volume={voiceVolume} />
           </Sequence>
         ) : null,
       )}
       {music && (
         <Audio
+          crossOrigin="anonymous"
           src={staticFile(music.file)}
           loop
           volume={(f) => {
@@ -140,7 +141,7 @@ export function Sfx({ t, name, at, volume = 0.5 }: { t?: Timeline; name: string;
   const frames = Math.ceil((fx.duration ?? 2) * FPS) + 4
   return (
     <Sequence from={Math.max(0, Math.round(at))} durationInFrames={frames} layout="none" name={`sfx:${name}`}>
-      <Audio src={staticFile(fx.file)} volume={volume} />
+      <Audio crossOrigin="anonymous" src={staticFile(fx.file)} volume={volume} />
     </Sequence>
   )
 }

@@ -1,5 +1,5 @@
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
-import { Check, Clapperboard, Play, PlusSquare, SquareTerminal, UserRound } from 'lucide-react'
+import { Cable, Check, Clapperboard, Play, PlusSquare, SquareTerminal, UserRound } from 'lucide-react'
 import { startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState, type SyntheticEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '../components/Avatar'
@@ -12,8 +12,10 @@ import { useFeedSound } from '../components/feed/sound'
 import { KEYS, readPref, writePref } from '../components/feed/storage'
 import { ReelCard, compact } from '../components/ReelCard'
 import { Logo } from '../components/Logo'
+import { InstallButton } from '../components/pwa/InstallButton'
 import { CLAUDE, ME, SEED_REELS, agentReply, type Comment, type Reel } from '../data/reels'
-import { COMPOSITIONS } from '../reels/registry'
+import { loadGeneratedReels, replyFromLesson } from '../lib/library'
+import { getReelComposition } from '../reels/registry'
 
 type Tab = 'feed' | 'profile'
 type Filter = 'everyone' | 'mine'
@@ -34,10 +36,18 @@ function isTypingTarget(t: EventTarget | null) {
   return t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement || (t instanceof HTMLElement && t.isContentEditable)
 }
 
-/** /app#r-injection opens that reel; read before the first render so the feed never starts on the wrong reel. */
-function hashIndex() {
-  const id = decodeURIComponent(location.hash.slice(1))
-  return Math.max(0, SEED_REELS.findIndex((r) => r.id === id))
+/** Resolve deep links after the local library has loaded, including generated reels. */
+function hashIndex(reels: Reel[]) {
+  let id = location.hash.slice(1)
+  try {
+    id = decodeURIComponent(id)
+  } catch {
+    /* malformed hash falls back to the first reel */
+  }
+  return Math.max(
+    0,
+    reels.findIndex((r) => r.id === id),
+  )
 }
 
 /** Players for the reel the feed rests on and the next one, plus the previous one if it is still mounted. */
@@ -59,15 +69,16 @@ function toggled(set: Set<string>, id: string, force?: boolean) {
 }
 
 export default function FeedApp() {
-  const [reels, setReels] = useState<Reel[]>(SEED_REELS)
+  const [reels, setReels] = useState<Reel[]>([])
+  const [libraryReady, setLibraryReady] = useState(false)
+  const [libraryError, setLibraryError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('feed')
   const [filter, setFilter] = useState<Filter>('everyone')
-  const [start] = useState(hashIndex)
-  const [active, setActive] = useState(start)
+  const [active, setActive] = useState(0)
   // Where the scroller has come to rest. Reels play, Players mount and posters render only on settling, so all of
   // that work happens while still posters are on screen instead of during the swipe.
-  const [settled, setSettled] = useState(start)
-  const [mountIds, setMountIds] = useState<string[]>(() => playerIds(SEED_REELS.map((r) => r.id), start, []))
+  const [settled, setSettled] = useState(0)
+  const [mountIds, setMountIds] = useState<string[]>([])
   const [liked, setLiked] = useState<Set<string>>(new Set())
   const [saved, setSaved] = useState<Set<string>>(new Set())
   const [following, setFollowing] = useState<Set<string>>(new Set())
@@ -106,6 +117,38 @@ export default function FeedApp() {
     setTimeout(() => setToast((t) => (t?.id === id ? null : t)), 2400)
   }, [])
 
+  useEffect(() => {
+    let cancelled = false
+    const showLibrary = (generated: Reel[]) => {
+      if (cancelled) return
+      const all = [...generated, ...SEED_REELS]
+      const index = hashIndex(all)
+      setReels(all)
+      setActive(index)
+      setSettled(index)
+      setMountIds(
+        playerIds(
+          all.map((reel) => reel.id),
+          index,
+          [],
+        ),
+      )
+      setLibraryReady(true)
+    }
+    loadGeneratedReels()
+      .then(showLibrary)
+      .catch((error: unknown) => {
+        if (cancelled) return
+        setLibraryError(
+          error instanceof Error ? error.message : 'Your saved reels could not be loaded. The sample feed is still available.',
+        )
+        showLibrary([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   // Which reel is on screen
   useEffect(() => {
     const root = scroller.current
@@ -138,6 +181,7 @@ export default function FeedApp() {
 
   const step = useCallback(
     (dir: 1 | -1) => {
+      if (!countRef.current) return
       const from = targetRef.current ?? activeRef.current
       const next = Math.min(Math.max(from + dir, 0), countRef.current - 1)
       if (next === from) return
@@ -265,6 +309,7 @@ export default function FeedApp() {
 
   // Keyboard: arrows / j k navigate, M sound, Space pause, Esc closes
   const onKey = useStableCallback((e: KeyboardEvent) => {
+    if (document.querySelector('dialog[open]')) return
     if (e.metaKey || e.ctrlKey || e.altKey) return
     const typing = isTypingTarget(e.target)
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key
@@ -299,18 +344,43 @@ export default function FeedApp() {
     return () => window.removeEventListener('keydown', onKey)
   }, [onKey])
 
-  const addComment = useCallback((reelId: string, c: Comment) => setReels((rs) => rs.map((r) => (r.id === reelId ? { ...r, comments: [...r.comments, c] } : r))), [])
+  const addComment = useCallback(
+    (reelId: string, c: Comment) => setReels((rs) => rs.map((r) => (r.id === reelId ? { ...r, comments: [...r.comments, c] } : r))),
+    [],
+  )
 
   const postComment = useCallback(
     (reelId: string, text: string) => {
       addComment(reelId, { id: `u-${Date.now()}`, author: ME, text, time: 'now', likes: 0 })
+      const reel = reels.find((item) => item.id === reelId)
+      if (reel?.kind === 'generated') {
+        const lesson = reel.props && 'lesson' in reel.props ? reel.props.lesson : null
+        addComment(reelId, {
+          id: `n-${Date.now()}`,
+          author: { handle: 'lesson notes', color: '#a6c9ac' },
+          text: lesson
+            ? replyFromLesson(lesson, text)
+            : 'From your lesson: The saved lesson is unavailable. Reopen the original session in Claude Code for a new answer.',
+          time: 'now',
+          likes: 0,
+        })
+        return
+      }
       setTypingFor(reelId)
       setTimeout(() => {
         setTypingFor((t) => (t === reelId ? null : t))
-        addComment(reelId, { id: `a-${Date.now()}`, author: CLAUDE, agent: true, text: agentReply(reelId, text), time: 'now', likes: 0, fresh: true })
+        addComment(reelId, {
+          id: `a-${Date.now()}`,
+          author: CLAUDE,
+          agent: true,
+          text: agentReply(reelId, text),
+          time: 'now',
+          likes: 0,
+          fresh: true,
+        })
       }, REPLY_DELAY)
     },
-    [addComment],
+    [addComment, reels],
   )
 
   // Stable handlers for the memoised cards
@@ -339,7 +409,15 @@ export default function FeedApp() {
     setTypingFor(id)
     setTimeout(() => {
       setTypingFor((t) => (t === id ? null : t))
-      addComment(id, { id: `a-${Date.now()}`, author: CLAUDE, agent: true, text: reel.poll!.resolution(choice), time: 'now', likes: 0, fresh: true })
+      addComment(id, {
+        id: `a-${Date.now()}`,
+        author: CLAUDE,
+        agent: true,
+        text: reel.poll!.resolution(choice),
+        time: 'now',
+        likes: 0,
+        fresh: true,
+      })
       flash(`Claude resumed your session in ${reel.session.repo}`)
     }, 1500)
   })
@@ -383,8 +461,20 @@ export default function FeedApp() {
   const mine = reels.filter((r) => r.author.handle === ME.handle)
 
   const sideNav = [
-    { id: 'everyone', label: 'For you', icon: Clapperboard, on: tab === 'feed' && filter === 'everyone', onClick: () => showFilter('everyone') },
-    { id: 'mine', label: 'Your sessions', icon: SquareTerminal, on: tab === 'feed' && filter === 'mine', onClick: () => showFilter('mine') },
+    {
+      id: 'everyone',
+      label: 'For you',
+      icon: Clapperboard,
+      on: tab === 'feed' && filter === 'everyone',
+      onClick: () => showFilter('everyone'),
+    },
+    {
+      id: 'mine',
+      label: 'Your sessions',
+      icon: SquareTerminal,
+      on: tab === 'feed' && filter === 'mine',
+      onClick: () => showFilter('mine'),
+    },
     { id: 'create', label: 'Create', icon: PlusSquare, on: creating, onClick: () => setCreating(true) },
     { id: 'profile', label: 'Profile', icon: UserRound, on: tab === 'profile', onClick: () => setTab('profile') },
   ]
@@ -422,17 +512,25 @@ export default function FeedApp() {
                 <span className="hidden xl:inline">{n.label}</span>
               </button>
             ))}
+            <Link
+              to="/connect"
+              title="Connect local sessions"
+              className="group mt-2 flex min-h-12 items-center gap-4 rounded-xl px-3 text-[14px] text-white/60 transition-colors hover:bg-white/[0.07] hover:text-white"
+            >
+              <Cable size={23} strokeWidth={1.7} className="shrink-0" />
+              <span className="hidden xl:inline">Connect local sessions</span>
+            </Link>
+            <InstallButton compact className="mt-2" />
           </nav>
           <div className="mt-auto hidden flex-col gap-3 xl:flex">
             <div className="rounded-2xl border border-white/10 p-4 text-[13px] leading-relaxed text-white/60">
               <div className="mb-1 flex items-center gap-2 font-medium text-white">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-mgreen opacity-50" />
-                  <span className="relative inline-flex size-2 rounded-full bg-mgreen" />
-                </span>
-                Claude Code connected
+                <span className="size-2 rounded-full bg-white/35" />
+                {reels.some((reel) => reel.kind === 'generated') ? 'Your local library' : 'Sample session demo'}
               </div>
-              Watching 4 repos. New sessions turn into reels automatically.
+              {reels.some((reel) => reel.kind === 'generated')
+                ? 'Your saved lessons, alongside the sample feed. Connect to make another.'
+                : 'Explore example sessions, or connect your machine to make a reel from your own code.'}
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 px-1 text-[11.5px] text-white/40">
               {[
@@ -441,7 +539,9 @@ export default function FeedApp() {
                 ['Space', 'pause'],
               ].map(([k, v]) => (
                 <span key={k} className="flex items-center gap-1.5">
-                  <kbd className="rounded-[5px] border border-white/15 bg-white/[0.04] px-1.5 py-px font-sans text-[10.5px] text-white/60">{k}</kbd>
+                  <kbd className="rounded-[5px] border border-white/15 bg-white/[0.04] px-1.5 py-px font-sans text-[10.5px] text-white/60">
+                    {k}
+                  </kbd>
                   {v}
                 </span>
               ))}
@@ -450,6 +550,17 @@ export default function FeedApp() {
         </aside>
 
         <main className="relative flex min-h-0 min-w-0 flex-1 flex-col">
+          {libraryError && (
+            <div
+              role="alert"
+              className="z-40 flex shrink-0 items-start gap-3 border-b border-amber-300/20 bg-[#2b2514] px-4 py-3 text-[12px] leading-relaxed text-amber-100"
+            >
+              <p className="flex-1">{libraryError} The sample feed is still available.</p>
+              <button type="button" className="shrink-0 underline underline-offset-2" onClick={() => setLibraryError(null)}>
+                Dismiss
+              </button>
+            </div>
+          )}
           {tab === 'feed' ? (
             <div className="relative flex min-h-0 flex-1">
               <div className="@container relative min-w-0 flex-1">
@@ -467,13 +578,22 @@ export default function FeedApp() {
                         className={`relative flex h-11 items-center px-2.5 text-[16px] font-semibold transition-colors [text-shadow:0_1px_10px_rgba(0,0,0,0.5)] ${filter === f ? 'text-white' : 'text-white/55'}`}
                       >
                         {f === 'everyone' ? 'For you' : 'Your sessions'}
-                        {filter === f && <motion.span layoutId="filter-underline" className="absolute inset-x-2.5 bottom-1.5 h-[2px] rounded-full bg-white" />}
+                        {filter === f && (
+                          <motion.span
+                            layoutId="filter-underline"
+                            className="absolute inset-x-2.5 bottom-1.5 h-[2px] rounded-full bg-white"
+                          />
+                        )}
                       </button>
                     ))}
                   </nav>
                 </div>
 
-                <div ref={scroller} className="no-scrollbar h-full snap-y snap-mandatory overflow-y-scroll overscroll-contain" aria-label="Reels">
+                <div
+                  ref={scroller}
+                  className="no-scrollbar h-full snap-y snap-mandatory overflow-y-scroll overscroll-contain"
+                  aria-label="Reels"
+                >
                   {visible.map((r, i) => (
                     <div key={r.id} data-index={i} className="h-full">
                       <ReelCard
@@ -504,11 +624,20 @@ export default function FeedApp() {
                       />
                     </div>
                   ))}
-                  {visible.length === 0 && (
+                  {!libraryReady && (
+                    <div role="status" className="grid h-full place-items-center text-[14px] text-white/60">
+                      Opening your local library…
+                    </div>
+                  )}
+                  {libraryReady && visible.length === 0 && (
                     <div className="grid h-full place-items-center px-8 text-center">
                       <div>
                         <p className="font-serif text-[26px] italic">No reels from your sessions yet</p>
-                        <button type="button" onClick={() => setCreating(true)} className="mt-5 h-11 rounded-xl bg-mblue px-5 text-[15px] font-semibold text-black">
+                        <button
+                          type="button"
+                          onClick={() => setCreating(true)}
+                          className="mt-5 h-11 rounded-xl bg-mblue px-5 text-[15px] font-semibold text-black"
+                        >
                           Start a session
                         </button>
                       </div>
@@ -516,7 +645,13 @@ export default function FeedApp() {
                   )}
                 </div>
 
-                <NavButtons canPrev={active > 0} canNext={active < visible.length - 1} onPrev={() => step(-1)} onNext={() => step(1)} hidden={immersive} />
+                <NavButtons
+                  canPrev={active > 0}
+                  canNext={active < visible.length - 1}
+                  onPrev={() => step(-1)}
+                  onNext={() => step(1)}
+                  hidden={immersive}
+                />
                 <SwipeHint show={swipeHint && active === 0 && !commentsFor && !creating && !immersive} />
               </div>
 
@@ -538,7 +673,10 @@ export default function FeedApp() {
           )}
 
           {/* Phone tab bar */}
-          <nav className="flex shrink-0 items-stretch justify-around border-t border-white/10 bg-black pb-[env(safe-area-inset-bottom)] md:hidden" aria-label="Main">
+          <nav
+            className="flex shrink-0 items-stretch justify-around border-t border-white/10 bg-black pb-[env(safe-area-inset-bottom)] md:hidden"
+            aria-label="Main"
+          >
             {tabNav.map((n) => (
               <button
                 type="button"
@@ -554,7 +692,14 @@ export default function FeedApp() {
           </nav>
         </main>
 
-        {!panelMode && <CommentsSheet reel={commentsReel} typing={!!commentsReel && typingFor === commentsReel.id} onClose={closeComments} onPost={(t) => commentsFor && postComment(commentsFor, t)} />}
+        {!panelMode && (
+          <CommentsSheet
+            reel={commentsReel}
+            typing={!!commentsReel && typingFor === commentsReel.id}
+            onClose={closeComments}
+            onPost={(t) => commentsFor && postComment(commentsFor, t)}
+          />
+        )}
         <CreateSheet open={creating} muted={sound.muted} onClose={() => setCreating(false)} onPublish={publish} />
 
         {/* Toasts drop in at the top, clear of the caption and the action rail, centred over the content beside the sidebar */}
@@ -597,6 +742,7 @@ function Profile({ mine, onOpen, onCreate }: { mine: Reel[]; onOpen: (id: string
         <Link to="/" className="mb-5 inline-flex h-11 items-center md:hidden" aria-label="Unvibe home">
           <Logo />
         </Link>
+        <div className="mb-5 flex justify-end md:hidden"><InstallButton /></div>
         <div className="flex items-center gap-6 md:gap-16 md:px-10">
           <Avatar person={ME} size={88} ring />
           <div className="min-w-0 flex-1">
@@ -628,9 +774,15 @@ function Profile({ mine, onOpen, onCreate }: { mine: Reel[]; onOpen: (id: string
             </span>
           </button>
           {mine.map((r) => {
-            const { frames } = COMPOSITIONS[r.kind]
+            const { frames } = getReelComposition(r)
             return (
-              <button type="button" key={r.id} onClick={() => onOpen(r.id)} aria-label={`Play: ${r.caption}`} className="group relative aspect-[9/16] overflow-hidden rounded-sm bg-[#0a0a0a]">
+              <button
+                type="button"
+                key={r.id}
+                onClick={() => onOpen(r.id)}
+                aria-label={`Play: ${r.caption}`}
+                className="group relative aspect-[9/16] overflow-hidden rounded-sm bg-[#0a0a0a]"
+              >
                 <ReelPoster reel={r} frame={Math.floor(frames * 0.55)} />
                 <span className="absolute inset-0 bg-black/0 transition group-hover:bg-black/30" />
                 <span className="absolute bottom-2 left-2 flex items-center gap-1 text-[12px] font-semibold drop-shadow">

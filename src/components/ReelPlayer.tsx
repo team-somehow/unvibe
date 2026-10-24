@@ -1,7 +1,17 @@
 import { Player, type PlayerRef } from '@remotion/player'
-import { memo, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState, useSyncExternalStore, type ComponentType, type Ref } from 'react'
+import {
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ComponentType,
+  type Ref,
+} from 'react'
 import type { Reel } from '../data/reels'
-import { COMPOSITIONS, FPS, HEIGHT, WIDTH } from '../reels/registry'
+import { getReelComposition, FPS, HEIGHT, WIDTH } from '../reels/registry'
 import { isAudioUnlocked, registerPlayer, subscribeAudioUnlock } from './feed/sound'
 
 const EMPTY = {}
@@ -18,6 +28,8 @@ type Props = {
   loop?: boolean
   /** Reels start muted so autoplay is allowed; unmute only after a user gesture. */
   muted?: boolean
+  /** Frame shown before playback and after rewinding; useful for a paused lesson preview. */
+  initialFrame?: number
   onProgress?: (p: number) => void
   onEnded?: () => void
   /** Imperative controls (seeking), used by the feed's scrubber. */
@@ -29,12 +41,24 @@ type Props = {
   rewindDelayMs?: number
 }
 
-export function ReelPlayer({ reel, active, paused = false, loop = true, muted = true, onProgress, onEnded, handleRef, rewindDelayMs = 450 }: Props) {
+export function ReelPlayer({
+  reel,
+  active,
+  paused = false,
+  loop = true,
+  muted = true,
+  initialFrame = 0,
+  onProgress,
+  onEnded,
+  handleRef,
+  rewindDelayMs = 450,
+}: Props) {
   const ref = useRef<PlayerRef>(null)
-  const { component, frames } = COMPOSITIONS[reel.kind]
+  const { component, frames } = getReelComposition(reel)
   const playing = useRef(false)
   playing.current = active && !paused
-  const lastFrame = useRef(0)
+  const startFrame = Math.min(frames - 1, Math.max(0, Number.isFinite(initialFrame) ? Math.round(initialFrame) : 0))
+  const lastFrame = useRef(startFrame)
 
   // Before the first user gesture players mount muted and without an AudioContext. Remotion creates
   // the context on first unmute and that orphans <Audio> tags already playing, so once sound is
@@ -74,11 +98,11 @@ export function ReelPlayer({ reel, active, paused = false, loop = true, muted = 
   useEffect(() => {
     if (active) return
     const t = setTimeout(() => {
-      lastFrame.current = 0
-      ref.current?.seekTo(0)
+      lastFrame.current = startFrame
+      ref.current?.seekTo(startFrame)
     }, rewindDelayMs)
     return () => clearTimeout(t)
-  }, [active, rewindDelayMs, unlocked])
+  }, [active, rewindDelayMs, unlocked, startFrame])
 
   useEffect(() => {
     const p = ref.current
@@ -151,5 +175,10 @@ const StablePlayer = memo(
       />
     )
   },
-  (a, b) => a.playerRef === b.playerRef && a.component === b.component && a.inputProps === b.inputProps && a.frames === b.frames && a.loop === b.loop,
+  (a, b) =>
+    a.playerRef === b.playerRef &&
+    a.component === b.component &&
+    a.inputProps === b.inputProps &&
+    a.frames === b.frames &&
+    a.loop === b.loop,
 )

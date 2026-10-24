@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Unvibe launch signups: write-only and idempotent; no public email lookup.
+    match /unvibeSignups/{signupId} {
+      function validSignup() {
+        let data = request.resource.data;
+        return data.keys().hasOnly(['email', 'source', 'consent', 'createdAt'])
+          && data.keys().hasAll(['email', 'source', 'consent', 'createdAt'])
+          && data.email is string
+          && data.email.size() > 3 && data.email.size() <= 254
+          && data.email == data.email.lower()
+          && data.email.matches('^[^ <>@]+@[^ <>@]+[.][^ <>@]+$')
+          && data.source == 'unvibe-landing'
+          && data.consent == 'beta_launch_email_v1'
+          && signupId == hashing.sha256(data.email).toHexString().lower();
+      }
+      allow create: if validSignup() && request.resource.data.createdAt == request.time;
+      allow update: if validSignup() && request.resource.data == resource.data;
+      allow read, delete: if false;
+    }
+
+    match /ethArcadeSignups/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['email', 'quantity', 'reference', 'source', 'createdAt'])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^ @]+@[^ @]+[.][^ @]+$')
+        && request.resource.data.quantity is int
+        && request.resource.data.quantity >= 1 && request.resource.data.quantity <= 10
+        && request.resource.data.reference == id && id.size() <= 64
+        && request.resource.data.source == 'eth-arcade-website'
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if false;
+    }
+
+    // This rule allows anyone with your Firestore database reference to view, edit,
+    // and delete all data in your Firestore database. It is useful for getting
+    // started, but it is configured to expire after 30 days because it
+    // leaves your app open to attackers. At that time, all client
+    // requests to your Firestore database will be denied.
+    //
+    // Make sure to write security rules for your app before that time, or else
+    // all client requests to your Firestore database will be denied until you Update
+    // your rules
+    match /{document=**} {
+      allow read, write: if request.time < timestamp.date(2024, 12, 27);
+    }
+  }
+}

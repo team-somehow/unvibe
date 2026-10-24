@@ -4,23 +4,32 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pwa:icons": "node scripts/pwa-icons.mjs",
+    "package:companion": "node scripts/package-companion.mjs",
+    "test:signups": "node --test scripts/test-signups.mjs",
+    "deploy": "npm run package:companion && npm run build && firebase deploy --only hosting,firestore:rules --project personal-projects-e8a07",
+    "companion": "node --env-file-if-exists=.env.local companion/index.mjs",
+    "test": "node --test companion/test/*.test.mjs",
+    "test:pipeline": "node --env-file-if-exists=.env.local scripts/smoke-pipeline.mjs"
   },
   "dependencies": {
-    "@remotion/captions": "^4.0.538",
-    "@remotion/player": "^4.0.538",
+    "@remotion/bundler": "4.0.538",
+    "@remotion/captions": "4.0.538",
+    "@remotion/player": "4.0.538",
+    "@remotion/renderer": "4.0.538",
     "lucide-react": "^1.61.0",
     "motion": "^14.6.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4",
-    "remotion": "^4.0.538"
+    "remotion": "4.0.538"
   },
   "devDependencies": {
-    "@remotion/cli": "^4.0.538",
+    "@remotion/cli": "4.0.538",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
@@ -31,6 +40,14 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
     "vite": "^8.3.4",
-    "vite-plugin-pwa": "^2.0.0"
+    "vite-plugin-pwa": "^2.0.0",
+    "workbox-core": "7.4.1",
+    "workbox-precaching": "7.4.1",
+    "workbox-range-requests": "7.4.1",
+    "workbox-routing": "7.4.1",
+    "workbox-window": "7.4.1"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

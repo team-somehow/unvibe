@@ -11,8 +11,10 @@ import { RLS_REEL_FRAMES, RlsReel } from './RlsReel'
 import { SECRETS_REEL_FRAMES, SecretsReel } from './SecretsReel'
 import { SESSION_REEL_FRAMES, SessionReel } from './SessionReel'
 import { XSS_REEL_FRAMES, XssReel } from './XssReel'
+import { GeneratedReel } from './GeneratedReel'
+import { EXAMPLE_LESSON, lessonDurationInFrames, parseLesson } from '../../shared/lesson'
 
-export type ReelKind = 'index' | 'injection' | 'race' | 'jwt' | 'poll' | 'session' | 'rls' | 'secrets' | 'nplus1' | 'backoff' | 'hashing' | 'xss'
+export type ReelKind = 'index' | 'injection' | 'race' | 'jwt' | 'poll' | 'session' | 'rls' | 'secrets' | 'nplus1' | 'backoff' | 'hashing' | 'xss' | 'generated'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const COMPOSITIONS: Record<ReelKind, { component: ComponentType<any>; frames: number }> = {
@@ -28,6 +30,20 @@ export const COMPOSITIONS: Record<ReelKind, { component: ComponentType<any>; fra
   backoff: { component: BackoffReel, frames: BACKOFF_REEL_FRAMES },
   hashing: { component: HashingReel, frames: HASHING_REEL_FRAMES },
   xss: { component: XssReel, frames: XSS_REEL_FRAMES },
+  generated: { component: GeneratedReel, frames: lessonDurationInFrames(EXAMPLE_LESSON) },
+}
+
+/** Generated reels use their lesson's actual timeline in both Player and rendered MP4. */
+export function getReelComposition(reel: { kind: ReelKind; props?: unknown }) {
+  const composition = COMPOSITIONS[reel.kind]
+  if (reel.kind !== 'generated') return composition
+  const props = reel.props as { lesson?: unknown } | undefined
+  const lesson = props?.lesson === undefined ? EXAMPLE_LESSON : parseLesson(props.lesson)
+  return { ...composition, frames: lessonDurationInFrames(lesson) }
+}
+
+export function reelDurationInFrames(reel: { kind: ReelKind; props?: unknown }) {
+  return getReelComposition(reel).frames
 }
 
 export const FPS = 30

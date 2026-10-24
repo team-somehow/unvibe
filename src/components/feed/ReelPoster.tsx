@@ -1,7 +1,7 @@
 import { Thumbnail, type ThumbnailRef } from '@remotion/player'
 import { memo, useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react'
 import type { Reel } from '../../data/reels'
-import { COMPOSITIONS, FPS, HEIGHT, WIDTH, type ReelKind } from '../../reels/registry'
+import { COMPOSITIONS, getReelComposition, FPS, HEIGHT, WIDTH, type ReelKind } from '../../reels/registry'
 import { topicColor } from './topics'
 
 const EMPTY = {}
@@ -32,6 +32,12 @@ function subscribe(cb: () => void) {
 }
 
 function posterKey(reel: PosterReel, frame: number) {
+  // The audio can be an offline data URI. Its bytes do not affect the still and should
+  // never be copied into a potentially multi-megabyte DOM cache key.
+  if (reel.kind === 'generated' && reel.props && 'lesson' in reel.props) {
+    const { narration, ...visual } = reel.props.lesson
+    return `generated@${frame}:${JSON.stringify(visual)}:${narration?.durationSeconds ?? ''}`
+  }
   return `${reel.kind}@${frame}:${reel.props ? JSON.stringify(reel.props) : ''}`
 }
 
@@ -79,7 +85,7 @@ function StaticPoster({ cacheKey }: { cacheKey: string }) {
 
 /** Renders the reel once through Remotion, then hands its DOM to the cache (which swaps this for a StaticPoster). */
 function LivePoster({ reel, frame, cacheKey }: { reel: PosterReel; frame: number; cacheKey: string }) {
-  const { component, frames } = COMPOSITIONS[reel.kind]
+  const { component, frames } = getReelComposition(reel)
   const ref = useRef<ThumbnailRef>(null)
   useEffect(() => {
     let tries = 0

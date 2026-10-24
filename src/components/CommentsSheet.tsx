@@ -146,6 +146,7 @@ type BodyProps = {
 }
 
 function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = false }: BodyProps) {
+  const generated = reel.kind === 'generated'
   const [text, setText] = useState('')
   const [used, setUsed] = useState<string[]>([])
   const list = useRef<HTMLDivElement>(null)
@@ -178,7 +179,7 @@ function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = f
     setText('')
   }
 
-  const suggestions = (reel.suggestions ?? FALLBACK_SUGGESTIONS[reel.id] ?? DEFAULT_SUGGESTIONS).filter((s) => !used.includes(s))
+  const suggestions = (reel.suggestions ?? (generated ? ['What changed in this session?', 'Summarize the takeaways'] : FALLBACK_SUGGESTIONS[reel.id] ?? DEFAULT_SUGGESTIONS)).filter((s) => !used.includes(s))
   const accent = reel.topic ? topicColor(reel.topic) : null
 
   return (
@@ -218,10 +219,10 @@ function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = f
         {reel.comments.length === 0 && !typing ? (
           <div className="grid place-items-center px-6 py-14 text-center">
             <span className="mb-3 grid size-12 place-items-center rounded-full bg-[#D97757]/15">
-              <Avatar person={{ handle: 'claude', color: '#D97757' }} size={28} />
+              <Avatar person={generated ? { handle: 'lesson notes', color: '#a6c9ac' } : { handle: 'claude', color: '#D97757' }} size={28} />
             </span>
             <p className="text-[15px] font-semibold">No comments yet</p>
-            <p className="mt-1 max-w-[260px] text-[13px] leading-relaxed text-white/50">Ask Claude anything about this session. It read every line it changed.</p>
+            <p className="mt-1 max-w-[260px] text-[13px] leading-relaxed text-white/50">{generated ? 'Look up an explanation from this saved lesson. For a new AI answer, return to the original Claude Code session.' : 'Ask Claude anything about this session. It read every line it changed.'}</p>
           </div>
         ) : (
           <ul className="pt-1">
@@ -230,7 +231,7 @@ function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = f
             ))}
           </ul>
         )}
-        <AnimatePresence>{typing && <AgentTyping key="typing" />}</AnimatePresence>
+        <AnimatePresence>{typing && !generated && <AgentTyping key="typing" />}</AnimatePresence>
         <div className="h-2" />
       </div>
       <div className="shrink-0 border-t border-white/10 px-3 pt-2.5 pb-[max(12px,env(safe-area-inset-bottom))]">
@@ -269,8 +270,8 @@ function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = f
               ref={input}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Ask Claude about this change…"
-              aria-label="Ask Claude about this change"
+              placeholder={generated ? 'Look up something in this lesson…' : 'Ask Claude about this change…'}
+              aria-label={generated ? 'Look up something in this saved lesson' : 'Ask Claude about this change'}
               enterKeyHint="send"
               className="h-11 w-full rounded-full border border-white/14 bg-white/[0.03] pr-12 pl-4 text-[14px] outline-none placeholder:text-white/40 focus:border-mblue/60 focus:bg-white/[0.05]"
             />
@@ -291,6 +292,7 @@ function CommentsBody({ reel, typing, onPost, showCaption = false, autoFocus = f
             </AnimatePresence>
           </div>
         </form>
+        {generated && <p className="mt-2 pl-10 text-[10px] leading-relaxed text-white/40">Local lesson lookup. Replies quote saved content; no new AI request is sent.</p>}
       </div>
     </>
   )

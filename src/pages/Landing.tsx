@@ -1,90 +1,331 @@
-import { Check, Copy } from 'lucide-react'
-import { MotionConfig } from 'motion/react'
-import { useEffect, useMemo, useState } from 'react'
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Braces,
+  ChevronDown,
+  CirclePlay,
+  Code2,
+  Film,
+  MessageCircle,
+  Sparkles,
+} from 'lucide-react'
+import { AnimatePresence, MotionConfig } from 'motion/react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { flushSync } from 'react-dom'
 import { Link } from 'react-router-dom'
-import { Logo } from '../components/Logo'
-import { Explore } from '../components/landing/Explore'
+import { ReelPoster } from '../components/feed/ReelPoster'
+import { Viewer } from '../components/landing/Explore'
+import { ProductStage } from '../components/landing/ProductStage'
+import { Pricing } from '../components/landing/Pricing'
+import { ConnectionGuide } from '../components/landing/ConnectionGuide'
+import { ReelBoundary } from '../components/landing/Reel'
+import { SessionLab } from '../components/landing/SessionLab'
+import { SignupForm, SignupLink } from '../components/landing/SignupSection'
+import { EXPLORE } from '../components/landing/session'
 import { SoundCtx, type LandingSound } from '../components/landing/sound'
-import { WaitlistProvider, WaitlistSticker } from '../components/landing/Waitlist'
-import { useWaitlist } from '../components/landing/waitlistState'
-import { Workbench } from '../components/landing/Workbench'
+import './Landing.css'
 
-const COMMAND = 'npx unvibe connect'
+function Brand() {
+  return (
+    <Link to="/" className="uv-brand" aria-label="Unvibe home">
+      <svg viewBox="0 0 38 38" width="34" height="34" fill="none" aria-hidden="true">
+        <rect width="38" height="38" rx="11" fill="currentColor" />
+        <path d="M11 11v11a8 8 0 0 0 16 0V11h-5v11a3 3 0 0 1-6 0V11z" fill="#f7f5ef" />
+        <path d="m22 11 5-3v3z" fill="#f7f5ef" />
+      </svg>
+      <span>
+        unvibe<span className="uv-brand-dot">.</span>
+      </span>
+    </Link>
+  )
+}
 
 function Header() {
-  const { email, focusCard } = useWaitlist()
   return (
-    <header className="mx-auto flex h-16 w-full max-w-[1360px] min-[1800px]:max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-10">
-      <Link to="/" aria-label="Unvibe" className="-m-1 rounded-lg p-1">
-        <Logo />
-      </Link>
-      <nav aria-label="Main" className="flex items-center gap-2 sm:gap-6">
-        <Link to="/app" className="hidden h-10 items-center rounded-md text-[15px] text-dim transition-colors hover:text-chalk sm:inline-flex">
-          Open the demo app
-        </Link>
-        <button type="button" onClick={focusCard} className="h-10 rounded-full bg-chalk px-4 text-[14.5px] font-semibold text-night transition hover:bg-white active:scale-[0.98]">
-          {email ? 'You’re on the waitlist' : 'Join the waitlist'}
-        </button>
+    <header className="uv-header uv-container">
+      <Brand />
+      <nav className="uv-navigation" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#the-feed">The good stuff</a>
+        <a href="#pricing">Pricing</a>
+        <Link to="/connect">Connect</Link>
       </nav>
+      <SignupLink className="uv-button uv-button-small uv-button-ink">
+        Join the waitlist <ArrowUpRight size={16} />
+      </SignupLink>
     </header>
   )
 }
 
-function CopyCommand() {
-  const [copied, setCopied] = useState(false)
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(COMMAND)
-    } catch {
-      // clipboard can be blocked; the command is still selectable
-    }
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 1500)
-  }
+function Hero({ suspended }: { suspended: boolean }) {
   return (
-    <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-ink py-0.5 pr-0.5 pl-2.5 align-middle ring-1 ring-line">
-      <code className="truncate font-mono text-[14px] text-chalk">{COMMAND}</code>
-      <button type="button" onClick={copy} aria-label={copied ? 'Copied' : 'Copy command'} className="grid size-9 shrink-0 place-items-center rounded-md text-dim transition hover:bg-white/5 hover:text-chalk">
-        {copied ? <Check size={16} className="text-mgreen" /> : <Copy size={15} />}
-      </button>
-      <span className="sr-only" aria-live="polite">
-        {copied ? 'Copied' : ''}
-      </span>
-    </span>
+    <section className="uv-hero uv-container" aria-labelledby="hero-title">
+      <div className="uv-hero-copy">
+        <div className="uv-eyebrow">
+          <span className="uv-status-dot" /> FOR THE CURIOUS SIDE OF YOUR BRAIN
+        </div>
+        <h1 id="hero-title">
+          Your agent
+          <br />
+          shipped it.
+          <br />
+          <span className="uv-headline-last">
+            Now <em>get it.</em>
+            <svg viewBox="0 0 335 20" fill="none" aria-hidden="true">
+              <path d="M3 15C74 2 232-2 331 8M30 18C139 9 253 5 316 14" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </span>
+        </h1>
+        <p className="uv-hero-description">
+          The code works. But do you know <em>why?</em>
+          <br />
+          Download the companion. Turn your Claude Code sessions
+          <br className="uv-desktop-break" /> into visual reels that make the code click.
+        </p>
+        <div id="signup" className="uv-hero-signup">
+          <SignupForm variant="hero" />
+        </div>
+        <div className="uv-hero-actions">
+          <a href="#how-it-works" className="uv-text-link">
+            <CirclePlay size={21} strokeWidth={1.6} /> See how it works
+          </a>
+          <Link to="/app" className="uv-text-link uv-hero-demo-link">
+            Try the demo <ArrowUpRight size={16} />
+          </Link>
+        </div>
+      </div>
+      <div className="uv-hero-visual" inert={suspended || undefined}>
+        <ProductStage suspended={suspended} />
+      </div>
+      <a href="#how-it-works" className="uv-scroll-note">
+        A LITTLE SCROLL GOES A LONG WAY <ArrowDown size={13} />
+      </a>
+    </section>
   )
 }
 
-const STEPS = [
-  <>
-    Run <CopyCommand /> in a project where you use Claude Code.
-  </>,
-  <>Unvibe reads the session transcripts Claude Code already keeps on your machine and picks out the changes worth explaining.</>,
-  <>Reels show up in your feed. Comment to ask the agent why it did something. When it needs a decision, you get a poll.</>,
+function PromiseStrip() {
+  return (
+    <div className="uv-promise-strip">
+      <div className="uv-container uv-promise-inner">
+        <p>
+          A familiar scroll.
+          <br />
+          <strong>A very different aftertaste.</strong>
+        </p>
+        <span>
+          <Code2 size={21} /> Real code. Real context.
+        </span>
+        <span>
+          <Film size={21} /> The why, made visual.
+        </span>
+        <span>
+          <MessageCircle size={21} /> Curiosity encouraged.
+        </span>
+        <Sparkles className="uv-strip-star" size={29} strokeWidth={1.2} aria-hidden="true" />
+      </div>
+    </div>
+  )
+}
+
+function Capabilities() {
+  return (
+    <section id="capabilities" className="uv-how uv-container" aria-labelledby="capabilities-title">
+      <div className="uv-section-heading">
+        <div>
+          <p className="uv-eyebrow">THE DIFF IS ONLY HALF THE STORY</p>
+          <h2 id="capabilities-title">
+            From “it works”
+            <br />
+            to <em>“I get it.”</em>
+          </h2>
+        </div>
+        <p className="uv-section-description">
+          That index. That security fix. That one decision you left to the agent. There’s a lesson in every session. Here’s what it could
+          look like in your feed.
+        </p>
+      </div>
+      <SessionLab />
+      <div className="uv-how-caption">
+        <span>
+          <Braces size={15} /> Built around the code you’re already writing.
+        </span>
+        <span>Try a sample, or connect your own local sessions.</span>
+      </div>
+    </section>
+  )
+}
+
+const SHELF = [
+  {
+    index: 0,
+    number: '01',
+    category: 'SECURITY',
+    title: 'Your database has no bouncer.',
+    description: 'Why row level security matters more than a public API key.',
+    color: '#c0c9f5',
+    tag: 'Row level security',
+  },
+  {
+    index: 2,
+    number: '02',
+    category: 'PERFORMANCE',
+    title: 'One page. Fifty-one queries.',
+    description: 'Meet the tiny loop making a very big mess.',
+    color: '#b9d9b4',
+    tag: 'N+1 queries',
+  },
+  {
+    index: 3,
+    number: '03',
+    category: 'RELIABILITY',
+    title: 'Please stop asking so fast.',
+    description: 'How retries can turn a small outage into a bigger one.',
+    color: '#f2b59e',
+    tag: 'Retries & backoff',
+  },
 ]
 
-function Closing() {
+function GoodStuff({ open, setOpen }: { open: number | null; setOpen: (value: number | null) => void }) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const returnFocus = useRef<HTMLButtonElement | null>(null)
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    if (!sectionRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '250px' },
+    )
+    observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
   return (
-    <section aria-labelledby="close-title" className="mx-auto grid w-full max-w-[1360px] min-[1800px]:max-w-[1600px] gap-x-14 gap-y-12 px-4 pb-24 sm:px-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:px-10 lg:pb-32 xl:gap-x-20">
-      <h2 id="close-title" className="max-w-[12em] font-serif text-[clamp(40px,5vw,76px)] leading-[1] tracking-[-0.02em] text-balance italic lg:col-start-1">
-        Learn from every session you ship.
-      </h2>
-      <div className="lg:col-start-1 lg:row-start-2">
-        <ol className="flex max-w-[40rem] flex-col gap-6">
-          {STEPS.map((s, i) => (
-            <li key={i} className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-baseline text-[17px] leading-[1.6] text-chalk/90">
-              <span aria-hidden className="font-serif text-[26px] leading-none text-mblue italic">
-                {i + 1}
-              </span>
-              <p>{s}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-8 pl-[2.25rem] text-[15px] text-dim">Works with Claude Code today. Codex and Cursor are next.</p>
+    <section id="the-feed" ref={sectionRef} className="uv-good-stuff" aria-labelledby="feed-title">
+      <div className="uv-container">
+        <div className="uv-section-heading">
+          <div>
+            <p className="uv-eyebrow">GOOD RABBIT HOLES START HERE</p>
+            <h2 id="feed-title">
+              Same thumb.
+              <br />
+              <em>New superpowers.</em>
+            </h2>
+          </div>
+          <div className="uv-feed-intro">
+            <p>
+              Security scares. Slow queries. Things you probably shipped last Tuesday. Get the story behind the code, one reel at a time.
+            </p>
+            <Link to="/app" className="uv-text-link">
+              Explore the demo feed <ArrowUpRight size={18} />
+            </Link>
+          </div>
+        </div>
+        <div className="uv-reel-shelf">
+          {SHELF.map((item) => {
+            const reel = EXPLORE[item.index]
+            return (
+              <button
+                key={item.index}
+                type="button"
+                className="uv-reel-tile"
+                onClick={(event) => {
+                  returnFocus.current = event.currentTarget
+                  setOpen(item.index)
+                }}
+                aria-label={`Play ${item.tag} sample reel`}
+              >
+                <div className="uv-reel-art" style={{ '--tile-color': item.color } as CSSProperties}>
+                  <div className="uv-reel-poster" aria-hidden="true">
+                    <ReelBoundary resetKey={reel.kind}>
+                      <ReelPoster reel={{ kind: reel.kind, topic: reel.topic, caption: reel.caption }} live={near} frame={105} />
+                    </ReelBoundary>
+                  </div>
+                  <span className="uv-reel-category">{item.category}</span>
+                  <span className="uv-reel-play">
+                    <CirclePlay size={22} strokeWidth={1.5} /> Watch the reel
+                  </span>
+                  <span className="uv-reel-number">{item.number}</span>
+                </div>
+                <div className="uv-reel-text">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <span>
+                    {item.tag}
+                    <ArrowUpRight size={16} />
+                  </span>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+        <p className="uv-demo-footnote">A taste of the demo feed. Example sessions, real concepts, plenty of aha moments.</p>
       </div>
-      {/* after the steps in reading order; beside them on desktop */}
-      <div className="flex justify-center sm:justify-start lg:col-start-2 lg:row-start-2 lg:items-start lg:justify-end">
-        <WaitlistSticker id="email-close" />
+      <AnimatePresence>
+        {open !== null && (
+          <Viewer
+            index={open}
+            setIndex={setOpen}
+            onClose={() => {
+              setOpen(null)
+              requestAnimationFrame(() => returnFocus.current?.focus({ preventScroll: true }))
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </section>
+  )
+}
+
+const FAQS = [
+  {
+    question: 'Okay, what exactly is Unvibe?',
+    answer:
+      'A different way to understand the code your AI agent writes. The idea is to turn meaningful changes from a coding session into short, narrated visual explanations, with questions in the comments and decisions as polls. The interactive demo lets you try that experience with example sessions.',
+  },
+  {
+    question: 'Can I connect my own coding sessions?',
+    answer:
+      'Yes. Download the companion, follow its setup instructions, and connect Claude Code on your computer. Pick a saved session, review the transcript, then generate your reel and MP4 locally. Claude usage follows your own provider plan. The sample feed remains available without setup.',
+  },
+  {
+    question: 'Is this just another feed to get lost in?',
+    answer:
+      'The format is familiar, but the subject is the code you’re building. Each reel explains a specific change or concept: why an index helps, how a race condition happens, or what a security fix protects. Watch, ask a question, and carry that understanding back to your project.',
+  },
+  {
+    question: 'What can I actually try in the demo?',
+    answer:
+      'Play narrated reels, scroll the feed, ask questions, answer polls, and try likes and saves. The sessions, social activity, and agent replies are sample content. Questions use scripted responses, and interactions stay in your browser. No account or project access is required.',
+  },
+]
+
+function Questions() {
+  return (
+    <section id="questions" className="uv-questions uv-container" aria-labelledby="questions-title">
+      <div>
+        <p className="uv-eyebrow">THE VERY REASONABLE QUESTIONS</p>
+        <h2 id="questions-title">
+          Curious?
+          <br />
+          <em>Good.</em>
+        </h2>
+        <p className="uv-faq-aside">That’s kind of the whole point.</p>
+      </div>
+      <div className="uv-faq-list">
+        {FAQS.map((item) => (
+          <details key={item.question}>
+            <summary>
+              {item.question}
+              <ChevronDown size={19} />
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
       </div>
     </section>
   )
@@ -94,44 +335,42 @@ export default function Landing() {
   const [audio, setAudio] = useState({ on: false, ready: false })
   const [viewer, setViewer] = useState<number | null>(null)
   useEffect(() => {
-    const prev = document.title
-    document.title = 'Unvibe: understand what your coding agent shipped'
+    const previous = document.title
+    document.title = 'Unvibe — your agent shipped it. Now get it.'
     return () => {
-      document.title = prev
+      document.title = previous
     }
   }, [])
   const sound = useMemo<LandingSound>(
-    () => ({
-      ...audio,
-      set: (on: boolean) => flushSync(() => setAudio((a) => ({ on, ready: a.ready || on }))),
-    }),
+    () => ({ ...audio, set: (on: boolean) => flushSync(() => setAudio((current) => ({ on, ready: current.ready || on }))) }),
     [audio],
   )
-
   return (
     <MotionConfig reducedMotion="user">
-    <SoundCtx.Provider value={sound}>
-      <WaitlistProvider>
-        <div className="landing min-h-dvh overflow-x-clip bg-night text-chalk">
-          <a href="#hero-title" className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-chalk focus:px-3 focus:py-2 focus:text-night">
+      <SoundCtx.Provider value={sound}>
+        <div className="uv-landing">
+          <a href="#hero-title" className="uv-skip-link">
             Skip to content
           </a>
           <Header />
           <main>
-            <Workbench suspended={viewer !== null} />
-            <Explore open={viewer} setOpen={setViewer} />
-            <Closing />
+            <Hero suspended={viewer !== null} />
+            <PromiseStrip />
+            <ConnectionGuide />
+            <Capabilities />
+            <GoodStuff open={viewer} setOpen={setViewer} />
+            <Pricing />
+            <Questions />
           </main>
-          <footer className="mx-auto flex w-full max-w-[1360px] min-[1800px]:max-w-[1600px] flex-col gap-4 px-4 pt-8 pb-12 text-[14px] text-dim sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-10">
-            <Logo />
-            <span>Built for the AI for Learning track by team somehow.</span>
-            <Link to="/app" className="-my-2 self-start rounded-md py-2 text-chalk underline decoration-line underline-offset-4 transition hover:decoration-mblue sm:self-auto">
-              Open the demo app
-            </Link>
+          <footer className="uv-footer uv-container">
+            <Brand />
+            <p>For builders who give a damn about the why.</p>
+            <span>
+              Made by team somehow <span aria-hidden="true">↗</span>
+            </span>
           </footer>
         </div>
-      </WaitlistProvider>
-    </SoundCtx.Provider>
+      </SoundCtx.Provider>
     </MotionConfig>
   )
 }

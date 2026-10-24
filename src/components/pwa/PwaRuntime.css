@@ -1,0 +1,93 @@
+.pwa-runtime-notice {
+  position: fixed;
+  z-index: 85;
+  right: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: min(450px, calc(100vw - 40px));
+  padding: 17px 14px 17px 18px;
+  border: 1px solid #ffffff26;
+  border-radius: 13px;
+  background: #20241f;
+  color: #f5f3ea;
+  box-shadow: 0 15px 45px #0005;
+  font-family: var(--font-sans);
+}
+.pwa-runtime-icon {
+  color: #f1ab8b;
+  flex: none;
+}
+.pwa-runtime-notice strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.pwa-runtime-notice p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #b4bbab;
+  margin-top: 3px;
+}
+.pwa-runtime-notice button {
+  cursor: pointer;
+}
+.pwa-runtime-update {
+  border-radius: 6px;
+  background: #eb5538;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 12px;
+  flex: none;
+}
+.pwa-runtime-update:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.pwa-runtime-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 6px;
+  color: #b9c0af;
+}
+.pwa-runtime-close:hover {
+  background: #ffffff10;
+}
+.pwa-network-status {
+  position: fixed;
+  z-index: 65;
+  top: max(12px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid #ffffff25;
+  border-radius: 30px;
+  background: #252a22ed;
+  color: #dae2d1;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .pwa-runtime-notice {
+    bottom: calc(65px + env(safe-area-inset-bottom));
+    right: 14px;
+    width: calc(100vw - 28px);
+    gap: 10px;
+    padding: 14px 10px 14px 14px;
+  }
+  .pwa-runtime-notice p {
+    font-size: 10px;
+  }
+  .pwa-network-status {
+    top: calc(54px + env(safe-area-inset-top));
+    font-size: 9px;
+  }
+}

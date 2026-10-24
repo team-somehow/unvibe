@@ -36,7 +36,9 @@ export function blessPlayer(p: PlayerRef | null, e: SyntheticEvent, playing: boo
 
 export function playSfx(name: 'pop' | 'success', volume = 0.35) {
   try {
-    const a = new Audio(`/audio/shared/sfx-${name}.mp3`)
+    const a = new Audio()
+    a.crossOrigin = 'anonymous'
+    a.src = `/audio/shared/sfx-${name}.mp3`
     a.volume = volume
     void a.play().catch(() => {})
   } catch {

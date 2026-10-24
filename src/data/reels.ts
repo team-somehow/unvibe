@@ -1,5 +1,6 @@
 import type { ReelKind } from '../reels/registry'
 import type { SessionReelProps } from '../reels/SessionReel'
+import type { GeneratedReelProps } from '../reels/GeneratedReel'
 
 export type Person = { handle: string; color: string }
 
@@ -28,7 +29,7 @@ export type Reel = {
   shares: number
   comments: Comment[]
   poll?: Poll
-  props?: SessionReelProps
+  props?: SessionReelProps | GeneratedReelProps
   /** Short subject label shown on the reel, e.g. "Databases" */
   topic?: string
   /** Suggested questions shown above the comment box */

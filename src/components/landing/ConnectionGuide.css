@@ -1,0 +1,79 @@
+.uv-connect-guide { padding: 98px 0 94px; background: #efeee6; border-bottom: 1px solid #24262013; scroll-margin-top: 24px; }
+.uv-connect-layout { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); gap: 78px; align-items: center; }
+.uv-connect-intro { width: min(100%, 355px); flex: none; }
+.uv-companion-download-caption { margin-top: 9px; color: #858a79; font-size: 10px; }
+.uv-companion-download { min-width: 0; border: 1px solid #2426201e; background: #faf9f4; border-radius: 13px; box-shadow: 0 6px 0 #24262005; overflow: hidden; }
+.uv-companion-art { position: relative; padding: 34px 36px 39px; isolation: isolate; background: #e8e7dc; }
+.uv-companion-art::before { content: ''; position: absolute; top: -50px; left: -25px; width: 220px; height: 220px; border: 1px solid #2426200b; border-radius: 50%; z-index: -1; }
+.uv-companion-window { background: #f8f7f0; border: 1px solid #24262038; border-radius: 9px; box-shadow: 0 8px 0 #d5d5c8, 0 13px 23px #2426200b; transform: rotate(-2deg); }
+.uv-companion-window-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #24262016; color: #8a8c7e; font-size: 8px; }
+.uv-companion-window-dots { display: flex; gap: 4px; }
+.uv-companion-window-dots i { width: 4px; height: 4px; border-radius: 50%; background: #b7b8a8; }
+.uv-companion-window-content { position: relative; padding: 26px 28px 22px; }
+.uv-companion-icon { width: 104px; height: 104px; margin: 0 auto 27px; border-radius: 28px; background: var(--uv-coral); transform: rotate(7deg); box-shadow: 4px 6px 0 #c84028, 7px 12px 17px #bd442d24, inset 0 1px 0 #ffffff50; }
+.uv-companion-icon img { width: 100%; height: 100%; border-radius: inherit; }
+.uv-companion-sticky { position: absolute; top: 55px; right: -12px; display: block; padding: 12px 13px; background: #f1d4bd; border: 1px solid #d9ad8e65; box-shadow: 0 4px 7px #2426200a; color: #72533e; font-size: 9px; line-height: 1.7; transform: rotate(8deg); }
+.uv-companion-sticky em { font-family: 'Newsreader', Georgia, serif; font-size: 15px; }
+.uv-companion-workflow { display: flex; align-items: center; justify-content: center; gap: 24px; padding-top: 21px; border-top: 1px solid #24262012; color: #a3a590; }
+.uv-companion-workflow > span { display: grid; justify-items: center; gap: 5px; min-width: 83px; color: #767c65; }
+.uv-companion-workflow strong { color: #45493d; font-weight: 500; font-size: 10px; }
+.uv-companion-workflow small { color: #929684; font-size: 8px; }
+.uv-companion-workflow .uv-companion-workflow-reel > svg { color: var(--uv-coral); }
+.uv-companion-paper-note { position: absolute; right: 25px; bottom: 12px; display: flex; align-items: center; gap: 5px; font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 15px; color: #727c61; transform: rotate(-2deg); }
+.uv-companion-download-info { padding: 27px 29px 25px; }
+.uv-companion-download-title { display: flex; align-items: center; gap: 11px; }
+.uv-companion-download-title > svg { color: #868c76; flex: none; }
+.uv-companion-download-title h3 { font-size: 17px; font-weight: 550; line-height: 1.35; letter-spacing: -0.5px; }
+.uv-companion-download-title p { margin-top: 3px; font-size: 10px; color: #888b7d; }
+.uv-companion-download-action { margin-top: 22px; width: 100%; gap: 12px; min-height: 49px; font-size: 12px; padding-inline: 17px; }
+.uv-companion-download-action > svg:first-child { margin-right: auto; }
+.uv-companion-download-action > svg:last-child { margin-left: auto; }
+.uv-companion-platforms { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 15px; margin-top: 10px; color: #777d6b; font-size: 9px; }
+.uv-companion-platforms > span { color: #777d6b; }
+.uv-connect-setup-note { margin-top: 17px; padding-top: 15px; border-top: 1px solid #2426200d; font-size: 10px; line-height: 1.9; color: #777d6b; }
+.uv-connect-instructions-label { margin-bottom: 24px; font-size: 8px; letter-spacing: 1.4px; color: #9b9e8d; }
+.uv-connect-instructions ol { display: flex; flex-direction: column; gap: 24px; list-style: none; margin: 0; padding: 0; }
+.uv-connect-instructions li { display: flex; gap: 18px; }
+.uv-connect-step-number { font-size: 11px; letter-spacing: 0.7px; color: #c49781; font-family: 'Geist Mono', monospace; padding-top: 2px; }
+.uv-connect-instructions li > div { width: 100%; }
+.uv-connect-instructions h3 { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 16px; font-weight: 550; line-height: 1.5; letter-spacing: -0.3px; margin-bottom: 5px; }
+.uv-connect-instructions h3 svg { color: #9ba18a; flex: none; }
+.uv-connect-instructions li p { font-size: 12px; line-height: 1.85; color: #727866; max-width: 370px; }
+.uv-companion-setup-link { margin: 27px 0 0 34px; font-size: 12px; }
+.uv-connect-privacy { display: flex; gap: 11px; margin: 28px 0 0 34px; padding-top: 19px; border-top: 1px solid #24262012; font-size: 9px; line-height: 1.9; color: #969b88; }
+.uv-connect-privacy svg { flex: none; margin-top: 3px; color: #969e83; }
+@media (max-width: 1100px) {
+  .uv-connect-layout { gap: 45px; }
+  .uv-companion-art { padding-inline: 24px; }
+  .uv-companion-sticky { right: -10px; padding: 9px 10px; font-size: 8px; }
+  .uv-companion-sticky em { font-size: 13px; }
+  .uv-companion-download-info { padding-inline: 23px; }
+  .uv-companion-workflow { gap: 16px; }
+}
+@media (max-width: 760px) {
+  .uv-connect-guide { padding: 63px 0 65px; }
+  .uv-connect-layout { grid-template-columns: 1fr; gap: 38px; }
+  .uv-companion-download { max-width: 520px; width: 100%; }
+  .uv-companion-art { padding: 30px 28px 39px; }
+  .uv-companion-window-content { padding-inline: 22px; }
+  .uv-companion-sticky { right: -9px; top: 58px; }
+  .uv-companion-download-info { padding: 25px 24px 23px; }
+  .uv-companion-download-title h3 { font-size: 18px; }
+  .uv-companion-download-title p { font-size: 10px; }
+  .uv-companion-download-action { font-size: 13px; }
+  .uv-companion-platforms { font-size: 9px; }
+  .uv-connect-setup-note { font-size: 10px; }
+  .uv-connect-instructions-label { margin-bottom: 23px; }
+  .uv-connect-instructions ol { gap: 24px; }
+  .uv-connect-instructions li p { max-width: none; font-size: 12px; }
+  .uv-connect-instructions h3 { font-size: 16px; }
+  .uv-connect-privacy { font-size: 10px; }
+}
+@media (max-width: 380px) {
+  .uv-companion-art { padding-inline: 20px; }
+  .uv-companion-window-content { padding-inline: 15px; }
+  .uv-companion-sticky { right: -10px; font-size: 7px; }
+  .uv-companion-sticky em { font-size: 12px; }
+  .uv-companion-window-bar { font-size: 7px; gap: 7px; padding-inline: 10px; }
+  .uv-companion-download-info { padding-inline: 19px; }
+}

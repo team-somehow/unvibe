@@ -1,0 +1,80 @@
+.uv-signup {
+  background: #f1aa8d;
+  border-top: 1px solid #bd785c22;
+  scroll-margin-top: 26px;
+}
+.uv-signup-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  align-items: center;
+  gap: 100px;
+  min-height: 510px;
+  padding-block: 76px;
+}
+.uv-signup-copy > .uv-eyebrow { color: #7b4c39; font-size: 9px; letter-spacing: 1.5px; }
+.uv-signup-copy > .uv-eyebrow > span { width: 5px; height: 5px; border-radius: 50%; background: #8d4f37; box-shadow: 0 0 0 4px #93523814; margin-right: 5px; }
+.uv-signup h2 { margin-top: 22px; font-size: clamp(48px, 5.1vw, 72px); font-weight: 500; line-height: 1.04; letter-spacing: -3.6px; }
+.uv-signup h2 em { font-family: 'Newsreader', Georgia, serif; font-weight: 400; }
+.uv-signup-description { max-width: 360px; margin-top: 24px; color: #714e3d; font-size: 13px; line-height: 1.85; }
+.uv-signup-margin-note { margin-top: 27px; color: #8c5c44; font-family: 'Newsreader', Georgia, serif; font-size: 18px; font-style: italic; transform: rotate(-2deg); transform-origin: left; }
+.uv-signup-card { min-width: 0; min-height: 330px; padding: 33px; border: 1px solid #7e513a30; border-radius: 9px; background: #fbf8f1; box-shadow: 7px 8px 0 #8e523b18; }
+.uv-signup-card-heading { display: flex; align-items: center; gap: 9px; color: #868375; }
+.uv-signup-card-heading > span { font-size: 8px; font-weight: 600; letter-spacing: 1.35px; }
+.uv-signup-form h3 { margin-top: 15px; font-size: 26px; font-weight: 550; letter-spacing: -.9px; line-height: 1.2; }
+.uv-signup-form label { display: block; margin: 24px 0 8px; color: #66685b; font-size: 10px; font-weight: 550; }
+.uv-signup-form input { display: block; width: 100%; min-width: 0; height: 49px; border: 1px solid #b6b7aa; border-radius: 5px; padding: 11px 13px; background: #fffefa; color: #242620; font-family: inherit; font-size: 15px; line-height: 1.3; transition: border-color 150ms, box-shadow 150ms; }
+.uv-signup-form input::placeholder { color: #aaa99c; }
+.uv-signup-form input:focus { border-color: #a75a3e; box-shadow: 0 0 0 3px #d8906b18; outline: none; }
+.uv-signup-form input[aria-invalid="true"] { border-color: #b03e30; }
+.uv-signup-form input:read-only { color: #8b8c80; }
+.uv-signup-error { margin-top: 9px; color: #a52d24; font-size: 11px; line-height: 1.6; }
+.uv-signup-submit { display: flex; width: 100%; min-height: 49px; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 13px 16px; border: 1px solid #242620; border-radius: 5px; background: #242620; color: #fff; font-family: inherit; font-size: 12px; font-weight: 550; transition: background 150ms; }
+.uv-signup-submit:hover { background: #3d4037; }
+.uv-signup-submit:disabled { cursor: wait; background: #41443a; border-color: #41443a; }
+.uv-signup-consent { max-width: 310px; margin-top: 13px; color: #898a7b; font-size: 9px; line-height: 1.7; }
+.uv-signup-spinner { animation: uv-signup-spin 1s linear infinite; }
+.uv-signup-success { display: flex; min-height: 264px; flex-direction: column; align-items: flex-start; justify-content: center; }
+.uv-signup-success-mark { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid #78946c; border-radius: 50%; color: #4d6e40; background: #e9efdf; }
+.uv-signup-success h3 { margin-top: 21px; }
+.uv-signup-success > p { margin-top: 14px; color: #737869; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.uv-signup-success > p > strong { color: #494e3e; font-weight: 550; }
+.uv-signup-success-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 27px; color: #a74e31; font-size: 11px; font-weight: 550; }
+.uv-signup-success-link:hover { color: #d84429; }
+.uv-signup-form-hero { width: 100%; max-width: 480px; text-align: left; }
+.uv-signup-form-hero .uv-signup-fields { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 9px; }
+.uv-signup-form-hero .uv-signup-hero-label { margin: 0 0 8px; color: #66695e; font-size: 10px; font-weight: 550; }
+.uv-signup-form-hero .uv-signup-submit { width: auto; min-width: 153px; margin-top: 0; padding-inline: 14px; }
+.uv-signup-form-hero input { background: #fffefa; }
+.uv-signup-form-hero .uv-signup-consent { max-width: none; margin-top: 9px; color: #84877c; font-size: 10px; }
+.uv-signup-form-hero .uv-signup-success { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 5px 12px; align-content: center; min-height: 77px; }
+.uv-signup-form-hero .uv-signup-success-mark { grid-row: 1 / 3; width: 32px; height: 32px; }
+.uv-signup-form-hero .uv-signup-success h3 { margin: 0; font-size: 17px; letter-spacing: -.35px; }
+.uv-signup-form-hero .uv-signup-success > p { margin: 0; font-size: 11px; line-height: 1.7; }
+.uv-price-cloud .uv-price-action { color: #575d4c; border-color: #89917b; background: #f8f9ef; }
+.uv-price-cloud .uv-price-action:hover { background: #fffef8; }
+@keyframes uv-signup-spin { to { transform: rotate(360deg); } }
+@media (max-width: 1100px) {
+  .uv-signup-inner { gap: 55px; grid-template-columns: minmax(0, 1fr) minmax(0, 390px); }
+  .uv-signup h2 { font-size: 59px; letter-spacing: -2.8px; }
+  .uv-signup-card { padding: 29px; }
+}
+@media (max-width: 760px) {
+  .uv-signup-inner { grid-template-columns: 1fr; gap: 32px; padding-block: 53px 58px; }
+  .uv-signup h2 { font-size: clamp(48px, 9vw, 65px); margin-top: 19px; letter-spacing: -2.6px; }
+  .uv-signup-description { max-width: 440px; margin-top: 20px; font-size: 13px; }
+  .uv-signup-margin-note { margin-top: 17px; font-size: 17px; }
+  .uv-signup-card { width: min(100%, 460px); min-height: 0; padding: 27px; }
+  .uv-signup-form h3 { font-size: 25px; }
+  .uv-signup-form input { font-size: 16px; }
+  .uv-signup-form label { font-size: 11px; }
+  .uv-signup-submit { font-size: 13px; }
+  .uv-signup-consent { font-size: 10px; }
+  .uv-signup-success { min-height: 263px; }
+  .uv-signup-success > p { font-size: 13px; }
+}
+@media (max-width: 899px) { .uv-signup-form-hero { margin-inline: auto; } }
+@media (max-width: 380px) {
+  .uv-signup-form-hero .uv-signup-fields { grid-template-columns: 1fr; }
+  .uv-signup-form-hero .uv-signup-submit { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .uv-signup-spinner { animation: none; } }
