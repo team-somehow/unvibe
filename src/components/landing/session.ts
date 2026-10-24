@@ -42,7 +42,7 @@ export function writeBack(choice: string): Line[] {
       : { id: 'w2', glyph: '⏺', text: 'Update(migrations/0043_sessions.sql): add a sessions table with expires_at' },
     { id: 'w3', glyph: '⏺', text: 'Bash(npm test)' },
     { id: 'w4', glyph: '⎿', text: '42 passed', result: { text: '42 passed', tone: 'good' } },
-    { id: 'w5', glyph: '⏺', text: 'Done. 5 files changed, 1 migration added.' },
+    { id: 'w5', glyph: '⏺', text: choice === 'Redis' ? 'Done. 5 files changed, 1 migration added.' : 'Done. 5 files changed, 2 migrations added.' },
   ]
 }
 
@@ -53,6 +53,7 @@ export type Slide = {
   caption: string
   /** Short name used in labels: "Playing: {name}". */
   name: string
+  /** Suggested questions. Each must match one of the reel's answers in agentReply, so check them there. */
   chips: string[]
 }
 
@@ -63,35 +64,35 @@ export const SLIDES: Slide[] = [
     replyId: 'r-index',
     name: 'Why one index made the orders page fast',
     caption: 'One line in a migration took the orders page from 1.8 s to 4 ms.',
-    chips: ['Does an index slow down writes?', 'How did you know it was slow?'],
+    chips: ['Does an index slow writes?', 'How did you find it?'],
   },
   {
     kind: 'race',
     replyId: 'r-race',
     name: 'The double charge race condition',
     caption: 'Two taps on Pay read the same balance. Locking the row fixed it.',
-    chips: ['Can that lock deadlock?', 'What about double taps?'],
+    chips: ['Can the lock deadlock?', 'What about double taps?'],
   },
   {
     kind: 'injection',
     replyId: 'r-injection',
     name: 'The SQL injection in the login lookup',
     caption: 'The old login lookup pasted the email straight into the SQL.',
-    chips: ['Does my ORM protect me?', 'Why not just escape the input?'],
+    chips: ['Does my ORM protect me?', 'Why not escape the input?'],
   },
   {
     kind: 'jwt',
     replyId: 'r-jwt',
     name: 'What a JWT signature protects',
     caption: 'Anyone can read a JWT. The signature check is what stops edits.',
-    chips: ['Should I encrypt the token?', 'Where does the secret live?'],
+    chips: ['Should I encrypt it?', 'Where is the secret kept?'],
   },
   {
     kind: 'poll',
     replyId: 'r-poll',
     name: 'Claude is asking where login sessions should live',
     caption: 'Claude paused here to ask you. Vote and the session carries on.',
-    chips: ['Which would you pick and why?'],
+    chips: ['Which would you pick?', 'What if Redis restarts?'],
   },
 ]
 

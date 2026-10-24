@@ -50,7 +50,7 @@ function Hook() {
   const blipLabel = prog(frame, blip + 2, blip + 12) * (1 - prog(frame, spreadStart, spreadStart + 8))
   const bracket = prog(frame, spreadStart + 6, spreadEnd)
   const seconds = frame < spreadStart ? 2 : interpolate(frame, [spreadStart, spreadEnd + 6], [2, 600], { ...clamp, easing: (x) => x * x })
-  const clockP = useSpr(blip + 4, 14)
+  const clockP = useSpr(8, 14)
   const clockColor = interpolateColors(seconds, [2, 60, 600], [C.yellow, C.red, C.red])
   const loopLabel = useSpr(retry + 10, 14)
 
@@ -106,9 +106,9 @@ function Hook() {
 
       <CodeCard
         top={810}
-        from={claude - 6}
+        from={Math.min(22, claude - 6)}
         header="Read(src/payments/client.ts)"
-        size={30}
+        size={31}
         lines={['async function charge(order) {', '  while (true) {', '    try { return await pay(order) }', '    catch { /* retry right away */ }', '  }', '}']}
         hl={[
           { line: 1, text: 'while (true)', at: retry - 6, color: C.red },
@@ -121,7 +121,7 @@ function Hook() {
         </div>
       </div>
 
-      <Sfx t={T} name="error" at={blip + 1} volume={0.16} />
+      <Sfx t={T} name="error" at={blip + 1} volume={0.26} />
     </>
   )
 }
@@ -247,7 +247,7 @@ function Herd() {
         × thousands of clients
       </div>
 
-      <Sfx t={T} name="stampede" at={thunder - 8} volume={0.45} />
+      <Sfx t={T} name="stampede" at={thunder - 8} volume={0.7} />
     </>
   )
 }
@@ -396,7 +396,7 @@ function Backoff() {
         Each wait <span style={{ color: C.yellow }}>doubles</span>.
       </div>
       {cues.map((c, i) => (
-        <Sfx key={i} t={T} name="tick" at={c + durs[i] - 1} volume={0.9} />
+        <Sfx key={i} t={T} name="tick" at={c + durs[i] - 1} volume={1} />
       ))}
     </>
   )
@@ -468,11 +468,14 @@ function Jitter() {
       <Title from={0} top={150} size={74} out={rnd - 14}>Same wait, same spike</Title>
       <Title from={rnd - 4} top={150} size={74} color={C.green}>Jitter spreads them out</Title>
 
-      <div style={{ position: 'absolute', left: 130, top: 270, width: 760 }}>
-        <div style={{ position: 'absolute', left: 0, top: 6, fontFamily: mono, fontSize: 30, color: C.white }}>payments-api</div>
-        <StatusChip x={760} y={0} ok={healthy > 0.5 || frame < drops[0] + 20 ? 1 : 0} />
+      {/* eased in, so it doesn't collide with the outgoing formula during the cross-dissolve */}
+      <div style={{ position: 'absolute', inset: 0, opacity: prog(frame, 3, 15), transform: `translateY(${(1 - prog(frame, 3, 15)) * 14}px)` }}>
+        <div style={{ position: 'absolute', left: 130, top: 270, width: 760 }}>
+          <div style={{ position: 'absolute', left: 0, top: 6, fontFamily: mono, fontSize: 30, color: C.white }}>payments-api</div>
+          <StatusChip x={760} y={0} ok={healthy > 0.5 || frame < drops[0] + 20 ? 1 : 0} />
+        </div>
+        <Meter x={130} y={330} w={760} value={load} capacity={0.6} label="load" />
       </div>
-      <Meter x={130} y={330} w={760} value={load} capacity={0.6} label="load" />
 
       <div style={{ position: 'absolute', left: 130, top: 452, fontFamily: sans, fontSize: 28, color: C.grey, opacity: chart }}>12 clients</div>
       {Array.from({ length: N }).map((_, i) => {
@@ -527,8 +530,8 @@ function Jitter() {
         each wait × random(0.5 – 1.5)
       </div>
 
-      <Sfx t={T} name="patter" at={jStart} volume={0.7} />
-      <Sfx t={T} name="recover" at={recovers - 8} volume={0.32} />
+      <Sfx t={T} name="patter" at={jStart} volume={1} />
+      <Sfx t={T} name="recover" at={recovers - 8} volume={0.5} />
     </>
   )
 }
@@ -572,7 +575,7 @@ function Payoff() {
         from={2}
         stagger={3}
         header="Update(src/payments/client.ts)"
-        size={30}
+        size={31}
         lines={[
           'for (let n = 0; n < 5; n++) {',
           '  try { return await pay(order) }',
@@ -603,7 +606,7 @@ function Payoff() {
 export function BackoffReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.2} duck={0.38} />
+      <ReelAudio t={T} voiceVolume={1.75} musicVolume={0.37} duck={0.38} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="herd"><Herd /></Scene>
       <Scene t={T} id="backoff"><Backoff /></Scene>

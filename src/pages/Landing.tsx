@@ -20,7 +20,7 @@ function Header() {
         <Logo />
       </Link>
       <nav aria-label="Main" className="flex items-center gap-2 sm:gap-6">
-        <Link to="/app" className="hidden rounded-md text-[15px] text-dim transition-colors hover:text-chalk sm:inline">
+        <Link to="/app" className="hidden h-10 items-center rounded-md text-[15px] text-dim transition-colors hover:text-chalk sm:inline-flex">
           Open the demo app
         </Link>
         <button type="button" onClick={focusCard} className="h-10 rounded-full bg-chalk px-4 text-[14.5px] font-semibold text-night transition hover:bg-white active:scale-[0.98]">
@@ -66,12 +66,9 @@ const STEPS = [
 function Closing() {
   return (
     <section aria-labelledby="close-title" className="mx-auto grid w-full max-w-[1360px] min-[1800px]:max-w-[1600px] gap-x-14 gap-y-12 px-4 pb-24 sm:px-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:px-10 lg:pb-32 xl:gap-x-20">
-      <h2 id="close-title" className="max-w-[12em] font-serif text-[clamp(42px,6.2vw,92px)] leading-[0.98] tracking-[-0.02em] text-balance italic lg:col-start-1">
+      <h2 id="close-title" className="max-w-[12em] font-serif text-[clamp(40px,5vw,76px)] leading-[1] tracking-[-0.02em] text-balance italic lg:col-start-1">
         Learn from every session you ship.
       </h2>
-      <div className="flex justify-center sm:justify-start lg:col-start-2 lg:row-start-2 lg:items-start lg:justify-end">
-        <WaitlistSticker id="email-close" />
-      </div>
       <div className="lg:col-start-1 lg:row-start-2">
         <ol className="flex max-w-[40rem] flex-col gap-6">
           {STEPS.map((s, i) => (
@@ -84,6 +81,10 @@ function Closing() {
           ))}
         </ol>
         <p className="mt-8 pl-[2.25rem] text-[15px] text-dim">Works with Claude Code today. Codex and Cursor are next.</p>
+      </div>
+      {/* after the steps in reading order; beside them on desktop */}
+      <div className="flex justify-center sm:justify-start lg:col-start-2 lg:row-start-2 lg:items-start lg:justify-end">
+        <WaitlistSticker id="email-close" />
       </div>
     </section>
   )
@@ -124,7 +125,7 @@ export default function Landing() {
           <footer className="mx-auto flex w-full max-w-[1360px] min-[1800px]:max-w-[1600px] flex-col gap-4 px-4 pt-8 pb-12 text-[14px] text-dim sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-10">
             <Logo />
             <span>Built for the AI for Learning track by team somehow.</span>
-            <Link to="/app" className="rounded-md text-chalk underline decoration-line underline-offset-4 transition hover:decoration-mblue">
+            <Link to="/app" className="-my-2 self-start rounded-md py-2 text-chalk underline decoration-line underline-offset-4 transition hover:decoration-mblue sm:self-auto">
               Open the demo app
             </Link>
           </footer>

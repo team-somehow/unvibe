@@ -102,11 +102,11 @@ export function WaitlistSticker({ id, tone = 'page', className = '' }: { id: str
             <p className={`leading-snug text-night/70 ${compact ? 'text-[13.5px]' : 'text-[15px]'}`}>
               {result === 'duplicate' ? (
                 <>
-                  We have <span className="font-semibold break-all text-night">{email}</span> and will email it when the beta opens.
+                  We have <span className="font-semibold text-night [overflow-wrap:anywhere]">{email}</span> and will email it when the beta opens.
                 </>
               ) : (
                 <>
-                  We’ll email <span className="font-semibold break-all text-night">{email}</span> when the beta opens.
+                  We’ll email <span className="font-semibold text-night [overflow-wrap:anywhere]">{email}</span> when the beta opens.
                 </>
               )}
             </p>
@@ -137,7 +137,7 @@ export function WaitlistSticker({ id, tone = 'page', className = '' }: { id: str
               placeholder="you@company.com"
               aria-invalid={error}
               aria-describedby={error ? errId : undefined}
-              className={`mt-3 h-12 w-full min-w-0 rounded-xl border bg-white px-4 text-[16px] text-night outline-none placeholder:text-night/45 focus:border-[#1B6F8A] focus:ring-2 focus:ring-[#1B6F8A]/25 ${error ? 'border-[#B42318]' : 'border-night/20'}`}
+              className={`mt-3 h-12 w-full min-w-0 rounded-xl border bg-white px-4 text-[16px] text-night outline-none placeholder:text-night/55 focus:border-[#1B6F8A] focus:ring-2 focus:ring-[#1B6F8A]/25 ${error ? 'border-[#B42318]' : 'border-night/20'}`}
             />
             {error && (
               <p id={errId} className="mt-1.5 text-[13px] font-medium text-[#B42318]">

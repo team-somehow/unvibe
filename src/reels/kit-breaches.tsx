@@ -162,7 +162,7 @@ export function BrowserFrame({ x, y, w, h, url, color = C.dim, glow = 0, childre
     <Panel x={x} y={y} w={w} h={h} color={color} glow={glow} style={{ overflow: 'hidden', ...style }}>
       <div style={{ height: 62, display: 'flex', alignItems: 'center', gap: 12, padding: '0 22px', borderBottom: `2px solid ${C.dim}`, background: '#0E141B' }}>
         {[C.red, C.yellow, C.green].map((c) => <span key={c} style={{ width: 16, height: 16, borderRadius: 8, background: c, opacity: 0.75 }} />)}
-        <div style={{ marginLeft: 14, flex: 1, height: 38, borderRadius: 19, background: '#161E27', display: 'flex', alignItems: 'center', padding: '0 20px', fontFamily: mono, fontSize: 26, color: C.grey, whiteSpace: 'nowrap', overflow: 'hidden' }}>
+        <div style={{ marginLeft: 14, flex: 1, height: 40, borderRadius: 20, background: '#161E27', display: 'flex', alignItems: 'center', padding: '0 20px', fontFamily: mono, fontSize: 28, color: C.grey, whiteSpace: 'nowrap', overflow: 'hidden' }}>
           {url}
         </div>
       </div>

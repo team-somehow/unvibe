@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Easing, interpolate, useCurrentFrame } from 'remotion'
-import { Captions, ReelAudio, Scene, Sfx, buildTimeline, useScene, type Manifest } from './audio'
+import { Captions, ReelAudio, Scene, Sfx, buildTimeline, type Manifest } from './audio'
 import manifest from './audio/secrets.json'
 import {
   BrowserFrame, Chip, CodeLine, GearIcon, GlobeIcon, Heading, KeyIcon, LockIcon, Packet, Panel, Wire,
@@ -66,12 +66,13 @@ function Hook() {
   const sight = cue('sight', 96)
   const claude = cue('claude', 185)
   // the spotlight sweeps the code like a searchlight, then settles on the key
-  const keys = [14, 40, 62, sight - 8]
-  const xs = [WALL_X + 120, WALL_X + 600, WALL_X + 160, keyCx]
-  const ys = [WALL_Y + 80, WALL_Y + 260, WALL_Y + 540, keyCy]
+  // it brushes past the key around the poster frame (45), moves on, then comes back and locks on
+  const keys = [10, 30, 48, 68, Math.max(80, sight - 8)]
+  const xs = [WALL_X + 140, WALL_X + 600, keyCx - 40, WALL_X + 200, keyCx]
+  const ys = [WALL_Y + 90, WALL_Y + 230, keyCy, WALL_Y + 620, keyCy]
   const sx = interpolate(frame, keys, xs, { ...clamp, easing: Easing.inOut(Easing.sin) })
   const sy = interpolate(frame, keys, ys, { ...clamp, easing: Easing.inOut(Easing.sin) })
-  const light = ramp(frame, 8, 22)
+  const light = ramp(frame, 4, 16)
   const found = ramp(frame, sight - 10, sight + 4)
   const box = ramp(frame, claude - 8, claude + 8)
   const chip = useSpring(claude - 6, 12)
@@ -79,11 +80,11 @@ function Hook() {
   const mask = `radial-gradient(ellipse ${160 + found * 210}px ${160 + found * 20}px at ${sx}px ${sy}px, #000 60%, transparent 100%)`
   return (
     <>
-      <Heading from={2} top={180} size={76}>Hiding in plain sight</Heading>
+      <Heading from={2} top={150} size={76}>Hiding in plain sight</Heading>
       <div style={{ opacity: panel, transform: `translateY(${(1 - panel) * 30}px)` }}>
         <BrowserFrame x={HOOK_PANEL.x} y={HOOK_PANEL.y} w={HOOK_PANEL.w} h={HOOK_PANEL.h} url={<span>yourapp.com/assets/<span style={{ color: C.white }}>index-4f9a.js</span></span>} />
         {/* dark copy of the code */}
-        <Wall tint="#2A3038" keyColor="#2A3038" ring={box} style={{ left: WALL_X, top: WALL_Y }} />
+        <Wall tint="#353D47" keyColor="#353D47" ring={box} style={{ left: WALL_X, top: WALL_Y }} />
         {/* lit copy, visible only inside the spotlight */}
         <div style={{ position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, opacity: light, WebkitMaskImage: mask, maskImage: mask }}>
           <Wall keyGlow={found} keyColor={blend(C.green, C.red, found)} ring={box} style={{ left: WALL_X, top: WALL_Y }} />
@@ -93,7 +94,7 @@ function Hook() {
       <div style={{ position: 'absolute', top: HOOK_PANEL.y + HOOK_PANEL.h + 40, left: 90, width: 780, display: 'flex', justifyContent: 'center', opacity: chip, transform: `scale(${0.85 + 0.15 * chip})` }}>
         <Chip color={C.yellow} glow={chip}><KeyIcon size={34} /> Claude spotted a live secret key</Chip>
       </div>
-      <Sfx t={T} name="ding" at={claude - 4} volume={0.35} />
+      <Sfx t={T} name="ding" at={claude - 4} volume={0.9} />
     </>
   )
 }
@@ -137,7 +138,7 @@ function Prefix() {
 
   return (
     <>
-      <Heading from={2} top={180} size={72}>How it got there</Heading>
+      <Heading from={2} top={150} size={76}>How it got there</Heading>
       {/* .env */}
       <div style={{ opacity: env, transform: `translateY(${(1 - env) * 30}px)` }}>
         <Panel x={ENV.x} y={ENV.y} w={ENV.w} style={{ padding: '0 30px 20px' }}>
@@ -226,7 +227,7 @@ function Find() {
   const items = ['charges', 'refunds', 'customer data']
   return (
     <>
-      <Heading from={2} top={180} size={72}>Anyone can <span style={{ color: C.red }}>view source</span></Heading>
+      <Heading from={2} top={150} size={76}>Anyone can <span style={{ color: C.red }}>view source</span></Heading>
       <div style={{ opacity: win, transform: `translateY(${(1 - win) * 30}px)` }}>
         <BrowserFrame x={FIND_FRAME.x} y={FIND_FRAME.y} w={FIND_FRAME.w} h={FIND_FRAME.h}
           color={stolen > 0 ? blend(C.dim, C.red, stolen) : C.dim} glow={stolen * 0.6}
@@ -265,7 +266,7 @@ function Find() {
         </div>
       </div>
       <Sfx t={T} name="zoom" at={search - 8} volume={0.45} />
-      <Sfx t={T} name="alarm" at={walk - 2} volume={0.3} />
+      <Sfx t={T} name="alarm" at={walk - 2} volume={0.24} />
     </>
   )
 }
@@ -284,7 +285,7 @@ function Fix() {
   const never = cue('never', 120)
   const browserW = cue('browser', 173)
   const pub = cue('publishable', 215)
-  const nodes = useSpring(0, 16)
+  const nodes = useSpring(3, 16)
   const server = useSpring(moved - 4, 15)
   const direct = 1 - ramp(frame, moved, moved + 16)
   const rewire = ramp(frame, moved + 6, route - 4)
@@ -301,7 +302,7 @@ function Fix() {
   const press = req ? 1 - 0.06 * Math.max(0, 1 - Math.abs(loop - 2) / 4) : 1
   return (
     <>
-      <Heading from={2} top={180} size={72}>Claude moved it <span style={{ color: C.green }}>server-side</span></Heading>
+      <Heading from={2} top={150} size={76}>Claude moved it <span style={{ color: C.green }}>server-side</span></Heading>
       {/* the old direct call: browser straight to Stripe, secret in hand */}
       <div style={{ opacity: direct }}>
         <Wire x1={480} y1={BR.y + BR.h} x2={480} y2={ST.y} p={nodes} color={C.red} width={4} dash="10 12" glow={0.5} />
@@ -371,7 +372,7 @@ function Rotate() {
   const spin = interpolate(frame, [rotated - 10, keyW + 10], [0, 360], { ...clamp, easing: Easing.inOut(Easing.cubic) })
   return (
     <>
-      <Heading from={2} top={180} size={72}>Then: <span style={{ color: C.yellow }}>rotate</span> the key</Heading>
+      <Heading from={2} top={150} size={76}>Then: <span style={{ color: C.yellow }}>rotate</span> the key</Heading>
       <div style={{ opacity: old, transform: `translateY(${(1 - old) * 20}px)` }}>
         <Panel x={90} y={360} w={780} h={150} color={C.red} glow={0.3 * (1 - strike)} style={{ display: 'flex', alignItems: 'center', padding: '0 34px', gap: 20 }}>
           <KeyIcon size={48} color={C.red} />
@@ -412,15 +413,13 @@ function Rotate() {
 function Takeaway() {
   const frame = useCurrentFrame()
   const cue = useCues()
-  const { durationInFrames } = useScene()
   const vite = cue('vite', 39)
   const whole = cue('whole', 70)
-  const chip = useSpring(2, 12)
+  const chip = useSpring(5, 12)
   const chipGlow = ramp(frame, vite - 4, vite + 6) * (1 - ramp(frame, vite + 14, vite + 30))
   const globe = useSpring(whole - 10, 14)
-  const out = 1 - ramp(frame, durationInFrames - 10, durationInFrames)
   return (
-    <div style={{ opacity: out }}>
+    <div>
       <div style={{ position: 'absolute', top: 300, left: 90, width: 780, display: 'flex', justifyContent: 'center', opacity: chip, transform: `scale(${0.7 + 0.3 * chip})` }}>
         <div style={{ fontFamily: mono, fontSize: 112, fontWeight: 600, color: C.yellow, border: `5px solid ${C.yellow}`, borderRadius: 28, padding: '6px 40px', boxShadow: `0 0 ${60 + chipGlow * 60}px ${alpha(C.yellow, 0.35 + chipGlow * 0.3)}`, background: alpha(C.yellow, 0.08), transform: `scale(${1 + chipGlow * 0.05})` }}>
           VITE_*
@@ -443,7 +442,7 @@ function Takeaway() {
 export function SecretsReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.2} duck={0.4} />
+      <ReelAudio t={T} voiceVolume={1.14} musicVolume={0.43} duck={0.5} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="prefix"><Prefix /></Scene>
       <Scene t={T} id="find"><Find /></Scene>

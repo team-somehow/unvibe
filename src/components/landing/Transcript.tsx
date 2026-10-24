@@ -38,7 +38,7 @@ function Result({ line, wrap }: { line: Line; wrap: boolean }) {
   return (
     <>
       {line.text.slice(0, i)}
-      <span className={line.result.tone === 'bad' ? 'text-mred' : 'text-mgreen'}>{line.result.text}</span>
+      <span className={`whitespace-nowrap ${line.result.tone === 'bad' ? 'text-mred' : 'text-mgreen'}`}>{line.result.text}</span>
       {line.text.slice(i + line.result.text.length)}
     </>
   )

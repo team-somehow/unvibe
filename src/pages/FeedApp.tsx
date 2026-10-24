@@ -1,19 +1,19 @@
-import { Thumbnail } from '@remotion/player'
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import { Check, Clapperboard, Play, PlusSquare, SquareTerminal, UserRound } from 'lucide-react'
-import { startTransition, useCallback, useEffect, useRef, useState, type SyntheticEvent } from 'react'
+import { startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState, type SyntheticEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '../components/Avatar'
 import { CommentsPanel, CommentsSheet } from '../components/CommentsSheet'
 import { CreateSheet } from '../components/CreateSheet'
 import { NavButtons, SwipeHint } from '../components/feed/FeedChrome'
+import { ReelPoster } from '../components/feed/ReelPoster'
 import { useMediaQuery, usePageVisible, useStableCallback } from '../components/feed/hooks'
 import { useFeedSound } from '../components/feed/sound'
 import { KEYS, readPref, writePref } from '../components/feed/storage'
 import { ReelCard, compact } from '../components/ReelCard'
 import { Logo } from '../components/Logo'
 import { CLAUDE, ME, SEED_REELS, agentReply, type Comment, type Reel } from '../data/reels'
-import { COMPOSITIONS, FPS, HEIGHT, WIDTH } from '../reels/registry'
+import { COMPOSITIONS } from '../reels/registry'
 
 type Tab = 'feed' | 'profile'
 type Filter = 'everyone' | 'mine'
@@ -34,6 +34,23 @@ function isTypingTarget(t: EventTarget | null) {
   return t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement || (t instanceof HTMLElement && t.isContentEditable)
 }
 
+/** /app#r-injection opens that reel; read before the first render so the feed never starts on the wrong reel. */
+function hashIndex() {
+  const id = decodeURIComponent(location.hash.slice(1))
+  return Math.max(0, SEED_REELS.findIndex((r) => r.id === id))
+}
+
+/** Players for the reel the feed rests on and the next one, plus the previous one if it is still mounted. */
+function playerIds(ids: string[], s: number, prev: string[]) {
+  const next = [ids[s], ids[s + 1]]
+  if (s > 0 && prev.includes(ids[s - 1])) next.push(ids[s - 1])
+  const out = next.filter((id): id is string => !!id)
+  return out.length === prev.length && out.every((id) => prev.includes(id)) ? prev : out
+}
+
+// Posters render live (once, then they are cached) for reels this close to where the feed rests
+const POSTER_REACH = 3
+
 function toggled(set: Set<string>, id: string, force?: boolean) {
   const next = new Set(set)
   if (force || !next.has(id)) next.add(id)
@@ -45,7 +62,12 @@ export default function FeedApp() {
   const [reels, setReels] = useState<Reel[]>(SEED_REELS)
   const [tab, setTab] = useState<Tab>('feed')
   const [filter, setFilter] = useState<Filter>('everyone')
-  const [active, setActive] = useState(0)
+  const [start] = useState(hashIndex)
+  const [active, setActive] = useState(start)
+  // Where the scroller has come to rest. Reels play, Players mount and posters render only on settling, so all of
+  // that work happens while still posters are on screen instead of during the swipe.
+  const [settled, setSettled] = useState(start)
+  const [mountIds, setMountIds] = useState<string[]>(() => playerIds(SEED_REELS.map((r) => r.id), start, []))
   const [liked, setLiked] = useState<Set<string>>(new Set())
   const [saved, setSaved] = useState<Set<string>>(new Set())
   const [following, setFollowing] = useState<Set<string>>(new Set())
@@ -72,6 +94,11 @@ export default function FeedApp() {
   activeRef.current = active
   const countRef = useRef(visible.length)
   countRef.current = visible.length
+  const idsRef = useRef<string[]>([])
+  idsRef.current = visible.map((r) => r.id)
+  // Where a keyboard / wheel / button step is heading, so quick repeated steps add up instead of being lost
+  const targetRef = useRef<number | null>(null)
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
 
   const flash = useCallback((text: string) => {
     const id = Date.now()
@@ -100,26 +127,82 @@ export default function FeedApp() {
   // A sticky pause belongs to the reel it was made on
   useEffect(() => setPausedId(null), [active, filter, tab])
 
-  const scrollTo = useCallback((i: number, smooth = true) => {
-    const root = scroller.current
-    if (!root) return
-    root.scrollTo({ top: i * root.clientHeight, behavior: smooth ? 'smooth' : 'auto' })
-  }, [])
+  const scrollTo = useCallback(
+    (i: number, smooth = true) => {
+      const root = scroller.current
+      if (!root) return
+      root.scrollTo({ top: i * root.clientHeight, behavior: smooth && !reducedMotion ? 'smooth' : 'auto' })
+    },
+    [reducedMotion],
+  )
 
   const step = useCallback(
     (dir: 1 | -1) => {
-      const next = Math.min(Math.max(activeRef.current + dir, 0), countRef.current - 1)
-      if (next !== activeRef.current) scrollTo(next)
+      const from = targetRef.current ?? activeRef.current
+      const next = Math.min(Math.max(from + dir, 0), countRef.current - 1)
+      if (next === from) return
+      targetRef.current = next
+      scrollTo(next)
     },
     [scrollTo],
   )
 
-  // Deep link: /app#r-injection opens that reel
+  const settleAt = useCallback((i: number) => {
+    const ids = idsRef.current
+    const s = Math.min(Math.max(i, 0), Math.max(ids.length - 1, 0))
+    targetRef.current = null
+    // One commit: the new Players mount before the landed reel's play effect runs
+    setSettled(s)
+    setMountIds((prev) => playerIds(ids, s, prev))
+  }, [])
+
+  // The feed opens where it left off (deep link, back from the profile, a new filter or post) before the first paint
+  useLayoutEffect(() => {
+    const root = scroller.current
+    if (tab !== 'feed' || !root) return
+    root.scrollTop = activeRef.current * root.clientHeight
+  }, [tab, filter, visible.length])
+
+  // Detect when scrolling has come to rest: scrollend where supported, a short quiet period otherwise. A finger
+  // still on the glass never counts as rest.
   useEffect(() => {
-    const id = decodeURIComponent(location.hash.slice(1))
-    const i = SEED_REELS.findIndex((r) => r.id === id)
-    if (i > 0) requestAnimationFrame(() => scrollTo(i, false))
-  }, [scrollTo])
+    const root = scroller.current
+    if (!root || tab !== 'feed') return
+    const hasScrollEnd = 'onscrollend' in window
+    let timer = 0
+    let touching = false
+    const settle = () => {
+      clearTimeout(timer)
+      if (!touching) settleAt(Math.round(root.scrollTop / Math.max(1, root.clientHeight)))
+    }
+    const later = () => {
+      clearTimeout(timer)
+      timer = window.setTimeout(settle, hasScrollEnd ? 500 : 120)
+    }
+    const down = () => {
+      touching = true
+      clearTimeout(timer)
+    }
+    const up = () => {
+      touching = false
+      later()
+    }
+    root.addEventListener('scroll', later, { passive: true })
+    root.addEventListener('scrollend', settle)
+    root.addEventListener('touchstart', down, { passive: true })
+    root.addEventListener('touchend', up, { passive: true })
+    root.addEventListener('touchcancel', up, { passive: true })
+    // The list or the tab changed: rest where we are now
+    settle()
+    return () => {
+      clearTimeout(timer)
+      root.removeEventListener('scroll', later)
+      root.removeEventListener('scrollend', settle)
+      root.removeEventListener('touchstart', down)
+      root.removeEventListener('touchend', up)
+      root.removeEventListener('touchcancel', up)
+    }
+  }, [tab, filter, visible.length, settleAt])
 
   // Mouse wheels and trackpads move exactly one reel per gesture, like Instagram on the web
   useEffect(() => {
@@ -396,9 +479,10 @@ export default function FeedApp() {
                       <ReelCard
                         reel={r}
                         current={i === active}
+                        landed={i === settled}
                         running={running}
-                        mountPlayer={Math.abs(i - active) <= 1}
-                        wantPoster={Math.abs(i - active) <= 3}
+                        mountPlayer={mountIds.includes(r.id)}
+                        wantPoster={Math.abs(i - settled) <= POSTER_REACH}
                         liked={liked.has(r.id)}
                         saved={saved.has(r.id)}
                         following={following.has(r.author.handle)}
@@ -473,8 +557,11 @@ export default function FeedApp() {
         {!panelMode && <CommentsSheet reel={commentsReel} typing={!!commentsReel && typingFor === commentsReel.id} onClose={closeComments} onPost={(t) => commentsFor && postComment(commentsFor, t)} />}
         <CreateSheet open={creating} muted={sound.muted} onClose={() => setCreating(false)} onPublish={publish} />
 
-        {/* Toasts drop in at the top, clear of the caption and the action rail */}
-        <div className="pointer-events-none fixed inset-x-0 top-[calc(52px+max(6px,env(safe-area-inset-top)))] z-[60] flex justify-center md:top-6" aria-live="polite">
+        {/* Toasts drop in at the top, clear of the caption and the action rail, centred over the content beside the sidebar */}
+        <div
+          className="pointer-events-none fixed inset-x-0 top-[calc(52px+max(6px,env(safe-area-inset-top)))] z-[60] flex justify-center px-4 md:top-6 md:left-[76px] xl:left-[244px]"
+          aria-live="polite"
+        >
           <AnimatePresence>
             {toast && (
               <motion.div
@@ -541,19 +628,10 @@ function Profile({ mine, onOpen, onCreate }: { mine: Reel[]; onOpen: (id: string
             </span>
           </button>
           {mine.map((r) => {
-            const { component, frames } = COMPOSITIONS[r.kind]
+            const { frames } = COMPOSITIONS[r.kind]
             return (
               <button type="button" key={r.id} onClick={() => onOpen(r.id)} aria-label={`Play: ${r.caption}`} className="group relative aspect-[9/16] overflow-hidden rounded-sm bg-[#0a0a0a]">
-                <Thumbnail
-                  component={component}
-                  inputProps={r.props ?? {}}
-                  compositionWidth={WIDTH}
-                  compositionHeight={HEIGHT}
-                  durationInFrames={frames}
-                  fps={FPS}
-                  frameToDisplay={Math.floor(frames * 0.55)}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                <ReelPoster reel={r} frame={Math.floor(frames * 0.55)} />
                 <span className="absolute inset-0 bg-black/0 transition group-hover:bg-black/30" />
                 <span className="absolute bottom-2 left-2 flex items-center gap-1 text-[12px] font-semibold drop-shadow">
                   <Play size={13} className="fill-white" /> {compact(r.likes * 7 + 40)}

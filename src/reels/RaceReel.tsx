@@ -48,7 +48,10 @@ function Hook() {
   const landB = tap + 38
   const walletPulse = interpolate(frame, [wallet - 4, wallet + 6, wallet + 30], [0, 1, 0.35], clamp)
   const total = prog(frame, spent - 4, spent + 10)
-  const bars = prog(frame, sixty - 14, sixty + 18)
+  // has vs spent: the wallet's $100 is on screen from the start, each charge fills the spent bar
+  const barsIn = useSpr(12, 16)
+  const has = prog(frame, 14, 36)
+  const spentAmt = 80 * prog(frame, landA, landA + 10) + 80 * prog(frame, spent - 2, sixty + 16)
   const over = prog(frame, sixty + 4, sixty + 22)
   const claudeP = useSpr(claude - 2, 15)
   const spentRed = prog(frame, spent - 2, spent + 8)
@@ -127,26 +130,27 @@ function Hook() {
       </div>
 
       {/* has vs spent */}
-      <div style={{ position: 'absolute', left: 110, top: 990, width: 780, fontFamily: sans, opacity: Math.min(1, bars * 3) }}>
+      <div style={{ position: 'absolute', left: 110, top: 990, width: 780, fontFamily: sans, opacity: Math.min(1, barsIn), transform: `translateY(${(1 - barsIn) * 24}px)` }}>
         <div style={{ fontSize: 30, color: C.grey }}>has</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 8 }}>
-          <div style={{ height: 56, width: 480 * bars, borderRadius: 14, background: rgba(C.yellow, 0.85) }} />
-          <span style={{ fontSize: 38, fontWeight: 600, color: C.yellow }}>$100</span>
+          <div style={{ height: 56, width: Math.max(1, 480 * has), borderRadius: 14, background: rgba(C.yellow, 0.85) }} />
+          <span style={{ fontSize: 38, fontWeight: 600, color: C.yellow, opacity: has }}>$100</span>
         </div>
         <div style={{ fontSize: 30, color: C.grey, marginTop: 26 }}>spent</div>
         <div style={{ position: 'relative', height: 56, marginTop: 8 }}>
-          <div style={{ position: 'absolute', left: 0, top: 0, height: 56, width: 480 * bars, borderRadius: '14px 0 0 14px', background: rgba(C.red, 0.75) }} />
+          <div style={{ position: 'absolute', left: 0, top: 0, height: 56, width: 768, borderRadius: 14, border: `2px dashed ${C.dim}`, boxSizing: 'border-box' }} />
+          <div style={{ position: 'absolute', left: 0, top: 0, height: 56, width: 4.8 * Math.min(100, spentAmt), borderRadius: spentAmt > 100 ? '14px 0 0 14px' : 14, background: rgba(C.red, 0.75) }} />
           <div
             style={{
-              position: 'absolute', left: 480, top: 0, height: 56, width: 288 * over, borderRadius: '0 14px 14px 0', background: C.red,
+              position: 'absolute', left: 480, top: 0, height: 56, width: 4.8 * Math.max(0, spentAmt - 100), borderRadius: '0 14px 14px 0', background: C.red,
               boxShadow: `0 0 ${50 * over}px ${rgba(C.red, 0.7)}`,
             }}
           />
-          <span style={{ position: 'absolute', right: 22, top: 4, fontSize: 38, fontWeight: 700, color: '#000', opacity: over }}>$160</span>
+          <span style={{ position: 'absolute', left: Math.max(16, 4.8 * spentAmt - 120), top: 4, width: 104, textAlign: 'right', fontSize: 38, fontWeight: 700, color: '#000', opacity: Math.min(1, spentAmt / 40), fontVariantNumeric: 'tabular-nums' }}>${Math.round(spentAmt)}</span>
         </div>
       </div>
       <Svg>
-        <line x1={590} y1={1010} x2={590} y2={1236} stroke={C.white} strokeWidth={3} strokeDasharray="10 10" opacity={0.6 * bars} />
+        <line x1={590} y1={1010} x2={590} y2={1236} stroke={C.white} strokeWidth={3} strokeDasharray="10 10" opacity={0.6 * has} />
       </Svg>
       <div style={{ position: 'absolute', left: 110, width: 768, top: 1238, textAlign: 'right', fontFamily: sans, fontSize: 32, fontWeight: 600, color: C.red, opacity: over }}>
         +$60 that never existed
@@ -176,7 +180,7 @@ function ChargeRow({ at, y, color, label, red }: { at: number; y: number; color:
         display: 'flex', alignItems: 'center', gap: 16, padding: '0 22px', fontFamily: sans, opacity: Math.min(1, p), transform: `translateX(${(1 - p) * -30}px)`,
       }}
     >
-      <span style={{ width: 40, height: 40, borderRadius: 20, background: color, color: '#000', fontWeight: 700, fontSize: 26, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{label}</span>
+      <span style={{ width: 40, height: 40, borderRadius: 20, background: color, color: '#000', fontWeight: 700, fontSize: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{label}</span>
       <span style={{ fontSize: 30, color: C.grey, flex: 1 }}>charge</span>
       <span style={{ fontSize: 40, fontWeight: 700, color: C.red }}>−$80</span>
     </div>
@@ -206,7 +210,7 @@ function RowBox({ value, flash = 0, tag, tagColor, at = 4, border = C.blue, glow
       <span style={{ position: 'absolute', left: 22, top: 20, fontFamily: mono, fontSize: 28, color: C.grey }}>balance</span>
       <span style={{ position: 'absolute', left: valueX - x1, top: 6, fontSize: 52, fontWeight: 700, color: valueColor, fontVariantNumeric: 'tabular-nums', transform: 'translateX(-50%)', textShadow: glowText(valueColor, 24, 0.4) }}>
         {value}
-        {tag && <span style={{ fontSize: 26, fontWeight: 600, color: tagColor, marginLeft: 10, verticalAlign: 'middle' }}>{tag}</span>}
+        {tag && <span style={{ fontSize: 28, fontWeight: 600, color: tagColor, marginLeft: 10, verticalAlign: 'middle' }}>{tag}</span>}
       </span>
       {children}
     </div>
@@ -237,7 +241,7 @@ function Race() {
 
   return (
     <>
-      <Title from={0} top={150} size={78}>Two requests, one row</Title>
+      <Title from={9} top={150} size={78}>Two requests, one row</Title>
       <CodeCard
         top={270}
         left={130}
@@ -315,7 +319,7 @@ function Lost() {
 
   return (
     <>
-      <Title from={0} top={150} size={78}>The second write wins</Title>
+      <Title from={9} top={150} size={78}>The second write wins</Title>
       <div style={{ position: 'absolute', top: 300, left: 0, right: 0, textAlign: 'center', fontFamily: mono, fontSize: 30, color: C.grey, opacity: slot }}>wallet.balance</div>
       <div
         style={{
@@ -368,7 +372,7 @@ function Lost() {
         Lost update
       </div>
 
-      <Sfx t={T} name="glitch" at={over - 1} volume={0.42} />
+      <Sfx t={T} name="glitch" at={over - 1} volume={0.3} />
     </>
   )
 }
@@ -392,7 +396,7 @@ function ValueChip({ x, y, rot, color, label, opacity, strike = 0 }: { x: number
 function LedgerRow({ color, l, v }: { color: string; l: string; v: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16, height: 70 }}>
-      <span style={{ width: 40, height: 40, borderRadius: 20, background: color, color: '#000', fontWeight: 700, fontSize: 26, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{l}</span>
+      <span style={{ width: 40, height: 40, borderRadius: 20, background: color, color: '#000', fontWeight: 700, fontSize: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{l}</span>
       <span style={{ fontSize: 44, fontWeight: 600, color: C.red }}>{v}</span>
     </div>
   )
@@ -438,7 +442,7 @@ function Lock() {
 
   return (
     <>
-      <Title from={0} top={150} size={74} color={C.green}>Claude's fix: lock the row</Title>
+      <Title from={9} top={150} size={74} color={C.green}>Claude's fix: lock the row</Title>
       <CodeCard
         top={262}
         from={6}
@@ -496,7 +500,7 @@ function Lock() {
         declined <span style={{ color: C.grey, fontWeight: 500 }}>· $20 &lt; $80</span>
       </Pill>
 
-      <Sfx t={T} name="lock" at={locks - 2} volume={0.55} />
+      <Sfx t={T} name="lock" at={locks - 2} volume={0.38} />
       <Sfx t={T} name="declined" at={declined - 2} volume={0.42} />
     </>
   )
@@ -530,7 +534,7 @@ function Payoff() {
 
   return (
     <>
-      <Title from={0} top={150} size={74}>Plus an idempotency key</Title>
+      <Title from={9} top={150} size={76}>Plus an idempotency key</Title>
       <div style={{ position: 'absolute', inset: 0, opacity: dimDiagram }}>
         <TapCard x={270} y={400} at={idem - 2} title="tap 1" color={A} keyGlow={prog(frame, key - 4, key + 6)} />
         <TapCard x={730} y={400} at={retried - 2} title="tap 2 · retry" color={B} keyGlow={prog(frame, retried, retried + 8)} />
@@ -619,7 +623,7 @@ function TapCard({ x, y, at, title, color, keyGlow }: { x: number; y: number; at
 export function RaceReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.13} duck={0.34} />
+      <ReelAudio t={T} voiceVolume={0.9} musicVolume={0.23} duck={0.5} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="race"><Race /></Scene>
       <Scene t={T} id="lost"><Lost /></Scene>

@@ -1,5 +1,5 @@
 import { Player, type PlayerRef } from '@remotion/player'
-import { useEffect, useImperativeHandle, useLayoutEffect, useRef, useState, useSyncExternalStore, type Ref } from 'react'
+import { memo, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState, useSyncExternalStore, type ComponentType, type Ref } from 'react'
 import type { Reel } from '../data/reels'
 import { COMPOSITIONS, FPS, HEIGHT, WIDTH } from '../reels/registry'
 import { isAudioUnlocked, registerPlayer, subscribeAudioUnlock } from './feed/sound'
@@ -97,25 +97,59 @@ export function ReelPlayer({ reel, active, paused = false, loop = true, muted = 
   }, [frames, onProgress, onEnded, unlocked])
 
   return (
-    <Player
+    <StablePlayer
       key={unlocked ? 'audio' : 'silent'}
-      ref={ref}
+      playerRef={ref}
       component={component}
       inputProps={reel.props ?? EMPTY}
-      durationInFrames={frames}
-      fps={FPS}
-      compositionWidth={WIDTH}
-      compositionHeight={HEIGHT}
+      frames={frames}
       initialFrame={Math.min(lastFrame.current, frames - 1)}
       loop={loop}
-      controls={false}
-      clickToPlay={false}
-      doubleClickToFullscreen={false}
-      spaceKeyToPlayOrPause={false}
       initiallyMuted={!unlocked}
-      numberOfSharedAudioTags={8}
-      acknowledgeRemotionLicense
-      style={{ width: '100%', height: '100%', background: '#000' }}
     />
   )
 }
+
+const PLAYER_STYLE = { width: '100%', height: '100%', background: '#000' }
+
+type StableProps = {
+  playerRef: Ref<PlayerRef>
+  component: ComponentType<Record<string, unknown>>
+  inputProps: Record<string, unknown>
+  frames: number
+  initialFrame: number
+  loop: boolean
+  initiallyMuted: boolean
+}
+
+/*
+ * Re-rendering a Remotion <Player> re-renders the whole composition, a long task for the bigger reels. Play,
+ * pause, mute and seek all go through the ref, so the element itself only needs to render when the reel changes.
+ * initialFrame and initiallyMuted are read on mount only (a remount is keyed above), so they are not compared.
+ */
+const StablePlayer = memo(
+  function StablePlayer({ playerRef, component, inputProps, frames, initialFrame, loop, initiallyMuted }: StableProps) {
+    return (
+      <Player
+        ref={playerRef}
+        component={component}
+        inputProps={inputProps}
+        durationInFrames={frames}
+        fps={FPS}
+        compositionWidth={WIDTH}
+        compositionHeight={HEIGHT}
+        initialFrame={initialFrame}
+        loop={loop}
+        controls={false}
+        clickToPlay={false}
+        doubleClickToFullscreen={false}
+        spaceKeyToPlayOrPause={false}
+        initiallyMuted={initiallyMuted}
+        numberOfSharedAudioTags={8}
+        acknowledgeRemotionLicense
+        style={PLAYER_STYLE}
+      />
+    )
+  },
+  (a, b) => a.playerRef === b.playerRef && a.component === b.component && a.inputProps === b.inputProps && a.frames === b.frames && a.loop === b.loop,
+)

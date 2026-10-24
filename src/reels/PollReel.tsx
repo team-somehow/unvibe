@@ -53,11 +53,13 @@ function Ask() {
   const decision = cue('decision', 98)
   const where = cue('where', 137)
   const sessions = cue('sessions', 169)
-  const token = useSpring(cue('session', 54) - 4, 12)
+  // The fork is on stage before the narration reaches the question, so the poster frame (45) shows the decision;
+  // the token starts hesitating between the two homes when the question is asked
+  const token = useSpring(Math.min(12, cue('session', 54) - 4), 12)
   const ask = ramp(frame, decision - 4, decision + 8)
-  const paths = ramp(frame, where - 6, where + 18)
-  const left = useSpring(sessions - 14, 14)
-  const right = useSpring(sessions - 6, 14)
+  const paths = ramp(frame, Math.min(18, where - 6), Math.min(38, where + 18))
+  const left = useSpring(Math.min(24, sessions - 14), 14)
+  const right = useSpring(Math.min(30, sessions - 6), 14)
   // the session token hesitates between the two homes
   const sway = frame > sessions ? Math.sin((frame - sessions) / 9) : 0
   const tx = 480 + sway * 70
@@ -176,7 +178,7 @@ function Redis() {
       </div>
       <ServiceRow y={830} items={['app', 'postgres']} from={catchW} extra="redis" extraP={extra} extraColor={C.yellow} />
       <div style={{ position: 'absolute', top: 770, left: 90 + 2 * 266, width: 246, textAlign: 'center', fontFamily: sans, fontWeight: 600, fontSize: 30, color: C.yellow, opacity: extra }}>+1 to run</div>
-      <Sfx t={T} name="reveal" at={cue('redis', 35) - 6} volume={0.35} />
+      <Sfx t={T} name="reveal" at={cue('redis', 35) - 6} volume={1} />
       <Sfx t={T} name="pop" at={clean + 4} volume={0.4} />
     </>
   )
@@ -257,7 +259,7 @@ function Postgres() {
           })}
         </div>
       </div>
-      <Sfx t={T} name="reveal" at={cue('postgres', 41) - 6} volume={0.35} />
+      <Sfx t={T} name="reveal" at={cue('postgres', 41) - 6} volume={1} />
     </>
   )
 }
@@ -303,7 +305,7 @@ function Vote() {
       <svg width={80} height={70} viewBox="0 0 80 70" style={{ position: 'absolute', left: 440, top: 850 + bounce, opacity: arrow * (1 - ramp(frame, durationInFrames - 14, durationInFrames)) }}>
         <path d="M10 10l30 24 30-24M10 36l30 24 30-24" fill="none" stroke={C.yellow} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <Sfx t={T} name="ding" at={tap - 2} volume={0.35} />
+      <Sfx t={T} name="ding" at={tap - 2} volume={0.9} />
     </>
   )
 }
@@ -311,7 +313,7 @@ function Vote() {
 export function PollReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.17} duck={0.45} />
+      <ReelAudio t={T} voiceVolume={1.24} musicVolume={0.26} duck={0.45} />
       <Waiting />
       <Scene t={T} id="ask"><Ask /></Scene>
       <Scene t={T} id="redis"><Redis /></Scene>

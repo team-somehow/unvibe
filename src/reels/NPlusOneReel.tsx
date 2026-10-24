@@ -42,14 +42,15 @@ function Hook() {
   const GX = 20
   const GY = 14
   const X0 = 190
-  const Y0 = 680
+  const Y0 = 690
 
   return (
     <>
-      <div style={{ position: 'absolute', top: 170, left: 0, right: 0, textAlign: 'center', fontFamily: mono, fontSize: 34, color: C.grey, opacity: prog(frame, 0, 12) }}>
+      <Say from={2} top={150} size={76}>Why was the feed so slow?</Say>
+      <div style={{ position: 'absolute', top: 258, left: 0, right: 0, textAlign: 'center', fontFamily: mono, fontSize: 32, color: C.grey, opacity: prog(frame, 6, 18) }}>
         GET <span style={{ color: C.white }}>/api/feed</span>
       </div>
-      <div style={{ position: 'absolute', top: 250, left: 0, right: 0, height: 260, overflow: 'hidden', opacity: counterIn }}>
+      <div style={{ position: 'absolute', top: 296, left: 0, right: 0, height: 260, overflow: 'hidden', opacity: counterIn }}>
         <div style={{ position: 'absolute', left: 0, right: 0, top: -swap * 260, textAlign: 'center', fontFamily: sans, fontWeight: 600, fontSize: 240, lineHeight: '260px', letterSpacing: -8, color: numColor, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 90px ${rgba(numColor, 0.35)}`, opacity: 1 - swap }}>
           {fired}
         </div>
@@ -57,10 +58,10 @@ function Hook() {
           2
         </div>
       </div>
-      <div style={{ position: 'absolute', top: 520, left: 0, right: 0, textAlign: 'center', fontFamily: sans, fontSize: 40, color: C.white, opacity: prog(frame, fiftyOne + 20, fiftyOne + 34) }}>
-        database queries
+      <div style={{ position: 'absolute', top: 552, left: 0, right: 0, textAlign: 'center', fontFamily: sans, fontSize: 38, color: C.white, opacity: counterIn }}>
+        database {fired === 1 && swap < 0.5 ? 'query' : 'queries'}
       </div>
-      <Tag color={C.grey} style={{ top: 622, left: X0, opacity: prog(frame, start, start + 10) }}>50 posts on the feed</Tag>
+      <Tag color={C.grey} style={{ top: 640, left: X0, opacity: prog(frame, start, start + 10) }}>50 posts on the feed</Tag>
       <Svg>
         <GlowDefs />
         {Array.from({ length: 50 }).map((_, i) => {
@@ -84,14 +85,14 @@ function Hook() {
           )
         })}
       </Svg>
-      <div style={{ position: 'absolute', top: 1340, left: 70, right: 190, textAlign: 'center', fontFamily: sans, fontSize: 34, color: C.grey, opacity: prog(frame, fiftyOne + 30, fiftyOne + 44) * (1 - swap) }}>
+      <div style={{ position: 'absolute', top: 1356, left: 70, right: 190, textAlign: 'center', fontFamily: sans, fontSize: 34, color: C.grey, opacity: prog(frame, fiftyOne + 30, fiftyOne + 44) * (1 - swap) }}>
         1 for the posts, <span style={{ color: C.yellow }}>+1 for each author</span>
       </div>
-      <div style={{ position: 'absolute', top: 1340, left: 70, right: 190, textAlign: 'center', fontFamily: sans, fontSize: 34, color: C.green, opacity: swap }}>
+      <div style={{ position: 'absolute', top: 1356, left: 70, right: 190, textAlign: 'center', fontFamily: sans, fontSize: 34, color: C.green, opacity: swap }}>
         same feed, same authors
       </div>
-      <Sfx t={T} name="flurry" at={start} volume={0.32} />
-      <Sfx t={T} name="snap" at={down - 2} volume={0.55} />
+      <Sfx t={T} name="flurry" at={start} volume={0.8} />
+      <Sfx t={T} name="snap" at={down - 2} volume={0.85} />
     </>
   )
 }
@@ -180,6 +181,7 @@ function Loop() {
   return (
     <>
       <CodeCard
+        opacity={prog(frame, 6, 16)}
         y={150}
         size={30}
         title="feed.ts"
@@ -235,7 +237,7 @@ function Loop() {
           )
         })}
       </div>
-      <Sfx t={T} name="boing" at={who + 2} volume={0.28} />
+      <Sfx t={T} name="boing" at={who + 2} volume={0.65} />
     </>
   )
 }
@@ -279,7 +281,7 @@ function Cost() {
 
   return (
     <>
-      <Say from={0} top={170} size={68}>Every query is a round trip</Say>
+      <Say from={9} top={150} size={72}>Every query is a round trip</Say>
       <Svg>
         <GlowDefs />
         <g transform={`translate(${cx} ${cy}) scale(${sc}) translate(-540 -780)`}>
@@ -346,7 +348,7 @@ function Cost() {
         </div>
         <div style={{ marginTop: 10, fontFamily: serif, fontStyle: 'italic', fontSize: 52, color: C.red, opacity: red }}>of pure waiting</div>
       </div>
-      <Sfx t={T} name="error" at={waiting - 2} volume={0.22} />
+      <Sfx t={T} name="error" at={waiting - 2} volume={0.13} />
     </>
   )
 }
@@ -373,11 +375,13 @@ function Fix() {
   const goBack = prog(frame, query + 4, two - 2)
   const collapse = prog(frame, two - 4, two + 16)
   const sameIn = prog(frame, same - 4, same + 10)
+  // the before/after numbers wait for the cross-dissolve, so they never stack on the previous scene's 408 ms
+  const lowerIn = prog(frame, 8, 20)
 
   const chipRowW = 640
   return (
     <>
-      <Say from={0} top={160} size={72}>
+      <Say from={9} top={150} size={72}>
         Claude's fix: <span style={{ color: C.green }}>batch it</span>
       </Say>
       <CodeCard
@@ -421,6 +425,7 @@ function Fix() {
         <text x={525} y={685} textAnchor="middle" fill={C.yellow} opacity={goOut > 0 && goOut < 1 ? 1 : 0} style={{ fontFamily: sans, fontSize: 30, fontWeight: 600 }}>1 query</text>
         <text x={525} y={817} textAnchor="middle" fill={C.green} opacity={goBack > 0 && goBack < 1 ? 1 : 0} style={{ fontFamily: sans, fontSize: 30, fontWeight: 600 }}>50 authors</text>
         {/* timeline strip: 51 slivers collapse into 2 */}
+        <g opacity={lowerIn}>
         <text x={110} y={965} fill={C.grey} style={{ fontFamily: sans, fontSize: 28, fontWeight: 600, letterSpacing: 3 }}>TIME SPENT ON QUERIES</text>
         {Array.from({ length: BARS }).map((_, i) => {
           const from = 110 + i * 8 * MS_PX
@@ -432,14 +437,15 @@ function Fix() {
         <text x={110 + 2 * 8 * MS_PX + 18 + (1 - collapse) * (BARS - 2) * 8 * MS_PX} y={1025} fill={collapse > 0.5 ? C.green : C.red} style={{ fontFamily: mono, fontSize: 30, fontWeight: 600 }} opacity={collapse > 0.02 && collapse < 0.98 ? 0 : 1}>
           {collapse > 0.5 ? '16 ms' : ''}
         </text>
+        </g>
       </Svg>
-      <div style={{ position: 'absolute', top: 1080, left: 90, width: 400, textAlign: 'center', fontFamily: sans }}>
+      <div style={{ position: 'absolute', top: 1080, left: 90, width: 400, textAlign: 'center', fontFamily: sans, opacity: lowerIn }}>
         <div style={{ fontSize: 140, fontWeight: 600, lineHeight: 1, letterSpacing: -4, color: collapse > 0.5 ? C.green : C.red, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 60px ${rgba(collapse > 0.5 ? C.green : C.red, 0.35)}` }}>
           {collapse > 0.5 ? 2 : 51}
         </div>
         <div style={{ fontSize: 34, color: C.grey, marginTop: 12 }}>round trips</div>
       </div>
-      <div style={{ position: 'absolute', top: 1080, left: 490, width: 400, textAlign: 'center', fontFamily: sans }}>
+      <div style={{ position: 'absolute', top: 1080, left: 490, width: 400, textAlign: 'center', fontFamily: sans, opacity: lowerIn }}>
         <div style={{ fontSize: 140, fontWeight: 600, lineHeight: 1, letterSpacing: -4, color: collapse > 0.5 ? C.green : C.red, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 60px ${rgba(collapse > 0.5 ? C.green : C.red, 0.35)}` }}>
           {collapse > 0.5 ? 16 : 408}
           <span style={{ fontSize: 56, marginLeft: 8 }}>ms</span>
@@ -474,7 +480,7 @@ function Takeaway() {
   const circ = 2 * Math.PI * R
   return (
     <>
-      <Say from={whenever - 6} top={180} size={76}>A query inside a loop?</Say>
+      <Say from={Math.max(9, whenever - 6)} top={150} size={76}>A query inside a loop?</Say>
       <Svg>
         <GlowDefs />
         {/* the loop: a spinning circular arrow that unrolls into one straight arrow */}
@@ -506,7 +512,7 @@ function Takeaway() {
       <div style={{ position: 'absolute', top: 1110, left: 70, right: 70, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 120, lineHeight: 1, color: C.green, opacity: Math.min(1, bIn * 1.3), transform: `scale(${0.8 + 0.2 * bIn})`, textShadow: `0 0 70px ${rgba(C.green, 0.45)}` }}>
         Batch it.
       </div>
-      <Sfx t={T} name="snap" at={batch - 2} volume={0.5} />
+      <Sfx t={T} name="snap" at={batch - 2} volume={0.65} />
     </>
   )
 }
@@ -514,7 +520,7 @@ function Takeaway() {
 export function NPlusOneReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.16} duck={0.35} />
+      <ReelAudio t={T} voiceVolume={0.93} musicVolume={0.2} duck={0.5} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="loop"><Loop /></Scene>
       <Scene t={T} id="cost"><Cost /></Scene>

@@ -37,10 +37,12 @@ function Hook() {
   const sounds = useCue('sounds', 154)
   const isnt = useCue('isn', 192)
 
-  const pw = useSpr(passwords - 8, 13)
-  const box = useSpr(hashing - 2, 13)
+  // The pipeline builds before the narration reaches it, so the feed's poster frame (45) shows password -> SHA-256 -> hash
+  const pwAt = Math.min(14, passwords - 8)
+  const pw = useSpr(pwAt, 13)
+  const box = useSpr(Math.min(20, hashing - 2), 13)
   const shaGlow = interpolate(frame, [sha - 4, sha + 6, sha + 40], [0, 1, 0.45], clamp)
-  const hashAt = passwords + 18
+  const hashAt = Math.min(30, passwords + 18)
   const hashP = interpolate(frame, [hashAt, hashAt + 22], [0, 1], clamp)
   const safe = useSpr(sounds - 4, 12)
   const broken = frame >= isnt - 2
@@ -65,7 +67,7 @@ function Hook() {
       <div style={{ position: 'absolute', top: 568, left: 70, width: 820, display: 'flex', justifyContent: 'center', opacity: Math.min(1, pw), transform: `translateY(${(1 - pw) * -20}px)` }}>
         <Pill color={C.white} style={{ fontFamily: mono, fontWeight: 500, fontSize: 46, padding: '10px 36px' }}>hunter2</Pill>
       </div>
-      <Arrow x1={480} y1={658} x2={480} y2={720} at={passwords + 2} dur={10} color={C.grey} />
+      <Arrow x1={480} y1={658} x2={480} y2={720} at={pwAt + 6} dur={10} color={C.grey} />
       <div
         style={{
           position: 'absolute', top: 730, left: 480 - 210, width: 420, height: 116, borderRadius: 24, border: `3px solid ${broken ? mixColor(FAST, C.red, red) : FAST}`,
@@ -372,7 +374,7 @@ function Twins() {
       <Arrow x1={XL} y1={808} x2={XL} y2={876} at={table - 4} dur={8} color={C.yellow} head={12} dash="8 10" />
       <Arrow x1={XR} y1={808} x2={XR} y2={876} at={table - 4} dur={8} color={C.yellow} head={12} dash="8 10" />
       <LookupTable p={tableP} at={pre - 4} matchP={matchP} crackP={crackP} dead={0} />
-      <Sfx t={T} name="impact" at={cracks} volume={0.5} />
+      <Sfx t={T} name="impact" at={cracks} volume={0.36} />
     </>
   )
 }
@@ -477,7 +479,8 @@ function Cost() {
   const sweep = interpolate(frame, [work - 4, twelve + 4], [0, 1], { ...clamp, easing: Easing.bezier(0.3, 0, 0.1, 1) })
   const v = lerp(4, 12, sweep)
   const rounds = useP(twelve + 4, 12)
-  const counter = useSpr(gpu - 8, 14)
+  // the 20-billion counter carries over from the GPU scene straight away, then falls when the narration gets there
+  const counter = useSpr(Math.min(34, gpu - 8), 14)
   const fall = interpolate(frame, [drops, thousand + 4], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) })
   const value = Math.pow(10, lerp(Math.log10(2e10), 3, fall))
   const done = frame >= thousand + 4
@@ -494,7 +497,7 @@ function Cost() {
           <div style={{ fontFamily: sans, fontWeight: 700, fontSize: 92, lineHeight: 1.05, color: mixColor(C.red, C.green, (v - 4) / 10), fontVariantNumeric: 'tabular-nums' }}>{Math.round(v)}</div>
         </div>
         <div style={{ position: 'absolute', top: 694, left: 70, width: 940, textAlign: 'center', fontFamily: sans, fontSize: 36, color: C.white, opacity: rounds }}>
-          2<sup style={{ fontSize: 22 }}>12</sup> = <span style={{ color: SLOW }}>4,096</span> rounds per hash
+          2<sup style={{ fontSize: 26 }}>12</sup> = <span style={{ color: SLOW }}>4,096</span> rounds per hash
         </div>
       </div>
       <div style={{ position: 'absolute', top: 828, left: 70, width: 820, textAlign: 'center', opacity: Math.min(1, counter), transform: `translateY(${(1 - Math.min(1, counter)) * 20}px)` }}>
@@ -517,7 +520,7 @@ function Cost() {
       <Pop at={thousand - 8} rise={10} style={{ top: 1196, left: 70, right: 190, textAlign: 'center', fontFamily: sans, fontWeight: 600, fontSize: 38, color: SLOW }}>
         About twenty million times slower
       </Pop>
-      <Sfx t={T} name="dial" at={work - 4} volume={0.55} />
+      <Sfx t={T} name="dial" at={work - 4} volume={0.68} />
       <Sfx t={T} name="success" at={thousand + 4} volume={0.3} />
     </>
   )
@@ -543,17 +546,17 @@ function Takeaway() {
   )
   return (
     <>
-      <div style={{ position: 'absolute', top: 210, left: 70, right: 70, height: 120 }}>
+      <div style={{ position: 'absolute', top: 270, left: 70, right: 70, height: 120 }}>
         <SerifLine at={fast - 2} size={100} style={{ left: 0, right: 0, textAlign: 'center' }}>
           <span style={{ color: C.red, textShadow: textGlow(C.red, 0.6) }}>Fast</span> is the enemy.
         </SerifLine>
       </div>
-      <div style={{ position: 'absolute', top: 400, left: 70, right: 70, display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ position: 'absolute', top: 470, left: 70, right: 70, display: 'flex', justifyContent: 'space-between' }}>
         {card(a, SALT, <Sparkles size={72} color={SALT} strokeWidth={1.8} />, 'Salt it', 'unique hash per user')}
         {card(b, SLOW, <Gauge size={72} color={SLOW} strokeWidth={1.8} />, 'Slow it down', 'expensive to guess')}
       </div>
       <CodeCard
-        y={850}
+        y={930}
         size={30}
         at={fast + 22}
         tool="Update(src/auth/signup.ts)"
@@ -569,7 +572,7 @@ function Takeaway() {
 export function HashingReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.24} />
+      <ReelAudio t={T} voiceVolume={1.93} musicVolume={0.19} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="gpu"><Gpu /></Scene>
       <Scene t={T} id="twins"><Twins /></Scene>

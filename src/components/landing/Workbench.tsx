@@ -69,6 +69,49 @@ function SoundButton({ on, hint, onToggle }: { on: boolean; hint: boolean; onTog
   )
 }
 
+/**
+ * Suggested questions under the reel. Only the chips that fit on one row are shown, so nothing is ever cut off;
+ * asking one makes room for the next. Where the row is a hover popover (short desktop screens) they wrap instead.
+ */
+function Chips({ chips, onAsk }: { chips: string[]; onAsk: (q: string) => void }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [fits, setFits] = useState(chips.length)
+  const key = chips.join('|')
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const measure = () => {
+      const kids = [...el.children] as HTMLElement[]
+      let n = 0
+      for (const k of kids) {
+        if (k.offsetTop + k.offsetHeight > el.clientHeight + 1) break
+        n += 1
+      }
+      setFits(Math.max(1, n))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [key])
+  return (
+    <div ref={ref} className="ask-chips mb-2 flex h-9 flex-wrap gap-2 overflow-hidden empty:pointer-events-none">
+      {chips.map((c, i) => (
+        <button
+          key={c}
+          type="button"
+          onClick={() => onAsk(c)}
+          aria-hidden={i >= fits || undefined}
+          tabIndex={i >= fits ? -1 : undefined}
+          className={`h-9 max-w-full shrink-0 truncate rounded-full bg-night-2 px-3 text-[13px] whitespace-nowrap sm:px-3.5 sm:text-[13.5px] text-chalk ring-1 ring-line transition hover:bg-[#12294a] hover:ring-[#2a4a70] active:scale-[0.97] ${i >= fits ? 'invisible' : ''}`}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 function RoundButton({ label, onClick, children, disabled }: { label: string; onClick: () => void; children: ReactNode; disabled?: boolean }) {
   return (
     <button
@@ -86,6 +129,8 @@ function RoundButton({ label, onClick, children, disabled }: { label: string; on
 
 export function Workbench({ suspended }: { suspended: boolean }) {
   const reduce = !!useReducedMotion()
+  // Tablet and up show the whole session beside the reel; phones show its current line above the reel
+  const wide = useMedia('(min-width: 768px)')
   const desktop = useMedia('(min-width: 1024px)')
   const coarse = useMedia('(pointer: coarse)')
   const sound = useLandingSound()
@@ -141,10 +186,10 @@ export function Workbench({ suspended }: { suspended: boolean }) {
 
   const sourceFor = useCallback(
     (k: ReelKind): HTMLElement | null => {
-      if (desktop) return wellRef.current?.querySelector<HTMLElement>(`[data-reel="${k}"]`) ?? null
+      if (wide) return wellRef.current?.querySelector<HTMLElement>(`[data-reel="${k}"]`) ?? null
       return stripLineRef.current
     },
-    [desktop],
+    [wide],
   )
 
   /** Put reel `next` on stage. With `fly`, its transcript line lifts off and becomes the reel's title. */
@@ -440,33 +485,34 @@ export function Workbench({ suspended }: { suspended: boolean }) {
   const showPoll = current?.kind === 'poll' && started && !flying
 
   return (
-    <section aria-labelledby="hero-title" className="mx-auto grid w-full max-w-[1360px] min-[1800px]:max-w-[1600px] gap-x-14 px-4 pt-6 pb-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:px-10 lg:pt-[clamp(12px,3svh,40px)] lg:pb-20 xl:gap-x-20">
-      <div className="flex min-w-0 flex-col lg:h-0 lg:min-h-full">
-        <h1 id="hero-title" className="hero-title font-serif italic">
+    <section aria-labelledby="hero-title" className="mx-auto grid w-full max-w-[1360px] min-[1800px]:max-w-[1600px] px-4 pt-6 pb-8 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:gap-x-6 lg:px-10 lg:pt-[clamp(12px,3svh,40px)] lg:pb-20 lg:gap-x-14 xl:gap-x-20">
+      {/* On tablets this column dissolves so the headline spans the page and the session sits beside the reel */}
+      <div className="flex min-w-0 flex-col md:contents lg:flex lg:h-0 lg:min-h-full">
+        <h1 id="hero-title" className="hero-title font-serif italic md:col-span-2">
           <span className="block">You shipped it.</span>
           <span className="block">Do you understand it?</span>
         </h1>
-        <p className="mt-4 max-w-[34em] text-[17px] leading-[1.55] text-dim sm:text-[18px] lg:mt-5 lg:text-[clamp(17px,1.25vw,20px)]">
-          Learnagram reads your Claude Code sessions and turns the changes that matter into short explainer reels.
+        <p className="mt-4 max-w-[36em] text-[17px] leading-[1.55] text-pretty text-dim sm:text-[18px] md:col-span-2 lg:mt-5 lg:max-w-[38em] short:mt-3 lg:text-[clamp(17px,1.25vw,20px)]">
+          Your agent writes code faster than you can review it. Learnagram reads your Claude Code sessions and turns the changes that matter into short explainer reels.
         </p>
 
-        <div ref={wellRef} className="mt-7 hidden min-h-0 flex-1 flex-col rounded-[14px] bg-ink ring-1 ring-line/70 lg:flex xl:mt-8">
-          <div className="flex items-baseline justify-between gap-4 px-6 pt-4 pb-2 text-[13px] text-dim">
+        <div ref={wellRef} className="mt-7 hidden min-h-0 min-w-0 flex-1 flex-col rounded-[14px] bg-ink ring-1 ring-line/70 md:flex md:h-0 md:min-h-full lg:h-auto lg:min-h-0 xl:mt-8 short:mt-5">
+          <div className="flex items-baseline justify-between gap-4 px-6 pt-4 pb-2 text-[13px] text-dim short:pt-3">
             <span className="font-mono">~/{REPO}</span>
             <span>Claude Code, 2 hours ago</span>
           </div>
           <div data-scroll className="well-lines min-h-0 flex-1 overflow-y-auto px-6 pb-3 font-mono">
-            <Transcript lines={lines} active={activeKind} printed={vote ? lines.length : printed} sweepKey={switchId} onPick={(k) => pick(k)} hintId="line-hint" />
+            <Transcript lines={lines} active={activeKind} printed={vote ? lines.length : printed} sweepKey={switchId} onPick={(k) => pick(k)} hintId="line-hint" wrap={!desktop} />
           </div>
-          <p id="line-hint" className="px-6 pt-2 pb-4 text-[14px] text-dim">
+          <p id="line-hint" className="px-6 pt-2 pb-4 text-[14px] text-dim short:pb-3">
             {hintText}
           </p>
         </div>
       </div>
 
       <div className="mt-7 flex min-w-0 flex-col items-start lg:mt-0">
-        {/* Phone and tablet: the line on stage, with the whole session one tap away */}
-        <div className="mb-3 w-full max-w-[420px] rounded-[14px] bg-ink px-4 pt-3 pb-3.5 ring-1 ring-line/70 lg:hidden">
+        {/* Phone: the line on stage, with the whole session one tap away */}
+        <div className="mb-3 w-full max-w-[420px] rounded-[14px] bg-ink px-4 pt-3 pb-3.5 ring-1 ring-line/70 md:hidden">
           <div className="flex items-center justify-between gap-3 text-[13px] text-dim">
             <span className="truncate font-mono">~/{REPO}</span>
             <button type="button" onClick={() => setSheet(true)} className="-my-2 -mr-2 h-11 shrink-0 rounded-lg px-2 font-medium text-mblue underline-offset-4 hover:underline">
@@ -477,11 +523,11 @@ export function Workbench({ suspended }: { suspended: boolean }) {
             <span aria-hidden className="w-[2ch] shrink-0">
               ⏺
             </span>
-            <span className="min-w-0 [overflow-wrap:anywhere]"><Breakable text={atEnd ? 'Done. 5 files changed, 1 migration added.' : (stripLine?.text ?? '')} /></span>
+            <span className="min-w-0 [overflow-wrap:anywhere]"><Breakable text={atEnd ? lines[lines.length - 1].text : (stripLine?.text ?? '')} /></span>
           </p>
         </div>
 
-        <div className="flex w-full items-center gap-4 lg:w-auto">
+        <div className="flex w-full items-center gap-4 md:w-auto">
           <div
             role="region"
             aria-roledescription="carousel"
@@ -726,20 +772,8 @@ export function Workbench({ suspended }: { suspended: boolean }) {
           }}
           className="ask-bar group/ask relative mt-3 w-full max-w-[420px] lg:max-w-none"
         >
-          {current && !atEnd && current.chips.some((c) => !asked.includes(c)) && (
-            <div className="ask-chips no-scrollbar -mx-4 mb-2 flex gap-2 overflow-x-auto px-4 lg:mx-0 lg:px-0 lg:[mask-image:linear-gradient(to_right,#000_82%,transparent)]">
-              {current.chips.filter((c) => !asked.includes(c)).map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => ask(c)}
-                  className="h-9 shrink-0 rounded-full bg-night-2 px-3.5 text-[13.5px] whitespace-nowrap text-chalk ring-1 ring-line transition hover:ring-[#2a4a70] active:scale-[0.97]"
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* always rendered, so the row keeps its height (and the session beside it keeps its size) when it empties */}
+          <Chips chips={current && !atEnd ? current.chips.filter((c) => !asked.includes(c)) : []} onAsk={ask} />
           <div className="flex h-12 items-center gap-2 rounded-full bg-night-2 pr-1.5 pl-2 ring-1 ring-line focus-within:ring-mblue">
             <Avatar person={CLAUDE} size={30} />
             <label htmlFor="ask" className="sr-only">

@@ -2,7 +2,7 @@ import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion'
 import { Captions, ReelAudio, Scene, Sfx, buildTimeline, useCue, useScene, type Manifest } from './audio'
 import manifest from './audio/index.json'
 import { CLAMP, EASE, EASE_OUT, GlowDefs, Say, Svg, Tag, fmt, lerp, prog, rgba, springAt } from './kit-databases'
-import { C, Fade, Stage, TranscriptCard, mono, sans, serif } from './primitives'
+import { C, Fade, Stage, mono, sans, serif } from './primitives'
 import script from './scripts/index.json'
 
 const T = buildTimeline(script, manifest as unknown as Manifest)
@@ -13,49 +13,81 @@ const TARGET = 9
 
 // ---------------------------------------------------------------------------------------------
 // 1. Hook: one migration line, 1.8 s → 4 ms
+// The migration Claude wrote, styled like a transcript card but typed fast enough to read on the poster frame
+const MIGRATION = ['CREATE INDEX idx_orders_user_id', '  ON orders (user_id);']
+
+function MigrationCard({ hl }: { hl: number }) {
+  const frame = useCurrentFrame()
+  const { fps } = useVideoConfig()
+  const pop = springAt(frame, 4, fps, 16)
+  let start = 12
+  return (
+    <div
+      style={{
+        position: 'absolute', top: 390, left: 70, right: 70, opacity: pop, transform: `translateY(${(1 - pop) * 40}px) scale(${0.96 + pop * 0.04})`,
+        background: '#0A0E13', border: `2px solid ${C.dim}`, borderRadius: 30, padding: '30px 34px', fontFamily: mono, fontSize: 31, lineHeight: 1.55,
+      }}
+    >
+      <div style={{ color: C.white, marginBottom: 12, whiteSpace: 'nowrap' }}>
+        <span style={{ color: C.green }}>⏺</span> Update(<span style={{ color: C.grey }}>migrations/0042_orders_index.sql</span>)
+      </div>
+      {/* "here's why": the new lines glow */}
+      <div style={{ borderRadius: 12, boxShadow: `0 0 0 3px ${rgba(C.yellow, hl)}, 0 0 40px ${rgba(C.yellow, 0.35 * hl)}`, background: rgba(C.green, 0.1) }}>
+        {MIGRATION.map((t, i) => {
+          const s = start
+          start += Math.ceil(t.length / 2.6) + 2
+          const n = Math.max(0, Math.min(t.length, Math.floor((frame - s) * 2.6)))
+          return (
+            <div key={i} style={{ color: C.green, padding: '0 12px', whiteSpace: 'pre' }}>
+              <span style={{ color: rgba(C.green, 0.7) }}>+ </span>
+              {t.slice(0, n)}
+              {n > 0 && n < t.length && <span style={{ color: C.blue }}>▍</span>}
+              &nbsp;
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function Hook() {
   const frame = useCurrentFrame()
   const { fps } = useVideoConfig()
-  const card = useCue('migration', 40)
-  const orders = useCue('orders', 97)
-  const went = useCue('went', 118)
   const secs = useCue('seconds', 153)
   const four = useCue('four', 176)
   const why = useCue('why', 243)
   const drop = prog(frame, four - 6, four + 10, EASE)
-  const fill = prog(frame, went - 6, secs + 4, (t) => 1 - Math.pow(1 - t, 1.6))
-  const ms = drop > 0 ? lerp(1800, 4, drop) : 1800 * fill
-  const p = springAt(frame, orders - 8, fps, 15)
+  // the endpoint is slow from the first frame (so the poster reads "before"), then drops on "four"
+  const ms = lerp(1800, 4, drop)
+  const p = springAt(frame, 16, fps, 15)
+  const pulse = interpolate(frame, [secs - 4, secs + 4, secs + 20], [0, 1, 0], CLAMP)
   const fast = drop > 0.5
   const color = fast ? C.green : C.red
   const hl = prog(frame, why - 6, why + 8)
+  const faster = springAt(frame, four + 10, fps, 14)
   const BAR_W = 760
   return (
     <>
-      <Say from={4} top={180} size={76}>Why did Claude add this index?</Say>
-      <TranscriptCard
-        from={card - 10}
-        top={430}
-        tool="Update(migrations/0042_orders_index.sql)"
-        lines={[
-          { t: '+ CREATE INDEX idx_orders_user_id', kind: 'add' },
-          { t: '+   ON orders (user_id);', kind: 'add' },
-        ]}
-      />
-      {/* "here's why": the new line glows */}
-      <div style={{ position: 'absolute', top: 520, left: 96, width: 888, height: 112, borderRadius: 14, border: `3px solid ${C.yellow}`, opacity: hl, boxShadow: `0 0 40px ${rgba(C.yellow, 0.35)}` }} />
-      <div style={{ position: 'absolute', top: 820, left: 110, width: BAR_W, opacity: p, transform: `translateY(${(1 - p) * 30}px)` }}>
-        <div style={{ fontFamily: mono, fontSize: 30, color: C.grey, textAlign: 'center' }}>GET /users/42/orders</div>
-        <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 168, lineHeight: 1.1, letterSpacing: -5, textAlign: 'center', color, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 70px ${rgba(color, 0.35)}` }}>
+      <Say from={4} top={150} size={76}>Why did Claude add this index?</Say>
+      <MigrationCard hl={hl} />
+      <div style={{ position: 'absolute', top: 730, left: 110, width: BAR_W, opacity: p, transform: `translateY(${(1 - p) * 30}px)` }}>
+        <div style={{ fontFamily: mono, fontSize: 30, color: C.grey, textAlign: 'center' }}>
+          GET <span style={{ color: C.white }}>/users/42/orders</span>
+        </div>
+        <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 176, lineHeight: 1.1, letterSpacing: -5, textAlign: 'center', color, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 ${70 + 60 * pulse}px ${rgba(color, 0.35 + 0.3 * pulse)}`, transform: `scale(${1 + 0.05 * pulse})` }}>
           {ms >= 1000 ? `${(ms / 1000).toFixed(1)}s` : `${Math.round(ms)}ms`}
         </div>
         <div style={{ position: 'relative', height: 36, marginTop: 20, borderRadius: 18, background: rgba(C.white, 0.06), border: `2px solid ${C.dim}` }}>
-          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.max(10, (ms / 2000) * BAR_W), borderRadius: 18, background: color, boxShadow: `0 0 40px ${rgba(color, 0.5)}` }} />
+          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.max(12, (ms / 2000) * BAR_W), borderRadius: 18, background: color, boxShadow: `0 0 40px ${rgba(color, 0.5)}` }} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 12, fontFamily: mono, fontSize: 28, color: C.grey }}>
           <span>0</span>
           <span>2 s</span>
         </div>
+      </div>
+      <div style={{ position: 'absolute', top: 1170, left: 70, right: 190, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 64, color: C.green, opacity: Math.min(1, faster * 1.4), transform: `translateY(${(1 - faster) * 24}px)`, textShadow: `0 0 40px ${rgba(C.green, 0.35)}` }}>
+        450× faster
       </div>
       <Sfx t={T} name="whoosh" at={four - 8} volume={0.4} />
       <Sfx t={T} name="success" at={four + 8} volume={0.35} />
@@ -73,12 +105,12 @@ function FullScan() {
   const found = frame >= end + 2
   return (
     <>
-      <Say from={0} top={160} size={66} color={C.yellow}>
+      <Say from={9} top={150} size={66} color={C.yellow}>
         Without an index,
         <br />
         Postgres checks every row
       </Say>
-      <div style={{ position: 'absolute', top: 400, left: 110, width: 570, display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ position: 'absolute', top: 400, left: 110, width: 570, display: 'flex', flexDirection: 'column', gap: 14, opacity: prog(frame, 6, 18) }}>
         {Array.from({ length: ROWS }).map((_, i) => {
           const active = i === idx && !found && frame >= start
           const hit = found && i === TARGET
@@ -102,7 +134,7 @@ function FullScan() {
           )
         })}
       </div>
-      <div style={{ position: 'absolute', top: 640, left: 700, width: 190, textAlign: 'center', fontFamily: sans }}>
+      <div style={{ position: 'absolute', top: 640, left: 700, width: 190, textAlign: 'center', fontFamily: sans, opacity: prog(frame, 6, 18) }}>
         <div style={{ fontSize: 120, fontWeight: 600, color: found ? C.green : C.yellow, fontVariantNumeric: 'tabular-nums' }}>{frame < start ? 0 : Math.min(idx + 1, TARGET + 1)}</div>
         <div style={{ fontSize: 30, color: C.grey }}>rows checked</div>
       </div>
@@ -156,7 +188,7 @@ function TreeWalk() {
   const ROW_Y = 930
   return (
     <>
-      <Say from={0} top={170} size={66} color={C.blue}>With the index, it walks a tree</Say>
+      <Say from={9} top={150} size={70} color={C.blue}>With the index, it walks a tree</Say>
       <Svg>
         <GlowDefs />
         {EDGES.map(([f, t], i) => {
@@ -215,7 +247,7 @@ function TreeWalk() {
         <span style={{ fontSize: 120, fontWeight: 600, color: found ? C.green : C.yellow, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 50px ${rgba(found ? C.green : C.yellow, 0.35)}` }}>{Math.max(1, step + 1)}</span>
         <span style={{ fontSize: 36, color: C.grey, marginLeft: 22 }}>{step < 1 ? 'step' : 'steps'} to find user 42</span>
       </div>
-      <Sfx t={T} name="tick" at={s0} volume={0.5} />
+      <Sfx t={T} name="tick" at={s0} volume={0.85} />
       <Sfx t={T} name="success" at={s3} volume={0.35} />
     </>
   )
@@ -241,7 +273,8 @@ function Payoff() {
   const million = useCue('million', 96)
   const twenty = useCue('twenty', 136)
   const million2 = Math.max(twenty + 30, useCue('million.', 186))
-  const panelsIn = prog(frame, 0, 16, EASE_OUT)
+  // waits for the cross-dissolve so the tree scene's step counter never doubles with these
+  const panelsIn = prog(frame, 8, 24, EASE_OUT)
   // the table grows to a million rows, then the scan reads through it
   const grow = prog(frame, million - 6, million + 14)
   const rows = Math.round(Math.exp(lerp(Math.log(12), Math.log(1_000_000), grow)))
@@ -261,8 +294,8 @@ function Payoff() {
   const stripes = Math.min(140, Math.floor(COL.h / pitch) + 2)
   return (
     <>
-      <Say from={0} out={at - 10} top={190} size={72}>Three steps vs. the whole table</Say>
-      <Say from={at - 4} top={190} size={72}>At a million orders</Say>
+      <Say from={9} out={at - 10} top={150} size={72}>Three steps vs. the whole table</Say>
+      <Say from={at - 4} top={150} size={72}>At a million orders</Say>
       <Tag color={C.red} style={{ top: 340, left: COL.x, width: COL.w, textAlign: 'center', opacity: panelsIn }}>Full scan</Tag>
       <Tag color={C.green} style={{ top: 340, left: FAN.cx - 200, width: 400, textAlign: 'center', opacity: panelsIn }}>Index</Tag>
       <Svg>
@@ -321,23 +354,23 @@ function Payoff() {
           </g>
         </g>
       </Svg>
-      <div style={{ position: 'absolute', top: FAN.bottom + 40, left: FAN.cx - 200, width: 400, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 34, color: C.white, opacity: prog(frame, twenty + 4, twenty + 16) }}>
-        2<sup style={{ fontSize: 22 }}>20</sup> ≈ a million leaves
+      <div style={{ position: 'absolute', top: FAN.bottom + 34, left: FAN.cx - 190, width: 380, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 40, color: C.white, opacity: prog(frame, twenty + 4, twenty + 16) }}>
+        2<sup style={{ fontSize: 28 }}>20</sup> ≈ a million leaves
       </div>
       {/* counters */}
-      <div style={{ position: 'absolute', top: 1160, left: COL.x - 20, width: COL.w + 40, textAlign: 'center', fontFamily: sans, opacity: panelsIn }}>
+      <div style={{ position: 'absolute', top: 1178, left: COL.x - 20, width: COL.w + 40, textAlign: 'center', fontFamily: sans, opacity: panelsIn }}>
         <div style={{ fontSize: 76, fontWeight: 600, lineHeight: 1, letterSpacing: -2, color: C.red, fontVariantNumeric: 'tabular-nums', textShadow: scanDone ? `0 0 50px ${rgba(C.red, 0.45)}` : undefined }}>{fmt(read)}</div>
         <div style={{ fontSize: 32, color: C.grey, marginTop: 10 }}>rows read</div>
       </div>
-      <div style={{ position: 'absolute', top: 1160, left: FAN.cx - 190, width: 380, textAlign: 'center', fontFamily: sans, opacity: panelsIn }}>
+      <div style={{ position: 'absolute', top: 1178, left: FAN.cx - 190, width: 380, textAlign: 'center', fontFamily: sans, opacity: panelsIn }}>
         <div style={{ fontSize: 76, fontWeight: 600, lineHeight: 1, color: C.green, fontVariantNumeric: 'tabular-nums', transform: `scale(${1 + 0.12 * (treeDone ? ding : 0) * (1 - prog(frame, twenty + 14, twenty + 30))})`, textShadow: treeDone ? `0 0 50px ${rgba(C.green, 0.5)}` : undefined }}>{levels}</div>
         <div style={{ fontSize: 32, color: C.grey, marginTop: 10 }}>steps</div>
       </div>
-      <div style={{ position: 'absolute', top: 1320, left: 70, right: 190, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 62, lineHeight: 1.1, color: C.yellow, opacity: Math.min(1, takeaway * 1.4), transform: `translateY(${(1 - takeaway) * 20}px)` }}>
+      <div style={{ position: 'absolute', top: 1336, left: 70, right: 190, textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 62, lineHeight: 1.1, color: C.yellow, opacity: Math.min(1, takeaway * 1.4), transform: `translateY(${(1 - takeaway) * 20}px)` }}>
         Index what you filter by.
       </div>
-      <Sfx t={T} name="riser" at={million - 20} volume={0.22} />
-      <Sfx t={T} name="ding" at={twenty + 2} volume={0.4} />
+      <Sfx t={T} name="riser" at={million - 20} volume={0.16} />
+      <Sfx t={T} name="ding" at={twenty + 2} volume={1} />
     </>
   )
 }
@@ -345,7 +378,7 @@ function Payoff() {
 export function IndexReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.2} />
+      <ReelAudio t={T} voiceVolume={0.9} musicVolume={0.48} duck={0.5} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="scan"><FullScan /></Scene>
       <Scene t={T} id="tree"><TreeWalk /></Scene>

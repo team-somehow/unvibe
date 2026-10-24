@@ -11,7 +11,24 @@
     <meta name="description" content="Learnagram reads your Claude Code sessions and turns the changes that matter into short explainer reels. Ask the agent why, and answer its questions as polls." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- the headline face and the UI face start downloading with the HTML instead of after the stylesheet -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/newsreader/v26/cY9CfjOCX1hbuyalUrK439vCjohCBJWxZA.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2" as="font" type="font/woff2" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+    <script>
+      // Hold the hero headline until its italic face is ready (at most 1s), so it never renders in a fallback and swaps
+      ;(function () {
+        var root = document.documentElement
+        var fonts = document.fonts
+        if (!fonts || !fonts.load) return
+        root.classList.add('fonts-pending')
+        var done = function () { root.classList.remove('fonts-pending') }
+        Promise.race([
+          Promise.all([fonts.load('italic 300 64px Newsreader'), fonts.load('italic 400 64px Newsreader')]),
+          new Promise(function (r) { setTimeout(r, 1000) }),
+        ]).then(done, done)
+      })()
+    </script>
     <title>Learnagram</title>
   </head>
   <body>

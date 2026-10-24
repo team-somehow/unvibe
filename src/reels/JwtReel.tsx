@@ -73,9 +73,15 @@ function Hook() {
   const claude = useCue('claude', 97)
   const route = useCue('admin', 155)
 
-  const n = Math.round(interpolate(frame, [tok - 10, tok + 24], [0, TOKEN_LEN], { ...clamp, easing: Easing.out(Easing.quad) }))
-  const hl = useP(anyone, 16)
-  const json = useSpr(read - 6, 15)
+  // The token types in and decodes right away, so the feed's poster frame (45) already shows the payload in the clear;
+  // the narration's "anyone can read it" then lands as a pulse on the decoded card.
+  const n = Math.round(interpolate(frame, [Math.min(4, tok), Math.min(26, tok + 24)], [0, TOKEN_LEN], { ...clamp, easing: Easing.out(Easing.quad) }))
+  const decodeAt = Math.min(22, read - 6)
+  const hl = useP(decodeAt - 6, 12)
+  const json = useSpr(decodeAt, 15)
+  const pulse = interpolate(frame, [anyone - 2, anyone + 6, read + 16], [0, 1, 0], clamp)
+  const cardIn = useP(0, 10)
+  const codeAt = Math.min(30, claude - 2)
   const lines = [
     { src: P.slice(0, 16), t: '{ "sub": "42",' },
     { src: P.slice(16, 36), t: '  "role": "user",' },
@@ -88,12 +94,12 @@ function Hook() {
         <br />
         <span style={{ color: C.yellow }}>isn't secret.</span>
       </Title>
-      <TokenCard y={392} n={n} hlPayload={hl} />
-      <Arrow x1={480} y1={648} x2={480} y2={706} at={read - 10} dur={10} color={PC} width={4} head={14} />
+      <TokenCard y={392} n={n} hlPayload={hl + pulse * 0.6} opacity={cardIn} />
+      <Arrow x1={480} y1={648} x2={480} y2={706} at={decodeAt - 4} dur={10} color={PC} width={4} head={14} />
       <div
         style={{
           position: 'absolute', top: 716, ...COL, opacity: Math.min(1, json), transform: `translateY(${(1 - json) * 24}px)`,
-          border: `3px solid ${PC}`, borderRadius: 24, padding: '22px 30px', background: '#07060B', boxShadow: boxGlow(PC, 0.6 * json),
+          border: `3px solid ${PC}`, borderRadius: 24, padding: '22px 30px', background: '#07060B', boxShadow: boxGlow(PC, 0.6 * Math.min(1, json) + 0.9 * pulse),
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
@@ -103,22 +109,23 @@ function Hook() {
         </div>
         {lines.map((l, i) => (
           <div key={i} style={{ fontFamily: mono, fontSize: 34, lineHeight: 1.45, color: C.white, whiteSpace: 'pre' }}>
-            <Scramble source={l.src} text={l.t} at={read - 4 + i * 5} dur={20} />
+            <Scramble source={l.src} text={l.t} at={decodeAt + 2 + i * 3} dur={10} />
           </div>
         ))}
       </div>
+      {/* on stage early so the poster frame is complete; the decode() line lights up when the narration names the admin route */}
       <CodeCard
         y={1074}
         size={31}
-        at={claude - 2}
+        at={codeAt}
         tool="Read(src/routes/admin.ts)"
         lines={[
-          { at: claude + 6, segs: [kw('const '), pl('token = '), fn('bearer'), pl('(req)')] },
-          { at: claude + 12, hl: route - 6, segs: [kw('const '), pl('user = jwt.'), fn('decode'), pl('(token)')] },
-          { at: claude + 18, segs: [kw('if '), pl('(user.role === '), str("'admin'"), pl(') '), fn('next'), pl('()')] },
+          { at: codeAt + 6, segs: [kw('const '), pl('token = '), fn('bearer'), pl('(req)')] },
+          { at: codeAt + 10, hl: route - 6, segs: [kw('const '), pl('user = jwt.'), fn('decode'), pl('(token)')] },
+          { at: codeAt + 14, segs: [kw('if '), pl('(user.role === '), str("'admin'"), pl(') '), fn('next'), pl('()')] },
         ]}
       />
-      <Sfx t={T} name="decode" at={read - 4} volume={0.45} />
+      <Sfx t={T} name="decode" at={decodeAt + 2} volume={0.45} />
     </>
   )
 }
@@ -159,7 +166,7 @@ function Parts() {
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Label color={r.c}>{r.name}</Label>
-                {!isSig && <Pill color={C.yellow} style={{ fontSize: 26, padding: '2px 16px', opacity: baseP }}>base64</Pill>}
+                {!isSig && <Pill color={C.yellow} style={{ fontSize: 28, padding: '2px 16px', opacity: baseP }}>base64</Pill>}
               </div>
               <div style={{ fontFamily: mono, fontSize: 32, lineHeight: 1.42, color: C.white, wordBreak: 'break-all', whiteSpace: 'pre-wrap', marginTop: 4 }}>
                 {r.dec ? <Scramble source={r.src} text={r.dec} at={base + 2 + i * 6} dur={26} seed={r.name} style={{ color: frame > base + 2 + i * 6 ? C.white : r.c }} /> : <span style={{ color: r.c }}>{r.src}</span>}
@@ -202,14 +209,16 @@ function Sign() {
   const server = useCue('server', 263)
 
   const pulse = interpolate(frame, [admin - 4, admin + 6, admin + 30], [0, 1, 0.25], clamp)
-  const machine = useSpr(signature - 6, 14)
+  // the whole diagram is set up while the question is asked; the narration then runs it
+  const machine = useSpr(Math.min(40, signature - 6), 14)
   const busy = interpolate(frame, [those, those + 20, only + 4, only + 30], [0, 1, 1, 0.35], clamp)
   const key = useSpr(secret - 6, 13)
   const keyIn = useP(secret + 6, 14)
   const out = useP(only - 2, 18)
   const filled = frame >= only + 2
   const box = useP(server - 6, 26)
-  const slot = useP(signature, 12)
+  const slot = useP(Math.min(48, signature), 12)
+  const slotPulse = interpolate(frame, [signature - 4, signature + 6, signature + 30], [0, 1, 0], clamp)
   const MX = 560
   const MY = 700
   const flows = [
@@ -282,7 +291,7 @@ function Sign() {
       <div
         style={{
           position: 'absolute', top: 894, ...COL, borderRadius: 22, padding: '14px 26px 18px', background: '#050A10',
-          border: `3px ${filled ? 'solid' : 'dashed'} ${filled ? SC : rgba(SC, 0.6)}`, boxShadow: boxGlow(SC, out * 0.9),
+          border: `3px ${filled ? 'solid' : 'dashed'} ${filled ? SC : rgba(SC, 0.6 + 0.4 * slotPulse)}`, boxShadow: boxGlow(SC, Math.max(out * 0.9, slotPulse * 0.8)),
           opacity: slot,
         }}
       >
@@ -294,7 +303,7 @@ function Sign() {
       <Pop at={only + 10} rise={10} style={{ top: 1072, left: 70, right: 190, textAlign: 'center', fontFamily: mono, fontSize: 32, color: C.white }}>
         HMAC(<span style={{ color: HC }}>header</span>.<span style={{ color: PC }}>payload</span>, <span style={{ color: C.yellow }}>secret</span>)
       </Pop>
-      <Sfx t={T} name="seal" at={only + 4} volume={0.55} />
+      <Sfx t={T} name="impact" at={only + 4} volume={0.3} />
     </>
   )
 }
@@ -321,10 +330,11 @@ function Tamper() {
   const dimAll = useP(ifc - 4, 12)
   const fade = 1 - dimAll * 0.55
   const broken = frame >= breaks
+  const roleIn = useP(3, 12)
   return (
     <>
       <Title from={2} top={150} size={84}>Change one letter</Title>
-      <div style={{ position: 'absolute', top: 290, left: 70, right: 70, display: 'flex', justifyContent: 'center', opacity: fade }}>
+      <div style={{ position: 'absolute', top: 290, left: 70, right: 70, display: 'flex', justifyContent: 'center', opacity: fade * roleIn, transform: `translateY(${(1 - roleIn) * 16}px)` }}>
         <div style={{ border: `3px solid ${redRole ? C.red : PC}`, borderRadius: 24, padding: '18px 40px', background: '#07060B', fontFamily: mono, fontSize: 46, color: C.white, boxShadow: boxGlow(redRole ? C.red : PC, 0.5) }}>
           {'"role": "'}
           <span style={{ color: redRole ? C.red : C.white, textShadow: redRole ? textGlow(C.red, 0.8) : 'none' }}>{role}</span>
@@ -424,7 +434,7 @@ function Fix() {
   const gateGlow = interpolate(frame, [every, every + 10], [0.4, 1], clamp)
   const kill = useP(out - 4, 16)
   const warn = useP(email - 4, 8)
-  const card = useSpr(took - 26, 15)
+  const card = useSpr(Math.min(80, took - 26), 15)
   const routeColor = mixColor(C.grey, C.red, breach)
   return (
     <>
@@ -557,7 +567,7 @@ function Takeaway() {
           jwt.verify() on every request
         </Pill>
       </div>
-      <Sfx t={T} name="ding" at={proof} volume={0.35} />
+      <Sfx t={T} name="ding" at={proof} volume={0.9} />
     </>
   )
 }
@@ -565,7 +575,7 @@ function Takeaway() {
 export function JwtReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.2} />
+      <ReelAudio t={T} voiceVolume={1.34} musicVolume={0.46} />
       <Scene t={T} id="hook"><Hook /></Scene>
       <Scene t={T} id="parts"><Parts /></Scene>
       <Scene t={T} id="sign"><Sign /></Scene>

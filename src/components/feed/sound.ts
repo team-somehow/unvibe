@@ -61,7 +61,9 @@ export function unlockAudio(ev?: Event | SyntheticEvent, { restartActive = false
     try {
       if (en.isActive()) {
         if (!p.isPlaying()) p.play(token)
-        else if (restartActive) {
+        // A Player that mounted after the first gesture (the next reels, the create preview) started without one;
+        // restarting it inside this gesture blesses its audio tags too (iOS needs that per tag)
+        else if (restartActive || !en.primed) {
           p.pause()
           p.play(token)
         }

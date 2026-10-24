@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { Bookmark, Heart, MessageCircle, Play, Send, SquareTerminal, Volume2, VolumeX } from 'lucide-react'
+import { Bookmark, ChevronRight, Heart, MessageCircle, Play, Send, SquareTerminal, Volume2, VolumeX } from 'lucide-react'
 import { memo, useCallback, useEffect, useRef, useState, type ReactNode, type SyntheticEvent } from 'react'
 import { ME, type Reel } from '../data/reels'
 import { Avatar } from './Avatar'
-import { ReelPlaceholder, ReelPoster } from './feed/ReelPoster'
+import { ReelPoster } from './feed/ReelPoster'
 import { SoundToggle } from './feed/SoundToggle'
 import { topicColor } from './feed/topics'
 import { ReelPlayer, type ReelPlayerHandle } from './ReelPlayer'
@@ -22,9 +22,12 @@ export type ReelCardProps = {
   current: boolean
   /** The feed is allowed to play (tab visible, no full-screen sheet on top). */
   running: boolean
-  /** Mount the Remotion Player (only the current reel and its neighbours). */
+  /** The feed has come to rest on this reel, so it may play. Playback waits for this so the heavy work of
+   *  a scroll (mounting the next Player, rendering posters) happens while a still poster is on screen. */
+  landed: boolean
+  /** Mount the Remotion Player (the reel the feed rests on and its neighbours). */
   mountPlayer: boolean
-  /** Render the poster still (reels near the viewport). */
+  /** May render its poster live if it is not cached yet (reels near where the feed rests). */
   wantPoster: boolean
   liked: boolean
   saved: boolean
@@ -102,7 +105,7 @@ function Rail({ reel, liked, saved, commentsOpen, onLike, onSave, onComments, on
   )
 }
 
-function PollSticker({ reel, vote, onVote }: { reel: Reel; vote: string | null; onVote: (c: string) => void }) {
+function PollSticker({ reel, vote, onVote, onOpenComments }: { reel: Reel; vote: string | null; onVote: (c: string) => void; onOpenComments: () => void }) {
   const poll = reel.poll!
   const total = poll.options.reduce((s, o) => s + o.votes, 0) + (vote ? 1 : 0)
   return (
@@ -111,18 +114,41 @@ function PollSticker({ reel, vote, onVote }: { reel: Reel; vote: string | null; 
       animate={{ scale: 1, opacity: 1, rotate: -2 }}
       exit={{ scale: 0.9, opacity: 0 }}
       transition={{ delay: 0.5, type: 'spring', stiffness: 260, damping: 18 }}
-      // The poll reel keeps y 1100-1600 (57%-83%) free for this sticker, below its captions
-      className="absolute inset-x-0 top-[57.5%] z-20 mx-auto w-[78%] max-w-[300px] rounded-[20px] bg-white p-2.5 text-black shadow-[0_20px_60px_rgba(0,0,0,0.55)] md:p-3"
+      // Positioned in the composition's box: the poll reel keeps y 1100-1600 (57%-83%) free for this sticker, below its
+      // captions (which end near 57.5%). On phones it also keeps clear of the action rail on the right.
+      className="pointer-events-auto absolute top-[59%] right-[66px] left-3 mx-auto max-w-[300px] rounded-[20px] bg-white p-2.5 text-black shadow-[0_20px_60px_rgba(0,0,0,0.55)] md:right-0 md:left-0 md:w-[78%] md:p-3 short:p-2.5"
       role="group"
       aria-label="Claude is asking you to decide"
     >
-      <p className="flex items-center justify-center gap-1.5 px-1 pt-0.5 pb-2 text-center text-[12.5px] font-semibold text-black/55">
-        <span className="relative flex size-2">
-          {!vote && <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#D97757] opacity-60" />}
-          <span className={`relative inline-flex size-2 rounded-full ${vote ? 'bg-mgreen' : 'bg-[#D97757]'}`} />
+      <div className={`flex min-h-6 items-center gap-1.5 px-1 pb-2 text-[12.5px] font-semibold text-black/55 ${vote ? 'justify-between' : 'justify-center'}`}>
+        <span className="flex min-w-0 items-center gap-1.5">
+          <span className="relative flex size-2 shrink-0">
+            {!vote && <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#D97757] opacity-60" />}
+            <span className={`relative inline-flex size-2 rounded-full ${vote ? 'bg-mgreen' : 'bg-[#D97757]'}`} />
+          </span>
+          <span className="truncate" aria-live="polite">
+            {vote ? (
+              <>
+                Building it with <span className="text-black">{vote}</span>
+              </>
+            ) : (
+              'Your vote goes straight to Claude'
+            )}
+          </span>
         </span>
-        {vote ? 'Claude got your answer' : 'Your vote goes straight to Claude'}
-      </p>
+        {vote && (
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, x: 6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.35 }}
+            onClick={onOpenComments}
+            className="relative flex h-6 shrink-0 items-center gap-0.5 rounded-full bg-black pr-1.5 pl-2.5 text-[12px] text-white before:absolute before:-inset-2 before:content-[''] active:scale-95"
+          >
+            See plan <ChevronRight size={13} strokeWidth={2.6} />
+          </motion.button>
+        )}
+      </div>
       <div className="flex flex-col gap-2">
         {poll.options.map((o) => {
           const votes = o.votes + (vote === o.label ? 1 : 0)
@@ -134,7 +160,8 @@ function PollSticker({ reel, vote, onVote }: { reel: Reel; vote: string | null; 
               key={o.label}
               disabled={!!vote}
               onClick={() => onVote(o.label)}
-              className="relative h-11 overflow-hidden rounded-[13px] bg-black/[0.06] text-[15px] font-semibold transition enabled:hover:bg-black/[0.09] enabled:active:scale-[0.97] focus-visible:outline-offset-1 md:h-12"
+              aria-pressed={mine}
+              className="relative h-11 overflow-hidden rounded-[13px] bg-black/[0.06] text-[15px] font-semibold transition enabled:hover:bg-black/[0.09] enabled:active:scale-[0.97] focus-visible:outline-offset-1 md:h-12 short:h-10"
             >
               {vote && (
                 <motion.span
@@ -156,13 +183,6 @@ function PollSticker({ reel, vote, onVote }: { reel: Reel; vote: string | null; 
           )
         })}
       </div>
-      <AnimatePresence>
-        {vote && (
-          <motion.p initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden px-1 pt-2.5 text-[13px] leading-snug text-black/65">
-            Claude picked up the session with <span className="font-semibold text-black">{vote}</span>. See its plan in the comments.
-          </motion.p>
-        )}
-      </AnimatePresence>
     </motion.div>
   )
 }
@@ -187,7 +207,7 @@ function FollowButton({ following, onClick }: { following: boolean; onClick: () 
 }
 
 export const ReelCard = memo(function ReelCard(props: ReelCardProps) {
-  const { reel, current, running, mountPlayer, wantPoster, vote, following, muted, soundHint, userPaused } = props
+  const { reel, current, landed, running, mountPlayer, wantPoster, vote, following, muted, soundHint, userPaused } = props
   const { onLike, onComments, onVote, onFollow, onToggleSound, onUnlock, onTogglePause, onImmersive } = props
 
   const [holding, setHolding] = useState(false)
@@ -196,8 +216,6 @@ export const ReelCard = memo(function ReelCard(props: ReelCardProps) {
   const [expanded, setExpanded] = useState(false)
   const [flash, setFlash] = useState<{ id: number; muted: boolean } | null>(null)
   const [started, setStarted] = useState(false)
-  const [posterMounted, setPosterMounted] = useState(wantPoster)
-  if (wantPoster && !posterMounted) setPosterMounted(true)
 
   const bar = useRef<HTMLDivElement>(null)
   const player = useRef<ReelPlayerHandle>(null)
@@ -336,18 +354,23 @@ export const ReelCard = memo(function ReelCard(props: ReelCardProps) {
       className="relative flex h-full w-full snap-start snap-always items-center justify-center md:gap-4"
       aria-roledescription="reel"
       aria-label={`${reel.author.handle}: ${reel.caption}`}
+      // Only the reel on screen takes focus and clicks: tabbing must not walk through (and scroll to) the other ten
+      inert={!current}
     >
       <div className="relative h-full w-full overflow-hidden bg-black md:aspect-[9/16] md:h-auto md:max-h-[calc(100%-32px)] md:w-[min(calc((100dvh-32px)*0.5625),calc(100%-88px))] md:rounded-xl md:ring-1 md:ring-white/10">
         {/* Video */}
-        <div className="absolute inset-0">{mountPlayer && <ReelPlayer reel={reel} active={current} paused={playerPaused} muted={muted || !current} onProgress={onProgress} handleRef={player} />}</div>
+        <div className="absolute inset-0">
+          {mountPlayer && <ReelPlayer reel={reel} active={current && landed} paused={playerPaused} muted={muted || !current} onProgress={onProgress} handleRef={player} />}
+        </div>
 
-        {/* Poster: covers the Player until the reel actually starts, so fast scrolling never shows black */}
+        {/* Poster: covers the Player until the reel actually starts, so fast scrolling never shows black. The poster is
+            1.5s in and playback starts at 0, so it hands over with a quick fade: a long one double-exposes the two frames */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
-          style={{ opacity: showPoster ? 1 : 0, transition: showPoster ? 'none' : 'opacity 320ms ease-out' }}
+          style={{ opacity: showPoster ? 1 : 0, transition: showPoster ? 'none' : 'opacity 160ms ease-out' }}
         >
-          {posterMounted ? <ReelPoster reel={reel} /> : <ReelPlaceholder reel={reel} />}
+          <ReelPoster reel={reel} live={wantPoster} />
         </div>
 
         {/* Gesture surface: tap = sound, double tap = like, press and hold = pause */}
@@ -364,8 +387,10 @@ export const ReelCard = memo(function ReelCard(props: ReelCardProps) {
         <div
           className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/55 to-transparent transition-opacity duration-200 md:h-20 md:from-black/35 ${chromeHidden ? 'opacity-0' : ''}`}
         />
+        {/* Steep, so the reel's own narration captions (77-83% down the frame) stay bright above the caption text */}
         <div
-          className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent transition-[height,opacity] duration-300 ${expanded ? 'h-[62%]' : 'h-[36%]'} ${chromeHidden ? 'opacity-0' : ''}`}
+          className={`pointer-events-none absolute inset-x-0 bottom-0 transition-[height,opacity] duration-300 ${expanded ? 'h-[62%]' : 'h-[32%]'} ${chromeHidden ? 'opacity-0' : ''}`}
+          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.6) 26%, rgba(0,0,0,0.26) 50%, rgba(0,0,0,0.07) 74%, rgba(0,0,0,0) 100%)' }}
         />
 
         {/* Centre feedback: paused, and the speaker flash after a sound change */}
@@ -411,7 +436,16 @@ export const ReelCard = memo(function ReelCard(props: ReelCardProps) {
           ))}
         </AnimatePresence>
 
-        <AnimatePresence>{reel.poll && current && !holding && <PollSticker reel={reel} vote={vote} onVote={(c) => onVote(reel.id, c)} />}</AnimatePresence>
+        {reel.poll && (
+          // The composition's own box (the Player letterboxes it on tall phones), so the sticker lands on the same spot of the reel everywhere
+          <div className="pointer-events-none absolute inset-0 z-20 [container-type:size]">
+            <div className="absolute inset-0 m-auto h-[min(100cqh,177.78cqw)] w-[min(100cqw,56.25cqh)]">
+              <AnimatePresence>
+                {current && !holding && <PollSticker reel={reel} vote={vote} onVote={(c) => onVote(reel.id, c)} onOpenComments={() => onComments(reel.id)} />}
+              </AnimatePresence>
+            </div>
+          </div>
+        )}
 
         {/* Speaker toggle, top-right of the video like Instagram */}
         <div className={`absolute top-[max(6px,env(safe-area-inset-top))] right-2 z-20 transition-opacity duration-200 md:top-2.5 md:right-2.5 ${chromeHidden ? 'pointer-events-none opacity-0' : ''}`}>

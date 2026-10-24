@@ -1,5 +1,5 @@
 import { Sequence, interpolate, useCurrentFrame } from 'remotion'
-import { Captions, ReelAudio, Scene, Sfx, buildTimeline, useScene, type Manifest } from './audio'
+import { Captions, ReelAudio, Scene, Sfx, buildTimeline, type Manifest } from './audio'
 import manifest from './audio/rls.json'
 import {
   BrowserFrame, CheckIcon, Chip, CodeLine, CrossIcon, Heading, KeyIcon, LockIcon, Packet, Panel, UserGlyph, Wire,
@@ -23,10 +23,12 @@ function Hook() {
   const appear = cue('supabase', 63)
   const handed = cue('handed', 102)
   const every = cue('every', 113)
-  const asked = cue('asked', 169)
   const claude = cue('claude', 198)
-  const count = Math.round(interpolate(frame, [every, asked + 6], [0, 4812], { ...clamp, easing: (t) => 1 - Math.pow(1 - t, 3) }))
-  const counter = useSpring(handed - 4, 16)
+  // The table fills in before the narration starts (so the poster frame is a full composition),
+  // then turns red as the profiles are handed out
+  const count = Math.round(interpolate(frame, [12, 46], [0, 4812], { ...clamp, easing: (t) => 1 - Math.pow(1 - t, 3) }))
+  const counter = useSpring(8, 16)
+  const exposed = ramp(frame, handed - 2, every + 10)
   const flag = useSpring(claude - 3, 12)
   return (
     <>
@@ -39,7 +41,7 @@ function Hook() {
         const row = Math.floor(i / COLS)
         const x = 120 + col * 156 + 78
         const y = 470 + row * 140
-        const pop = ramp(frame, appear - 30 + i * 1.5, appear - 14 + i * 1.5)
+        const pop = ramp(frame, Math.min(6, appear - 30) + i * 1.1, Math.min(20, appear - 14) + i * 1.1)
         // red ripple spreads from the top-left as the profiles are handed out
         const d = Math.hypot(col, row)
         const red = ramp(frame, handed + d * 6, handed + d * 6 + 10)
@@ -61,10 +63,13 @@ function Hook() {
         )
       })}
       <div style={{ position: 'absolute', top: 1040, left: 120, width: 780, textAlign: 'center', opacity: counter, transform: `translateY(${(1 - counter) * 20}px)` }}>
-        <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 132, lineHeight: 1, letterSpacing: -4, color: C.red, fontVariantNumeric: 'tabular-nums', textShadow: `0 0 60px ${alpha(C.red, 0.4)}` }}>
+        <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 132, lineHeight: 1, letterSpacing: -4, color: blend(C.blue, C.red, exposed), fontVariantNumeric: 'tabular-nums', textShadow: `0 0 60px ${alpha(exposed > 0.5 ? C.red : C.blue, 0.2 + 0.2 * exposed)}`, transform: `scale(${1 + 0.06 * Math.sin(exposed * Math.PI)})` }}>
           {count.toLocaleString('en-US')}
         </div>
-        <div style={{ fontFamily: sans, fontSize: 38, color: C.white, marginTop: 14 }}>profiles, readable by anyone</div>
+        <div style={{ position: 'relative', height: 50, marginTop: 14, fontFamily: sans, fontSize: 38 }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, color: C.grey, opacity: 1 - exposed }}>profiles in your table</div>
+          <div style={{ position: 'absolute', left: 0, right: 0, color: C.white, opacity: exposed }}>profiles, readable by <span style={{ color: C.red }}>anyone</span></div>
+        </div>
       </div>
       <div style={{ position: 'absolute', top: 1300, left: 120, width: 780, display: 'flex', justifyContent: 'center', opacity: flag, transform: `scale(${0.85 + 0.15 * flag})` }}>
         <Chip color={C.yellow} glow={flag}>
@@ -72,8 +77,8 @@ function Hook() {
           Claude caught it: RLS was off
         </Chip>
       </div>
-      <Sfx t={T} name="sting" at={6} volume={0.55} />
-      <Sfx t={T} name="ding" at={claude - 2} volume={0.35} />
+      <Sfx t={T} name="sting" at={6} volume={0.22} />
+      <Sfx t={T} name="ding" at={claude - 2} volume={0.9} />
     </>
   )
 }
@@ -126,7 +131,7 @@ function Case() {
   const end = rel('filter') + S.filter.durationInFrames
 
   const fadeIn = ramp(frame, 0, 12)
-  const fadeOut = 1 - ramp(frame, end - 12, end)
+  const fadeOut = 1 - ramp(frame, end, end + 9, (t) => t)
   const browser = useSpring(2, 16)
   const table = useSpring(kTable, 16)
   const wire = ramp(frame, kWire - 8, kWire + 14)
@@ -267,7 +272,7 @@ function Case() {
           ))}
         </Panel>
         <div style={{ position: 'absolute', left: GATE.x + 26, top: GATE.y - 22 }}>
-          <Chip color={C.green} solid size={26} style={{ padding: '4px 16px' }}><LockIcon size={26} color="#000" /> RLS policy</Chip>
+          <Chip color={C.green} solid size={28} style={{ padding: '4px 16px' }}><LockIcon size={28} color="#000" /> RLS policy</Chip>
         </div>
       </div>
 
@@ -313,24 +318,24 @@ function Case() {
       </div>
 
       <Sfx t={T} name="error" at={lOff - 2} volume={0.25} />
-      <Sfx t={T} name="leak" at={lRet} volume={0.4} />
-      <Sfx t={T} name="lock" at={pOn - 2} volume={0.55} />
+      <Sfx t={T} name="leak" at={lRet} volume={0.7} />
+      <Sfx t={T} name="lock" at={pOn - 2} volume={0.22} />
       <Sfx t={T} name="success" at={fYours - 4} volume={0.35} />
     </div>
   )
 }
 
 function KeyTitle() {
-  return <Heading from={2} top={180} size={68}>The anon key is <span style={{ color: C.yellow }}>public</span></Heading>
+  return <Heading from={2} top={150} size={76}>The anon key is <span style={{ color: C.yellow }}>public</span></Heading>
 }
 function LeakTitle() {
-  return <Heading from={2} top={180} size={68}>But <span style={{ color: C.red }}>RLS</span> was switched off</Heading>
+  return <Heading from={2} top={150} size={76}>But <span style={{ color: C.red }}>RLS</span> was switched off</Heading>
 }
 function PolicyTitle() {
-  return <Heading from={2} top={180} size={68}>Claude added a <span style={{ color: C.green }}>policy</span></Heading>
+  return <Heading from={2} top={150} size={76}>Claude added a <span style={{ color: C.green }}>policy</span></Heading>
 }
 function FilterTitle() {
-  return <Heading from={2} top={180} size={68}>Same query. <span style={{ color: C.green }}>One row.</span></Heading>
+  return <Heading from={2} top={150} size={76}>Same query. <span style={{ color: C.green }}>One row.</span></Heading>
 }
 
 /* ---------------- takeaway ---------------- */
@@ -338,16 +343,14 @@ function FilterTitle() {
 function Takeaway() {
   const frame = useCurrentFrame()
   const cue = useCues()
-  const { durationInFrames } = useScene()
   const second = cue('that', 53)
   const pol = cue('policy', 80)
   const a = useSpring(cue('browser', 16) - 4, 15)
   const b = useSpring(cue('table', 39) - 4, 15)
   const shield = useSpring(pol - 8, 11)
   const code = useSpring(pol + 4, 16)
-  const out = 1 - ramp(frame, durationInFrames - 10, durationInFrames)
   return (
-    <div style={{ opacity: out }}>
+    <div>
       <Heading from={4} top={220} size={80}>If the browser<br />can reach a table,</Heading>
       <Heading from={second - 4} top={410} size={80} color={C.green}>that table<br />needs a policy.</Heading>
       {/* browser -> policy -> table */}
@@ -385,9 +388,9 @@ function Takeaway() {
 export function RlsReel() {
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.24} duck={0.45} />
+      <ReelAudio t={T} voiceVolume={2.08} musicVolume={0.31} duck={0.42} />
       <Scene t={T} id="hook"><Hook /></Scene>
-      <Sequence from={S.key.from} durationInFrames={S.filter.from + S.filter.durationInFrames - S.key.from} name="case">
+      <Sequence from={S.key.from} durationInFrames={S.filter.from + S.filter.durationInFrames - S.key.from + 9} name="case">
         <Case />
       </Sequence>
       <Scene t={T} id="key"><KeyTitle /></Scene>

@@ -179,7 +179,7 @@ export function CodeCard({ at, out, y, x = 70, w = 820, tool, lines, size = 29, 
         fontFamily: mono, fontSize: size, lineHeight: 1.55, overflow: 'hidden',
       }}
     >
-      <div style={{ color: C.white, marginBottom: 10, fontSize: size - 3, whiteSpace: 'nowrap' }}>
+      <div style={{ color: C.white, marginBottom: 10, fontSize: Math.max(28, size - 3), whiteSpace: 'nowrap' }}>
         <span style={{ color: C.green }}>⏺</span> <span style={{ color: C.white }}>{tool}</span>
       </div>
       {lines.map((l, i) => (

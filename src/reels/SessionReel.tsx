@@ -26,10 +26,11 @@ function Badge({ n, color, size = 64 }: { n: number; color: string; size?: numbe
 function Header({ n, text, color }: { n: number; text: string; color: string }) {
   const frame = useCurrentFrame()
   const { fps } = useVideoConfig()
-  const p = springAt(frame, 2, fps, 15)
-  const w = prog(frame, 4, 28, EASE_OUT) * 100
+  // starts after the cross-dissolve so two numbered headers never stack
+  const p = springAt(frame, 9, fps, 15)
+  const w = prog(frame, 10, 34, EASE_OUT) * 100
   return (
-    <div style={{ position: 'absolute', top: 160, left: 70, right: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
+    <div style={{ position: 'absolute', top: 150, left: 70, right: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
       <div style={{ transform: `scale(${p})` }}>
         <Badge n={n} color={color} />
       </div>
@@ -54,6 +55,9 @@ function Intro({ prompt, repo, concepts }: SessionReelProps) {
   const typed = Math.max(0, Math.floor((frame - 6) * speed))
   const card = springAt(frame, 0, fps, 16)
   const claude = prog(frame, did + 30, did + 44)
+  // The visuals lead the narration slightly so the poster frame (45) already shows the whole story
+  const toolsAt = Math.min(did - 8, 14)
+  const ideasAt = Math.min(three + 2, 26)
   return (
     <>
       <div style={{ position: 'absolute', top: 160, left: 70, width: 820, textAlign: 'center', fontFamily: sans, fontSize: 30, color: C.grey, opacity: prog(frame, 0, 10) }}>
@@ -73,7 +77,7 @@ function Intro({ prompt, repo, concepts }: SessionReelProps) {
           { k: 'Update', a: 'middleware/rateLimit.ts', c: C.white },
           { k: 'Bash', a: 'npm test  ✓ 42 passed', c: C.green },
         ].map((l, i) => {
-          const p = prog(frame, did - 8 + i * 7, did + 4 + i * 7, EASE_OUT)
+          const p = prog(frame, toolsAt + i * 6, toolsAt + 12 + i * 6, EASE_OUT)
           return (
             <div key={i} style={{ opacity: p * (1 - 0.45 * claude * (i < 2 ? 1 : 0)), transform: `translateX(${(1 - p) * -24}px)`, whiteSpace: 'nowrap' }}>
               <span style={{ color: C.green }}>⏺</span> <span style={{ color: C.blue }}>{l.k}</span>
@@ -84,20 +88,22 @@ function Intro({ prompt, repo, concepts }: SessionReelProps) {
           )
         })}
       </div>
-      <Tag color={C.yellow} style={{ top: 830, left: 70, right: 190, textAlign: 'center', opacity: prog(frame, three - 6, three + 6) }}>3 ideas worth knowing</Tag>
+      <Tag color={C.yellow} style={{ top: 830, left: 70, right: 190, textAlign: 'center', opacity: prog(frame, ideasAt - 6, ideasAt + 6) }}>3 ideas worth knowing</Tag>
       <div style={{ position: 'absolute', top: 892, left: 70, width: 820, display: 'flex', flexDirection: 'column', gap: 28 }}>
         {[0, 1, 2].map((i) => {
-          const p = springAt(frame, three + 2 + i * 8, fps, 14)
+          const p = springAt(frame, ideasAt + i * 6, fps, 14)
+          // each idea lights up as the narration says "three ideas"
+          const lit = interpolate(frame, [three + i * 7, three + 6 + i * 7, three + 26 + i * 7], [0, 1, 0], CLAMP)
           return (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 26, padding: '22px 30px', borderRadius: 24, border: `3px solid ${rgba(ACCENT[i], 0.8)}`, background: rgba(ACCENT[i], 0.06), opacity: Math.min(1, p * 1.5), transform: `translateX(${(1 - p) * 80}px)` }}>
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 26, padding: '22px 30px', borderRadius: 24, border: `3px solid ${rgba(ACCENT[i], 0.8 + 0.2 * lit)}`, background: rgba(ACCENT[i], 0.06 + 0.1 * lit), boxShadow: `0 0 ${40 * lit}px ${rgba(ACCENT[i], 0.45 * lit)}`, opacity: Math.min(1, p * 1.5), transform: `translateX(${(1 - p) * 80}px) scale(${1 + 0.02 * lit})` }}>
               <Badge n={i + 1} color={ACCENT[i]} size={58} />
               <span style={{ fontFamily: sans, fontSize: 38, fontWeight: 500, color: C.white, lineHeight: 1.2 }}>{concepts[i] ?? DEFAULT_CONCEPTS[i]}</span>
             </div>
           )
         })}
       </div>
-      <Sfx t={T} name="typing" at={4} volume={0.18} />
-      <Sfx t={T} name="pop" at={three + 2} volume={0.3} />
+      <Sfx t={T} name="typing" at={4} volume={0.4} />
+      <Sfx t={T} name="pop" at={ideasAt} volume={0.6} />
     </>
   )
 }
@@ -210,8 +216,8 @@ function Window({ concepts }: SessionReelProps) {
       <div style={{ position: 'absolute', top: 1250, left: 70, width: 820, textAlign: 'center', fontFamily: sans, fontSize: 38, fontWeight: 600, color: C.red, opacity: prog(frame, blockF, blockF + 8) }}>
         burst over the limit → blocked
       </div>
-      <Sfx t={T} name="slide" at={moves - 12} volume={0.4} />
-      <Sfx t={T} name="block" at={blockF} volume={0.5} />
+      <Sfx t={T} name="slide" at={moves - 12} volume={0.85} />
+      <Sfx t={T} name="block" at={blockF} volume={0.85} />
     </>
   )
 }
@@ -355,8 +361,8 @@ function Keys({ concepts }: SessionReelProps) {
         <span style={{ color: C.grey }}> → </span>
         <span style={{ color: C.red, fontWeight: 600, opacity: prog(frame, blockAt, blockAt + 8) }}>caught by {phase.catches === 0 ? 'IP' : 'user'}</span>
       </div>
-      <Sfx t={T} name="block" at={phases[0].from + 5 * STEP + FLY} volume={0.45} />
-      <Sfx t={T} name="block" at={phases[1].from + 5 * STEP + FLY} volume={0.45} />
+      <Sfx t={T} name="block" at={phases[0].from + 5 * STEP + FLY} volume={0.85} />
+      <Sfx t={T} name="block" at={phases[1].from + 5 * STEP + FLY} volume={0.85} />
     </>
   )
 }
@@ -423,8 +429,8 @@ function Retry({ concepts }: SessionReelProps) {
         200
         <div style={{ fontSize: 30, fontWeight: 500 }}>OK</div>
       </div>
-      <Sfx t={T} name="error" at={replies + 8} volume={0.25} />
-      <Sfx t={T} name="chime" at={back + 6} volume={0.5} />
+      <Sfx t={T} name="error" at={replies + 8} volume={0.13} />
+      <Sfx t={T} name="success" at={back + 6} volume={0.38} />
     </>
   )
 }
@@ -496,7 +502,7 @@ export function SessionReel(props: SessionReelProps) {
   const p: SessionReelProps = { prompt: props.prompt ?? '', repo: props.repo ?? '', concepts: props.concepts?.length ? props.concepts : DEFAULT_CONCEPTS }
   return (
     <Stage>
-      <ReelAudio t={T} musicVolume={0.17} />
+      <ReelAudio t={T} voiceVolume={0.94} musicVolume={0.29} duck={0.5} />
       <Scene t={T} id="intro"><Intro {...p} /></Scene>
       <Scene t={T} id="window"><Window {...p} /></Scene>
       <Scene t={T} id="keys"><Keys {...p} /></Scene>

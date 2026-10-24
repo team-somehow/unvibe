@@ -138,7 +138,9 @@ function Viewer({ index, setIndex, onClose }: { index: number; setIndex: (i: num
         e.preventDefault()
         go(-1)
       } else if (e.key === 'Tab' && panelRef.current) {
-        const f = [...panelRef.current.querySelectorAll<HTMLElement>('button:not([disabled])')]
+        // only buttons that are actually shown: the side arrows are hidden on phones
+        const f = [...panelRef.current.querySelectorAll<HTMLElement>('button:not([disabled])')].filter((b) => b.getClientRects().length > 0)
+        if (!f.length) return
         const first = f[0]
         const last = f[f.length - 1]
         if (e.shiftKey && document.activeElement === first) {
@@ -231,7 +233,8 @@ function Viewer({ index, setIndex, onClose }: { index: number; setIndex: (i: num
         <button type="button" onClick={() => go(-1)} aria-label="Previous reel" className="hidden size-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:grid">
           <ChevronLeft size={22} />
         </button>
-        <div className="viewer-stage relative overflow-hidden bg-black md:rounded-[24px] md:ring-1 md:ring-white/10" style={{ touchAction: 'pan-y' }}>
+        {/* nothing behind the viewer scrolls, so it owns every drag: sideways changes reel, down closes */}
+        <div className="viewer-stage relative overflow-hidden bg-black md:rounded-[24px] md:ring-1 md:ring-white/10" style={{ touchAction: 'none' }}>
           <div aria-hidden className="absolute inset-0">
             <ReelBoundary resetKey={r.kind}>
               <LandingPlayer kind={r.kind} playerRef={playerRef} audioReady={sound.ready} initialFrame={resumeAt} />

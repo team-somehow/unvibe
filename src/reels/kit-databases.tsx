@@ -167,7 +167,7 @@ export function CodeCard({ rows, x = 70, y, w = 940, size = 31, title, opacity =
         padding: '22px 0 24px', fontFamily: mono, fontSize: size, lineHeight: 1.62, boxShadow: '0 30px 80px rgba(0,0,0,0.6)', ...style,
       }}
     >
-      {title && <div style={{ fontFamily: mono, fontSize: 26, color: C.grey, padding: '0 30px 10px' }}>{title}</div>}
+      {title && <div style={{ fontFamily: mono, fontSize: 28, color: C.grey, padding: '0 30px 10px' }}>{title}</div>}
       {rows.map((r, i) => {
         const hl = r.hl ?? 0
         const col = r.hlColor ?? C.yellow
