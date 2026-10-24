@@ -10,13 +10,13 @@ import { WaitlistProvider, WaitlistSticker } from '../components/landing/Waitlis
 import { useWaitlist } from '../components/landing/waitlistState'
 import { Workbench } from '../components/landing/Workbench'
 
-const COMMAND = 'npx learnagram connect'
+const COMMAND = 'npx unvibe connect'
 
 function Header() {
   const { email, focusCard } = useWaitlist()
   return (
     <header className="mx-auto flex h-16 w-full max-w-[1360px] min-[1800px]:max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-10">
-      <Link to="/" aria-label="Learnagram" className="-m-1 rounded-lg p-1">
+      <Link to="/" aria-label="Unvibe" className="-m-1 rounded-lg p-1">
         <Logo />
       </Link>
       <nav aria-label="Main" className="flex items-center gap-2 sm:gap-6">
@@ -59,7 +59,7 @@ const STEPS = [
   <>
     Run <CopyCommand /> in a project where you use Claude Code.
   </>,
-  <>Learnagram reads the session transcripts Claude Code already keeps on your machine and picks out the changes worth explaining.</>,
+  <>Unvibe reads the session transcripts Claude Code already keeps on your machine and picks out the changes worth explaining.</>,
   <>Reels show up in your feed. Comment to ask the agent why it did something. When it needs a decision, you get a poll.</>,
 ]
 
@@ -95,7 +95,7 @@ export default function Landing() {
   const [viewer, setViewer] = useState<number | null>(null)
   useEffect(() => {
     const prev = document.title
-    document.title = 'Learnagram: understand what your coding agent shipped'
+    document.title = 'Unvibe: understand what your coding agent shipped'
     return () => {
       document.title = prev
     }

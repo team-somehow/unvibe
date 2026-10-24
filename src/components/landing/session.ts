@@ -36,7 +36,7 @@ export const SESSION: Line[] = [
 /** What the session prints once the reader votes in the poll. */
 export function writeBack(choice: string): Line[] {
   return [
-    { id: 'w1', glyph: '⎿', text: `You chose ${choice} in Learnagram`, tone: 'good' },
+    { id: 'w1', glyph: '⎿', text: `You chose ${choice} in Unvibe`, tone: 'good' },
     choice === 'Redis'
       ? { id: 'w2', glyph: '⏺', text: 'Update(docker-compose.yml): add a redis service with a 30-day session TTL' }
       : { id: 'w2', glyph: '⏺', text: 'Update(migrations/0043_sessions.sql): add a sessions table with expires_at' },

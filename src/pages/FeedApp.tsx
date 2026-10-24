@@ -400,7 +400,7 @@ export default function FeedApp() {
       <div className="lg-feed flex h-dvh w-full overflow-hidden bg-black text-white">
         {/* Desktop sidebar */}
         <aside className="hidden w-[76px] shrink-0 flex-col border-r border-white/10 px-3 py-6 md:flex xl:w-[244px]">
-          <Link to="/" className="mb-9 flex h-11 items-center rounded-xl px-2.5" aria-label="Learnagram home">
+          <Link to="/" className="mb-9 flex h-11 items-center rounded-xl px-2.5" aria-label="Unvibe home">
             <span className="hidden xl:block">
               <Logo />
             </span>
@@ -594,7 +594,7 @@ function Profile({ mine, onOpen, onCreate }: { mine: Reel[]; onOpen: (id: string
   return (
     <div className="no-scrollbar flex-1 overflow-y-auto">
       <div className="mx-auto max-w-[935px] px-4 pt-[max(16px,env(safe-area-inset-top))] pb-10 md:px-8 md:pt-12">
-        <Link to="/" className="mb-5 inline-flex h-11 items-center md:hidden" aria-label="Learnagram home">
+        <Link to="/" className="mb-5 inline-flex h-11 items-center md:hidden" aria-label="Unvibe home">
           <Logo />
         </Link>
         <div className="flex items-center gap-6 md:gap-16 md:px-10">

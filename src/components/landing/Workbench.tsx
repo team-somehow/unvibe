@@ -493,7 +493,7 @@ export function Workbench({ suspended }: { suspended: boolean }) {
           <span className="block">Do you understand it?</span>
         </h1>
         <p className="mt-4 max-w-[36em] text-[17px] leading-[1.55] text-pretty text-dim sm:text-[18px] md:col-span-2 lg:mt-5 lg:max-w-[38em] short:mt-3 lg:text-[clamp(17px,1.25vw,20px)]">
-          Your agent writes code faster than you can review it. Learnagram reads your Claude Code sessions and turns the changes that matter into short explainer reels.
+          Your agent writes code faster than you can review it. Unvibe reads your Claude Code sessions and turns the changes that matter into short explainer reels.
         </p>
 
         <div ref={wellRef} className="mt-7 hidden min-h-0 min-w-0 flex-1 flex-col rounded-[14px] bg-ink ring-1 ring-line/70 md:flex md:h-0 md:min-h-full lg:h-auto lg:min-h-0 xl:mt-8 short:mt-5">
