@@ -4,6 +4,7 @@ import {
   Braces,
   ChevronDown,
   CirclePlay,
+  Download,
   Code2,
   Film,
   MessageCircle,
@@ -23,6 +24,7 @@ import { SessionLab } from '../components/landing/SessionLab'
 import { SignupForm, SignupLink } from '../components/landing/SignupSection'
 import { EXPLORE } from '../components/landing/session'
 import { SoundCtx, type LandingSound } from '../components/landing/sound'
+import { usePwaInstall } from '../components/pwa/usePwaInstall'
 import './Landing.css'
 
 function Brand() {
@@ -57,6 +59,23 @@ function Header() {
   )
 }
 
+/** The CTA after the waitlist: installs the feed as an app, which opens straight to /app. */
+function GetTheApp() {
+  const { installed, prompting, requestInstall } = usePwaInstall()
+  if (installed) {
+    return (
+      <Link to="/app" className="uv-button uv-button-small uv-button-outline">
+        Open the app <ArrowUpRight size={16} />
+      </Link>
+    )
+  }
+  return (
+    <button type="button" className="uv-button uv-button-small uv-button-outline" disabled={prompting} onClick={() => void requestInstall()}>
+      {prompting ? 'Opening…' : 'Get the app'} <Download size={16} />
+    </button>
+  )
+}
+
 function Hero({ suspended }: { suspended: boolean }) {
   return (
     <section className="uv-hero uv-container" aria-labelledby="hero-title">
@@ -86,12 +105,10 @@ function Hero({ suspended }: { suspended: boolean }) {
           <SignupForm variant="hero" />
         </div>
         <div className="uv-hero-actions">
+          <GetTheApp />
           <a href="#how-it-works" className="uv-text-link">
             <CirclePlay size={21} strokeWidth={1.6} /> See how it works
           </a>
-          <Link to="/app" className="uv-text-link uv-hero-demo-link">
-            Try the demo <ArrowUpRight size={16} />
-          </Link>
         </div>
       </div>
       <div className="uv-hero-visual" inert={suspended || undefined}>

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Download, Ellipsis, Share, X } from 'lucide-react'
-import { PwaContext } from './usePwaInstall'
+import { PwaContext, isStandalone, standaloneQuery } from './usePwaInstall'
 import './PwaControls.css'
 
 interface InstallPromptEvent extends Event {
@@ -21,9 +21,6 @@ let deferredPrompt: InstallPromptEvent | null = null
 let installedThisPage = false
 const subscribers = new Set<() => void>()
 const serverSnapshot: InstallSnapshot = { installed: false, available: false, prompting: false }
-const standaloneQuery = typeof window === 'undefined' ? null : window.matchMedia('(display-mode: standalone)')
-const isStandalone = () =>
-  Boolean(standaloneQuery?.matches || (typeof navigator !== 'undefined' && (navigator as Navigator & { standalone?: boolean }).standalone))
 let snapshot: InstallSnapshot = { ...serverSnapshot, installed: isStandalone() }
 
 function publish(change: Partial<InstallSnapshot>) {

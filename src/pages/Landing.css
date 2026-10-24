@@ -112,6 +112,18 @@
 .uv-button-ink:hover {
   background: #3d4037;
 }
+.uv-button-outline {
+  border: 1.5px solid var(--uv-ink);
+  color: var(--uv-ink);
+}
+.uv-button-outline:hover {
+  background: var(--uv-ink);
+  color: #fff;
+}
+.uv-button-outline:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
 .uv-button-coral {
   background: var(--uv-coral);
   color: #fff;
