@@ -1,0 +1,15 @@
+{
+  "id": "poll",
+  "voice": { "id": "EXAVITQu4vr4xnSDxMaL", "name": "Sarah", "model": "eleven_multilingual_v2", "settings": { "stability": 0.55, "similarity_boost": 0.8, "style": 0.25, "speed": 1.0 } },
+  "music": { "prompt": "Gentle game-show thinking music: soft pizzicato strings and light marimba over a steady ticking clock pulse, curious and lightly suspenseful but warm, seamless loop, around 96 bpm, instrumental", "minSeconds": 10 },
+  "sfx": [
+    { "id": "clock", "prompt": "soft wooden clock ticking, steady, game show countdown", "duration": 3.0, "promptInfluence": 0.7 },
+    { "id": "reveal", "prompt": "light playful game show reveal sparkle, short and bright", "duration": 0.9, "promptInfluence": 0.65 }
+  ],
+  "scenes": [
+    { "id": "ask", "text": "I've paused your auth-service session. I need one decision from you: where should login sessions live?", "minSeconds": 5, "leadIn": 0.3 },
+    { "id": "redis", "text": "Option one, Redis. Sessions sit in memory, so lookups are very fast, and each one has a timer, so expired logins clean themselves up. The catch: one more service to run.", "minSeconds": 8 },
+    { "id": "postgres", "text": "Option two, Postgres. It's already in your stack, and sessions survive a restart. The catch: under heavy load, it's slower.", "minSeconds": 7 },
+    { "id": "vote", "text": "Both are solid. Tap your answer below, and I'll carry on with it.", "minSeconds": 4.5, "padAfter": 1.4 }
+  ]
+}

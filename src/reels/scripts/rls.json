@@ -1,13 +1,77 @@
 {
   "id": "rls",
-  "voice": null,
-  "music": null,
-  "sfx": [],
+  "voice": {
+    "id": "JBFqnCBsd6RMkjVDRZzb",
+    "name": "George",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.4,
+      "speed": 1.07
+    }
+  },
+  "music": {
+    "prompt": "True-crime documentary underscore: sparse slow felt piano notes over a low sustained cello drone, quiet suspense, minor key, around 70 bpm, intimate and cinematic, no drums, instrumental",
+    "minSeconds": 10
+  },
+  "sfx": [
+    {
+      "id": "leak",
+      "prompt": "cascade of rapid soft digital data blips pouring out, like files streaming out of a server",
+      "duration": 2.0,
+      "promptInfluence": 0.6
+    },
+    {
+      "id": "lock",
+      "prompt": "heavy steel bolt sliding shut, solid vault lock clunk, short",
+      "duration": 1.0,
+      "promptInfluence": 0.7
+    },
+    {
+      "id": "sting",
+      "prompt": "single low ominous piano note with cello swell, true crime documentary sting, reverb tail",
+      "duration": 2.5,
+      "promptInfluence": 0.55
+    }
+  ],
   "scenes": [
     {
-      "id": "todo",
-      "text": "",
-      "minSeconds": 5
+      "id": "hook",
+      "text": "Nobody broke in. Your Supabase app simply handed every user's profile to anyone who asked. Claude caught it.",
+      "minSeconds": 5,
+      "leadIn": 0.35,
+      "padAfter": 0.4
+    },
+    {
+      "id": "key",
+      "text": "Your frontend talks to Supabase directly, with the anon key. That key is public. That part is fine.",
+      "minSeconds": 5,
+      "padAfter": 0.4
+    },
+    {
+      "id": "leak",
+      "text": "But the profiles table had Row Level Security switched off. So one line in the browser console returned everyone.",
+      "minSeconds": 5.5,
+      "padAfter": 0.4
+    },
+    {
+      "id": "policy",
+      "text": "Claude turned it on, and wrote a policy: each user can only read the row whose id matches their own.",
+      "minSeconds": 5.5,
+      "padAfter": 0.4
+    },
+    {
+      "id": "filter",
+      "text": "Same query. Same public key. Now it returns exactly one row. Yours.",
+      "minSeconds": 5,
+      "padAfter": 0.4
+    },
+    {
+      "id": "takeaway",
+      "text": "If the browser can reach a table, that table needs a policy.",
+      "minSeconds": 4,
+      "padAfter": 1.0
     }
   ]
 }

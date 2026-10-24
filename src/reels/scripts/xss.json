@@ -1,13 +1,18 @@
 {
   "id": "xss",
-  "voice": null,
-  "music": null,
-  "sfx": [],
+  "voice": { "id": "FGY2WhTYpPnrIDTdsKH5", "name": "Laura", "model": "eleven_v3", "settings": { "stability": 0.5, "similarity_boost": 0.8 } },
+  "music": { "prompt": "Quirky mischievous 8-bit chiptune, playful square wave melody, bouncy bass line, sneaky cartoon heist vibe, light and fun, 118 bpm, instrumental", "minSeconds": 10 },
+  "sfx": [
+    { "id": "hop", "prompt": "playful retro 8-bit arcade bouncing blips multiplying quickly", "duration": 1.5, "promptInfluence": 0.6 },
+    { "id": "swipe", "prompt": "quick cartoon sneaky swipe zip, something snatched away", "duration": 0.8, "promptInfluence": 0.7 },
+    { "id": "shield", "prompt": "retro 8-bit video game power-up shield activate sound", "duration": 1.0, "promptInfluence": 0.7 }
+  ],
   "scenes": [
-    {
-      "id": "todo",
-      "text": "",
-      "minSeconds": 5
-    }
+    { "id": "hook", "text": "This innocent little profile bio could steal the session of everyone who views it. Claude caught it in your comments feature.", "minSeconds": 5 },
+    { "id": "inject", "text": "Bios were rendered with dangerously set inner HTML, so any HTML in a bio became real code on the page.", "minSeconds": 5 },
+    { "id": "spread", "text": "Stored once in the database, it runs in every visitor's browser, and quietly ships their session cookie off to the attacker.", "minSeconds": 6 },
+    { "id": "escape", "text": "Claude rendered bios as plain text. React escapes the angle brackets, so the tag shows up as harmless words.", "minSeconds": 5.5 },
+    { "id": "defense", "text": "Plus an HttpOnly cookie that scripts can't read, and a content security policy as backup.", "minSeconds": 5 },
+    { "id": "takeaway", "text": "User content is text. Never HTML.", "minSeconds": 3, "padAfter": 1.0 }
   ]
 }

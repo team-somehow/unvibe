@@ -1,0 +1,553 @@
+{
+  "id": "session",
+  "voice": "SAz9YHcvj6GT2YYXdXww",
+  "scenes": [
+    {
+      "id": "intro",
+      "file": "audio/session/intro.mp3",
+      "minSeconds": 5.2,
+      "leadIn": 0.5,
+      "padAfter": 0.5,
+      "duration": 3.669,
+      "words": [
+        {
+          "text": "Here's",
+          "start": 0,
+          "end": 0.29
+        },
+        {
+          "text": "what",
+          "start": 0.313,
+          "end": 0.43
+        },
+        {
+          "text": "Claude",
+          "start": 0.464,
+          "end": 0.708
+        },
+        {
+          "text": "just",
+          "start": 0.731,
+          "end": 0.871
+        },
+        {
+          "text": "did",
+          "start": 0.906,
+          "end": 1.022
+        },
+        {
+          "text": "in",
+          "start": 1.057,
+          "end": 1.115
+        },
+        {
+          "text": "your",
+          "start": 1.149,
+          "end": 1.242
+        },
+        {
+          "text": "session,",
+          "start": 1.3,
+          "end": 1.73
+        },
+        {
+          "text": "and",
+          "start": 1.765,
+          "end": 1.939
+        },
+        {
+          "text": "three",
+          "start": 2.009,
+          "end": 2.241
+        },
+        {
+          "text": "ideas",
+          "start": 2.287,
+          "end": 2.577
+        },
+        {
+          "text": "worth",
+          "start": 2.624,
+          "end": 2.798
+        },
+        {
+          "text": "knowing.",
+          "start": 2.844,
+          "end": 3.669
+        }
+      ],
+      "hash": "793957cd7948"
+    },
+    {
+      "id": "window",
+      "file": "audio/session/window.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.25,
+      "padAfter": 0.7,
+      "duration": 9.706,
+      "words": [
+        {
+          "text": "One:",
+          "start": 0,
+          "end": 0.464
+        },
+        {
+          "text": "a",
+          "start": 0.778,
+          "end": 0.848
+        },
+        {
+          "text": "sliding",
+          "start": 0.929,
+          "end": 1.405
+        },
+        {
+          "text": "window.",
+          "start": 1.474,
+          "end": 2.055
+        },
+        {
+          "text": "Count",
+          "start": 2.415,
+          "end": 2.705
+        },
+        {
+          "text": "each",
+          "start": 2.786,
+          "end": 3.007
+        },
+        {
+          "text": "client's",
+          "start": 3.053,
+          "end": 3.425
+        },
+        {
+          "text": "requests",
+          "start": 3.471,
+          "end": 3.947
+        },
+        {
+          "text": "in",
+          "start": 4.005,
+          "end": 4.087
+        },
+        {
+          "text": "the",
+          "start": 4.122,
+          "end": 4.191
+        },
+        {
+          "text": "last",
+          "start": 4.249,
+          "end": 4.481
+        },
+        {
+          "text": "sixty",
+          "start": 4.528,
+          "end": 4.853
+        },
+        {
+          "text": "seconds.",
+          "start": 4.923,
+          "end": 5.515
+        },
+        {
+          "text": "The",
+          "start": 5.828,
+          "end": 5.956
+        },
+        {
+          "text": "window",
+          "start": 6.014,
+          "end": 6.339
+        },
+        {
+          "text": "moves",
+          "start": 6.432,
+          "end": 6.734
+        },
+        {
+          "text": "with",
+          "start": 6.757,
+          "end": 6.861
+        },
+        {
+          "text": "the",
+          "start": 6.896,
+          "end": 6.966
+        },
+        {
+          "text": "clock,",
+          "start": 7.001,
+          "end": 7.442
+        },
+        {
+          "text": "so",
+          "start": 7.488,
+          "end": 7.581
+        },
+        {
+          "text": "there's",
+          "start": 7.639,
+          "end": 7.837
+        },
+        {
+          "text": "no",
+          "start": 7.895,
+          "end": 8.034
+        },
+        {
+          "text": "reset",
+          "start": 8.127,
+          "end": 8.51
+        },
+        {
+          "text": "to",
+          "start": 8.545,
+          "end": 8.603
+        },
+        {
+          "text": "burst",
+          "start": 8.661,
+          "end": 8.893
+        },
+        {
+          "text": "through.",
+          "start": 8.928,
+          "end": 9.706
+        }
+      ],
+      "hash": "c71539c588ea"
+    },
+    {
+      "id": "keys",
+      "file": "audio/session/keys.mp3",
+      "minSeconds": 6.5,
+      "leadIn": 0.25,
+      "padAfter": 0.7,
+      "duration": 9.242,
+      "words": [
+        {
+          "text": "Two:",
+          "start": 0,
+          "end": 0.464
+        },
+        {
+          "text": "limit",
+          "start": 0.662,
+          "end": 0.94
+        },
+        {
+          "text": "by",
+          "start": 0.998,
+          "end": 1.138
+        },
+        {
+          "text": "IP",
+          "start": 1.254,
+          "end": 1.556
+        },
+        {
+          "text": "and",
+          "start": 1.823,
+          "end": 1.985
+        },
+        {
+          "text": "by",
+          "start": 2.043,
+          "end": 2.171
+        },
+        {
+          "text": "user.",
+          "start": 2.264,
+          "end": 2.775
+        },
+        {
+          "text": "IP",
+          "start": 3.088,
+          "end": 3.344
+        },
+        {
+          "text": "stops",
+          "start": 3.483,
+          "end": 3.808
+        },
+        {
+          "text": "one",
+          "start": 3.866,
+          "end": 4.075
+        },
+        {
+          "text": "machine",
+          "start": 4.11,
+          "end": 4.54
+        },
+        {
+          "text": "trying",
+          "start": 4.586,
+          "end": 4.899
+        },
+        {
+          "text": "many",
+          "start": 4.981,
+          "end": 5.19
+        },
+        {
+          "text": "accounts.",
+          "start": 5.248,
+          "end": 5.921
+        },
+        {
+          "text": "User",
+          "start": 6.339,
+          "end": 6.664
+        },
+        {
+          "text": "stops",
+          "start": 6.722,
+          "end": 7.012
+        },
+        {
+          "text": "one",
+          "start": 7.082,
+          "end": 7.245
+        },
+        {
+          "text": "account",
+          "start": 7.268,
+          "end": 7.57
+        },
+        {
+          "text": "hit",
+          "start": 7.628,
+          "end": 7.779
+        },
+        {
+          "text": "from",
+          "start": 7.814,
+          "end": 7.941
+        },
+        {
+          "text": "many",
+          "start": 7.999,
+          "end": 8.197
+        },
+        {
+          "text": "machines.",
+          "start": 8.255,
+          "end": 9.242
+        }
+      ],
+      "hash": "a3e0b5f0bad9"
+    },
+    {
+      "id": "retry",
+      "file": "audio/session/retry.mp3",
+      "minSeconds": 6.5,
+      "leadIn": 0.25,
+      "padAfter": 0.8,
+      "duration": 7.198,
+      "words": [
+        {
+          "text": "Three:",
+          "start": 0,
+          "end": 0.476
+        },
+        {
+          "text": "over",
+          "start": 0.639,
+          "end": 0.813
+        },
+        {
+          "text": "the",
+          "start": 0.859,
+          "end": 0.929
+        },
+        {
+          "text": "limit,",
+          "start": 0.987,
+          "end": 1.254
+        },
+        {
+          "text": "the",
+          "start": 1.277,
+          "end": 1.358
+        },
+        {
+          "text": "server",
+          "start": 1.405,
+          "end": 1.649
+        },
+        {
+          "text": "replies",
+          "start": 1.695,
+          "end": 2.125
+        },
+        {
+          "text": "four",
+          "start": 2.218,
+          "end": 2.403
+        },
+        {
+          "text": "twenty-nine,",
+          "start": 2.45,
+          "end": 3.123
+        },
+        {
+          "text": "Too",
+          "start": 3.262,
+          "end": 3.425
+        },
+        {
+          "text": "Many",
+          "start": 3.471,
+          "end": 3.646
+        },
+        {
+          "text": "Requests,",
+          "start": 3.715,
+          "end": 4.331
+        },
+        {
+          "text": "with",
+          "start": 4.47,
+          "end": 4.621
+        },
+        {
+          "text": "a",
+          "start": 4.656,
+          "end": 4.679
+        },
+        {
+          "text": "Retry-After",
+          "start": 4.748,
+          "end": 5.445
+        },
+        {
+          "text": "header",
+          "start": 5.515,
+          "end": 5.735
+        },
+        {
+          "text": "saying",
+          "start": 5.817,
+          "end": 6.026
+        },
+        {
+          "text": "when",
+          "start": 6.084,
+          "end": 6.211
+        },
+        {
+          "text": "to",
+          "start": 6.246,
+          "end": 6.293
+        },
+        {
+          "text": "come",
+          "start": 6.339,
+          "end": 6.49
+        },
+        {
+          "text": "back.",
+          "start": 6.525,
+          "end": 7.198
+        }
+      ],
+      "hash": "c0cfc4045950"
+    },
+    {
+      "id": "outro",
+      "file": "audio/session/outro.mp3",
+      "minSeconds": 4,
+      "leadIn": 0.25,
+      "padAfter": 1.3,
+      "duration": 3.994,
+      "words": [
+        {
+          "text": "Three",
+          "start": 0,
+          "end": 0.29
+        },
+        {
+          "text": "small",
+          "start": 0.325,
+          "end": 0.569
+        },
+        {
+          "text": "ideas.",
+          "start": 0.627,
+          "end": 1.173
+        },
+        {
+          "text": "Your",
+          "start": 1.37,
+          "end": 1.533
+        },
+        {
+          "text": "API",
+          "start": 1.591,
+          "end": 1.997
+        },
+        {
+          "text": "just",
+          "start": 2.113,
+          "end": 2.264
+        },
+        {
+          "text": "got",
+          "start": 2.299,
+          "end": 2.438
+        },
+        {
+          "text": "a",
+          "start": 2.485,
+          "end": 2.508
+        },
+        {
+          "text": "lot",
+          "start": 2.554,
+          "end": 2.763
+        },
+        {
+          "text": "harder",
+          "start": 2.821,
+          "end": 3.111
+        },
+        {
+          "text": "to",
+          "start": 3.17,
+          "end": 3.228
+        },
+        {
+          "text": "abuse.",
+          "start": 3.309,
+          "end": 3.994
+        }
+      ],
+      "hash": "dca388aa2ab1"
+    }
+  ],
+  "music": {
+    "file": "audio/session/music.mp3",
+    "duration": 41,
+    "hash": "d96a0b1beaec"
+  },
+  "sfx": {
+    "slide": {
+      "file": "audio/session/sfx-slide.mp3",
+      "duration": 0.9,
+      "hash": "fea9add2690c"
+    },
+    "block": {
+      "file": "audio/session/sfx-block.mp3",
+      "duration": 0.6,
+      "hash": "a1307bb735a8"
+    },
+    "chime": {
+      "file": "audio/session/sfx-chime.mp3",
+      "duration": 1.2,
+      "hash": "90c4d11e52bb"
+    }
+  }
+}

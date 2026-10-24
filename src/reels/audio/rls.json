@@ -1,7 +1,589 @@
 {
   "id": "rls",
-  "voice": null,
-  "scenes": [],
-  "music": null,
-  "sfx": {}
+  "voice": "JBFqnCBsd6RMkjVDRZzb",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/rls/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.35,
+      "padAfter": 0.4,
+      "duration": 7.663,
+      "words": [
+        {
+          "text": "Nobody",
+          "start": 0,
+          "end": 0.36
+        },
+        {
+          "text": "broke",
+          "start": 0.406,
+          "end": 0.662
+        },
+        {
+          "text": "in.",
+          "start": 0.72,
+          "end": 1.091
+        },
+        {
+          "text": "Your",
+          "start": 1.509,
+          "end": 1.707
+        },
+        {
+          "text": "Supabase",
+          "start": 1.765,
+          "end": 2.287
+        },
+        {
+          "text": "app",
+          "start": 2.345,
+          "end": 2.566
+        },
+        {
+          "text": "simply",
+          "start": 2.647,
+          "end": 2.984
+        },
+        {
+          "text": "handed",
+          "start": 3.042,
+          "end": 3.355
+        },
+        {
+          "text": "every",
+          "start": 3.425,
+          "end": 3.704
+        },
+        {
+          "text": "user's",
+          "start": 3.773,
+          "end": 4.052
+        },
+        {
+          "text": "profile",
+          "start": 4.098,
+          "end": 4.574
+        },
+        {
+          "text": "to",
+          "start": 4.609,
+          "end": 4.667
+        },
+        {
+          "text": "anyone",
+          "start": 4.737,
+          "end": 5.074
+        },
+        {
+          "text": "who",
+          "start": 5.097,
+          "end": 5.19
+        },
+        {
+          "text": "asked.",
+          "start": 5.271,
+          "end": 5.759
+        },
+        {
+          "text": "Claude",
+          "start": 6.235,
+          "end": 6.583
+        },
+        {
+          "text": "caught",
+          "start": 6.629,
+          "end": 6.885
+        },
+        {
+          "text": "it.",
+          "start": 6.943,
+          "end": 7.663
+        }
+      ],
+      "hash": "a722c7e50c12"
+    },
+    {
+      "id": "key",
+      "file": "audio/rls/key.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.25,
+      "padAfter": 0.4,
+      "duration": 6.827,
+      "words": [
+        {
+          "text": "Your",
+          "start": 0,
+          "end": 0.232
+        },
+        {
+          "text": "frontend",
+          "start": 0.302,
+          "end": 0.72
+        },
+        {
+          "text": "talks",
+          "start": 0.778,
+          "end": 1.068
+        },
+        {
+          "text": "to",
+          "start": 1.103,
+          "end": 1.184
+        },
+        {
+          "text": "Supabase",
+          "start": 1.254,
+          "end": 1.753
+        },
+        {
+          "text": "directly,",
+          "start": 1.788,
+          "end": 2.45
+        },
+        {
+          "text": "with",
+          "start": 2.496,
+          "end": 2.659
+        },
+        {
+          "text": "the",
+          "start": 2.682,
+          "end": 2.752
+        },
+        {
+          "text": "anon",
+          "start": 2.798,
+          "end": 3.053
+        },
+        {
+          "text": "key.",
+          "start": 3.135,
+          "end": 3.541
+        },
+        {
+          "text": "That",
+          "start": 3.843,
+          "end": 4.052
+        },
+        {
+          "text": "key",
+          "start": 4.133,
+          "end": 4.307
+        },
+        {
+          "text": "is",
+          "start": 4.365,
+          "end": 4.447
+        },
+        {
+          "text": "public.",
+          "start": 4.505,
+          "end": 5.05
+        },
+        {
+          "text": "That",
+          "start": 5.41,
+          "end": 5.631
+        },
+        {
+          "text": "part",
+          "start": 5.7,
+          "end": 5.956
+        },
+        {
+          "text": "is",
+          "start": 6.002,
+          "end": 6.084
+        },
+        {
+          "text": "fine.",
+          "start": 6.153,
+          "end": 6.827
+        }
+      ],
+      "hash": "b3bed5f85f15"
+    },
+    {
+      "id": "leak",
+      "file": "audio/rls/leak.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.25,
+      "padAfter": 0.4,
+      "duration": 7.198,
+      "words": [
+        {
+          "text": "But",
+          "start": 0,
+          "end": 0.163
+        },
+        {
+          "text": "the",
+          "start": 0.186,
+          "end": 0.255
+        },
+        {
+          "text": "profiles",
+          "start": 0.302,
+          "end": 0.836
+        },
+        {
+          "text": "table",
+          "start": 0.882,
+          "end": 1.219
+        },
+        {
+          "text": "had",
+          "start": 1.265,
+          "end": 1.382
+        },
+        {
+          "text": "Row",
+          "start": 1.463,
+          "end": 1.649
+        },
+        {
+          "text": "Level",
+          "start": 1.707,
+          "end": 1.939
+        },
+        {
+          "text": "Security",
+          "start": 1.997,
+          "end": 2.508
+        },
+        {
+          "text": "switched",
+          "start": 2.577,
+          "end": 2.926
+        },
+        {
+          "text": "off.",
+          "start": 2.984,
+          "end": 3.367
+        },
+        {
+          "text": "So",
+          "start": 3.843,
+          "end": 4.005
+        },
+        {
+          "text": "one",
+          "start": 4.087,
+          "end": 4.261
+        },
+        {
+          "text": "line",
+          "start": 4.307,
+          "end": 4.528
+        },
+        {
+          "text": "in",
+          "start": 4.551,
+          "end": 4.609
+        },
+        {
+          "text": "the",
+          "start": 4.644,
+          "end": 4.714
+        },
+        {
+          "text": "browser",
+          "start": 4.748,
+          "end": 5.062
+        },
+        {
+          "text": "console",
+          "start": 5.108,
+          "end": 5.584
+        },
+        {
+          "text": "returned",
+          "start": 5.642,
+          "end": 6.049
+        },
+        {
+          "text": "everyone.",
+          "start": 6.107,
+          "end": 7.198
+        }
+      ],
+      "hash": "60c25a10093e"
+    },
+    {
+      "id": "policy",
+      "file": "audio/rls/policy.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.25,
+      "padAfter": 0.4,
+      "duration": 6.177,
+      "words": [
+        {
+          "text": "Claude",
+          "start": 0,
+          "end": 0.372
+        },
+        {
+          "text": "turned",
+          "start": 0.395,
+          "end": 0.639
+        },
+        {
+          "text": "it",
+          "start": 0.673,
+          "end": 0.743
+        },
+        {
+          "text": "on,",
+          "start": 0.801,
+          "end": 1.091
+        },
+        {
+          "text": "and",
+          "start": 1.126,
+          "end": 1.265
+        },
+        {
+          "text": "wrote",
+          "start": 1.312,
+          "end": 1.509
+        },
+        {
+          "text": "a",
+          "start": 1.533,
+          "end": 1.556
+        },
+        {
+          "text": "policy:",
+          "start": 1.602,
+          "end": 2.171
+        },
+        {
+          "text": "each",
+          "start": 2.531,
+          "end": 2.74
+        },
+        {
+          "text": "user",
+          "start": 2.821,
+          "end": 3.053
+        },
+        {
+          "text": "can",
+          "start": 3.088,
+          "end": 3.204
+        },
+        {
+          "text": "only",
+          "start": 3.262,
+          "end": 3.495
+        },
+        {
+          "text": "read",
+          "start": 3.564,
+          "end": 3.75
+        },
+        {
+          "text": "the",
+          "start": 3.785,
+          "end": 3.855
+        },
+        {
+          "text": "row",
+          "start": 3.924,
+          "end": 4.145
+        },
+        {
+          "text": "whose",
+          "start": 4.214,
+          "end": 4.412
+        },
+        {
+          "text": "id",
+          "start": 4.47,
+          "end": 4.795
+        },
+        {
+          "text": "matches",
+          "start": 4.853,
+          "end": 5.201
+        },
+        {
+          "text": "their",
+          "start": 5.248,
+          "end": 5.422
+        },
+        {
+          "text": "own.",
+          "start": 5.48,
+          "end": 6.177
+        }
+      ],
+      "hash": "6b68b9c3dc3d"
+    },
+    {
+      "id": "filter",
+      "file": "audio/rls/filter.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.25,
+      "padAfter": 0.4,
+      "duration": 5.573,
+      "words": [
+        {
+          "text": "Same",
+          "start": 0,
+          "end": 0.313
+        },
+        {
+          "text": "query.",
+          "start": 0.372,
+          "end": 0.906
+        },
+        {
+          "text": "Same",
+          "start": 1.068,
+          "end": 1.358
+        },
+        {
+          "text": "public",
+          "start": 1.405,
+          "end": 1.718
+        },
+        {
+          "text": "key.",
+          "start": 1.776,
+          "end": 2.206
+        },
+        {
+          "text": "Now",
+          "start": 2.508,
+          "end": 2.682
+        },
+        {
+          "text": "it",
+          "start": 2.74,
+          "end": 2.81
+        },
+        {
+          "text": "returns",
+          "start": 2.868,
+          "end": 3.262
+        },
+        {
+          "text": "exactly",
+          "start": 3.32,
+          "end": 3.75
+        },
+        {
+          "text": "one",
+          "start": 3.831,
+          "end": 4.017
+        },
+        {
+          "text": "row.",
+          "start": 4.075,
+          "end": 4.447
+        },
+        {
+          "text": "Yours.",
+          "start": 4.807,
+          "end": 5.573
+        }
+      ],
+      "hash": "4bb52e3ef363"
+    },
+    {
+      "id": "takeaway",
+      "file": "audio/rls/takeaway.mp3",
+      "minSeconds": 4,
+      "leadIn": 0.25,
+      "padAfter": 1,
+      "duration": 3.158,
+      "words": [
+        {
+          "text": "If",
+          "start": 0,
+          "end": 0.139
+        },
+        {
+          "text": "the",
+          "start": 0.186,
+          "end": 0.255
+        },
+        {
+          "text": "browser",
+          "start": 0.29,
+          "end": 0.592
+        },
+        {
+          "text": "can",
+          "start": 0.615,
+          "end": 0.72
+        },
+        {
+          "text": "reach",
+          "start": 0.778,
+          "end": 0.94
+        },
+        {
+          "text": "a",
+          "start": 0.975,
+          "end": 0.998
+        },
+        {
+          "text": "table,",
+          "start": 1.057,
+          "end": 1.451
+        },
+        {
+          "text": "that",
+          "start": 1.533,
+          "end": 1.718
+        },
+        {
+          "text": "table",
+          "start": 1.765,
+          "end": 2.067
+        },
+        {
+          "text": "needs",
+          "start": 2.101,
+          "end": 2.299
+        },
+        {
+          "text": "a",
+          "start": 2.334,
+          "end": 2.368
+        },
+        {
+          "text": "policy.",
+          "start": 2.403,
+          "end": 3.158
+        }
+      ],
+      "hash": "0d8da53a7304"
+    }
+  ],
+  "music": {
+    "file": "audio/rls/music.mp3",
+    "duration": 43,
+    "hash": "9d20068ef3ef"
+  },
+  "sfx": {
+    "leak": {
+      "file": "audio/rls/sfx-leak.mp3",
+      "duration": 2,
+      "hash": "f6e15b81861e"
+    },
+    "lock": {
+      "file": "audio/rls/sfx-lock.mp3",
+      "duration": 1,
+      "hash": "d755a7385217"
+    },
+    "sting": {
+      "file": "audio/rls/sfx-sting.mp3",
+      "duration": 2.5,
+      "hash": "9003e2e9251a"
+    }
+  }
 }

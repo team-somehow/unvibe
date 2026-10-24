@@ -1,13 +1,17 @@
 {
   "id": "nplus1",
-  "voice": null,
-  "music": null,
-  "sfx": [],
+  "voice": { "id": "iP95p4xoKVk53GoZ742B", "name": "Chris", "model": "eleven_v3", "settings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.4, "speed": 1.0 } },
+  "music": { "prompt": "Playful funk bass groove, bouncy slap bass, clean muted wah guitar stabs, tight light drums with open hi-hat, cheeky and upbeat, 102 bpm, light and fun, no vocals, instrumental", "minSeconds": 10 },
+  "sfx": [
+    { "id": "flurry", "prompt": "rapid flurry of tiny soft digital blips accelerating, many small network packets firing one after another", "duration": 2.4, "promptInfluence": 0.6 },
+    { "id": "snap", "prompt": "satisfying soft mechanical click-clunk as pieces snap neatly together into one block", "duration": 0.7, "promptInfluence": 0.7 },
+    { "id": "boing", "prompt": "short playful cartoon spring boing, light and comedic", "duration": 0.6, "promptInfluence": 0.7 }
+  ],
   "scenes": [
-    {
-      "id": "todo",
-      "text": "",
-      "minSeconds": 5
-    }
+    { "id": "hook", "text": "Your feed was making fifty-one database queries just to show fifty posts. Claude got it down to two.", "minSeconds": 5, "leadIn": 0.2 },
+    { "id": "loop", "text": "Here's what happened. One query fetched the posts. Then, for every single post, the code went back and asked: who wrote this? That's one, plus N.", "minSeconds": 7, "padAfter": 0.6 },
+    { "id": "cost", "text": "Each of those is a round trip to the database. Eight milliseconds each, times fifty-one, is over four hundred milliseconds of pure waiting.", "minSeconds": 6.5, "padAfter": 0.7 },
+    { "id": "fix", "text": "Claude's fix: collect all the author IDs first, then fetch every author in one single query. Two trips. Same data.", "minSeconds": 6, "padAfter": 0.8 },
+    { "id": "takeaway", "text": "So whenever you spot a query inside a loop, that's your N plus one. Batch it.", "minSeconds": 4.5, "padAfter": 1.3 }
   ]
 }

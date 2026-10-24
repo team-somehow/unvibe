@@ -1,7 +1,559 @@
 {
   "id": "hashing",
-  "voice": null,
-  "scenes": [],
-  "music": null,
-  "sfx": {}
+  "voice": "nPczCjzI2devNBz1zQrb",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/hashing/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.12,
+      "padAfter": 0.3,
+      "duration": 7.338,
+      "words": [
+        {
+          "text": "Claude",
+          "start": 0,
+          "end": 0.406
+        },
+        {
+          "text": "found",
+          "start": 0.453,
+          "end": 0.708
+        },
+        {
+          "text": "your",
+          "start": 0.755,
+          "end": 0.871
+        },
+        {
+          "text": "signup",
+          "start": 0.929,
+          "end": 1.254
+        },
+        {
+          "text": "code",
+          "start": 1.312,
+          "end": 1.544
+        },
+        {
+          "text": "hashing",
+          "start": 1.591,
+          "end": 1.95
+        },
+        {
+          "text": "passwords",
+          "start": 2.02,
+          "end": 2.589
+        },
+        {
+          "text": "with",
+          "start": 2.624,
+          "end": 2.763
+        },
+        {
+          "text": "plain",
+          "start": 2.821,
+          "end": 3.123
+        },
+        {
+          "text": "SHA",
+          "start": 3.228,
+          "end": 3.611
+        },
+        {
+          "text": "two",
+          "start": 3.646,
+          "end": 3.762
+        },
+        {
+          "text": "fifty-six.",
+          "start": 3.82,
+          "end": 4.516
+        },
+        {
+          "text": "Sounds",
+          "start": 4.992,
+          "end": 5.317
+        },
+        {
+          "text": "safe.",
+          "start": 5.341,
+          "end": 5.724
+        },
+        {
+          "text": "It",
+          "start": 6.084,
+          "end": 6.223
+        },
+        {
+          "text": "isn't.",
+          "start": 6.281,
+          "end": 7.338
+        }
+      ],
+      "hash": "0ee124302fa8"
+    },
+    {
+      "id": "gpu",
+      "file": "audio/hashing/gpu.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 5.341,
+      "words": [
+        {
+          "text": "SHA",
+          "start": 0,
+          "end": 0.337
+        },
+        {
+          "text": "is",
+          "start": 0.418,
+          "end": 0.522
+        },
+        {
+          "text": "built",
+          "start": 0.592,
+          "end": 0.789
+        },
+        {
+          "text": "for",
+          "start": 0.836,
+          "end": 0.94
+        },
+        {
+          "text": "speed.",
+          "start": 0.987,
+          "end": 1.463
+        },
+        {
+          "text": "One",
+          "start": 2.032,
+          "end": 2.252
+        },
+        {
+          "text": "gaming",
+          "start": 2.299,
+          "end": 2.566
+        },
+        {
+          "text": "GPU",
+          "start": 2.612,
+          "end": 3.111
+        },
+        {
+          "text": "tries",
+          "start": 3.17,
+          "end": 3.425
+        },
+        {
+          "text": "twenty",
+          "start": 3.471,
+          "end": 3.727
+        },
+        {
+          "text": "billion",
+          "start": 3.773,
+          "end": 4.029
+        },
+        {
+          "text": "guesses",
+          "start": 4.087,
+          "end": 4.365
+        },
+        {
+          "text": "a",
+          "start": 4.423,
+          "end": 4.447
+        },
+        {
+          "text": "second.",
+          "start": 4.505,
+          "end": 5.341
+        }
+      ],
+      "hash": "66ceeadda162"
+    },
+    {
+      "id": "twins",
+      "file": "audio/hashing/twins.mp3",
+      "minSeconds": 6.5,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 6.92,
+      "words": [
+        {
+          "text": "Worse,",
+          "start": 0,
+          "end": 0.418
+        },
+        {
+          "text": "identical",
+          "start": 0.453,
+          "end": 0.987
+        },
+        {
+          "text": "passwords",
+          "start": 1.045,
+          "end": 1.567
+        },
+        {
+          "text": "give",
+          "start": 1.602,
+          "end": 1.753
+        },
+        {
+          "text": "identical",
+          "start": 1.788,
+          "end": 2.218
+        },
+        {
+          "text": "hashes,",
+          "start": 2.287,
+          "end": 2.914
+        },
+        {
+          "text": "so",
+          "start": 3.077,
+          "end": 3.228
+        },
+        {
+          "text": "one",
+          "start": 3.309,
+          "end": 3.529
+        },
+        {
+          "text": "precomputed",
+          "start": 3.576,
+          "end": 4.272
+        },
+        {
+          "text": "table",
+          "start": 4.307,
+          "end": 4.609
+        },
+        {
+          "text": "cracks",
+          "start": 4.644,
+          "end": 4.934
+        },
+        {
+          "text": "everyone",
+          "start": 5.039,
+          "end": 5.468
+        },
+        {
+          "text": "who",
+          "start": 5.492,
+          "end": 5.584
+        },
+        {
+          "text": "picked",
+          "start": 5.642,
+          "end": 5.84
+        },
+        {
+          "text": "hunter2.",
+          "start": 5.863,
+          "end": 6.92
+        }
+      ],
+      "hash": "4f632c4df710"
+    },
+    {
+      "id": "salt",
+      "file": "audio/hashing/salt.mp3",
+      "minSeconds": 6.5,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 6.78,
+      "words": [
+        {
+          "text": "Claude",
+          "start": 0,
+          "end": 0.395
+        },
+        {
+          "text": "switched",
+          "start": 0.418,
+          "end": 0.708
+        },
+        {
+          "text": "to",
+          "start": 0.731,
+          "end": 0.789
+        },
+        {
+          "text": "bcrypt,",
+          "start": 0.859,
+          "end": 1.509
+        },
+        {
+          "text": "which",
+          "start": 1.811,
+          "end": 2.009
+        },
+        {
+          "text": "mixes",
+          "start": 2.067,
+          "end": 2.334
+        },
+        {
+          "text": "a",
+          "start": 2.392,
+          "end": 2.415
+        },
+        {
+          "text": "random",
+          "start": 2.485,
+          "end": 2.81
+        },
+        {
+          "text": "salt",
+          "start": 2.891,
+          "end": 3.146
+        },
+        {
+          "text": "into",
+          "start": 3.181,
+          "end": 3.297
+        },
+        {
+          "text": "each",
+          "start": 3.344,
+          "end": 3.483
+        },
+        {
+          "text": "password.",
+          "start": 3.529,
+          "end": 4.052
+        },
+        {
+          "text": "Same",
+          "start": 4.702,
+          "end": 4.957
+        },
+        {
+          "text": "password,",
+          "start": 4.992,
+          "end": 5.538
+        },
+        {
+          "text": "different",
+          "start": 5.642,
+          "end": 5.956
+        },
+        {
+          "text": "hash.",
+          "start": 6.002,
+          "end": 6.78
+        }
+      ],
+      "hash": "1bea156d57df"
+    },
+    {
+      "id": "cost",
+      "file": "audio/hashing/cost.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.15,
+      "padAfter": 0.7,
+      "duration": 8.127,
+      "words": [
+        {
+          "text": "And",
+          "start": 0,
+          "end": 0.163
+        },
+        {
+          "text": "it's",
+          "start": 0.221,
+          "end": 0.348
+        },
+        {
+          "text": "slow",
+          "start": 0.395,
+          "end": 0.65
+        },
+        {
+          "text": "on",
+          "start": 0.72,
+          "end": 0.789
+        },
+        {
+          "text": "purpose.",
+          "start": 0.859,
+          "end": 1.405
+        },
+        {
+          "text": "At",
+          "start": 1.765,
+          "end": 1.916
+        },
+        {
+          "text": "work",
+          "start": 1.985,
+          "end": 2.206
+        },
+        {
+          "text": "factor",
+          "start": 2.276,
+          "end": 2.601
+        },
+        {
+          "text": "twelve,",
+          "start": 2.647,
+          "end": 3.216
+        },
+        {
+          "text": "that",
+          "start": 3.413,
+          "end": 3.587
+        },
+        {
+          "text": "GPU",
+          "start": 3.646,
+          "end": 4.272
+        },
+        {
+          "text": "drops",
+          "start": 4.342,
+          "end": 4.667
+        },
+        {
+          "text": "from",
+          "start": 4.702,
+          "end": 4.853
+        },
+        {
+          "text": "twenty",
+          "start": 4.923,
+          "end": 5.213
+        },
+        {
+          "text": "billion",
+          "start": 5.259,
+          "end": 5.526
+        },
+        {
+          "text": "guesses",
+          "start": 5.584,
+          "end": 5.898
+        },
+        {
+          "text": "a",
+          "start": 5.956,
+          "end": 5.979
+        },
+        {
+          "text": "second",
+          "start": 6.06,
+          "end": 6.467
+        },
+        {
+          "text": "to",
+          "start": 6.699,
+          "end": 6.827
+        },
+        {
+          "text": "about",
+          "start": 6.873,
+          "end": 7.07
+        },
+        {
+          "text": "a",
+          "start": 7.094,
+          "end": 7.129
+        },
+        {
+          "text": "thousand.",
+          "start": 7.175,
+          "end": 8.127
+        }
+      ],
+      "hash": "09b7df5bb588"
+    },
+    {
+      "id": "takeaway",
+      "file": "audio/hashing/takeaway.mp3",
+      "minSeconds": 4,
+      "leadIn": 0.15,
+      "padAfter": 0.9,
+      "duration": 3.065,
+      "words": [
+        {
+          "text": "Fast",
+          "start": 0,
+          "end": 0.348
+        },
+        {
+          "text": "is",
+          "start": 0.395,
+          "end": 0.476
+        },
+        {
+          "text": "the",
+          "start": 0.522,
+          "end": 0.592
+        },
+        {
+          "text": "enemy.",
+          "start": 0.65,
+          "end": 1.08
+        },
+        {
+          "text": "Salt",
+          "start": 1.382,
+          "end": 1.73
+        },
+        {
+          "text": "it,",
+          "start": 1.788,
+          "end": 1.95
+        },
+        {
+          "text": "and",
+          "start": 1.997,
+          "end": 2.148
+        },
+        {
+          "text": "slow",
+          "start": 2.194,
+          "end": 2.392
+        },
+        {
+          "text": "it",
+          "start": 2.438,
+          "end": 2.496
+        },
+        {
+          "text": "down.",
+          "start": 2.531,
+          "end": 3.065
+        }
+      ],
+      "hash": "8cbfcbed9423"
+    }
+  ],
+  "music": {
+    "file": "audio/hashing/music.mp3",
+    "duration": 44,
+    "hash": "4c2b544cda90"
+  },
+  "sfx": {
+    "gpu": {
+      "file": "audio/hashing/sfx-gpu.mp3",
+      "duration": 3,
+      "hash": "9df9bf96c0b8"
+    },
+    "vault": {
+      "file": "audio/hashing/sfx-vault.mp3",
+      "duration": 1.2,
+      "hash": "25c23536e8c1"
+    },
+    "dial": {
+      "file": "audio/hashing/sfx-dial.mp3",
+      "duration": 1.6,
+      "hash": "fd411a8befcf"
+    }
+  }
 }

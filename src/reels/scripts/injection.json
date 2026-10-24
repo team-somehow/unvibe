@@ -1,0 +1,65 @@
+{
+  "id": "injection",
+  "voice": {
+    "id": "onwK4e9ZLuTAKqWW03F9",
+    "name": "Daniel",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.55,
+      "similarity_boost": 0.8,
+      "style": 0.3,
+      "speed": 1.15
+    }
+  },
+  "music": {
+    "prompt": "Dark tense thriller underscore, steady ticking clock pulse, low analog synth drones, distant sub bass hits, suspenseful heist movie atmosphere, minimal and brooding, 95 bpm, instrumental",
+    "minSeconds": 56
+  },
+  "sfx": [
+    {
+      "id": "leak",
+      "prompt": "rapid cascade of digital data blips spilling out, records streaming, tense and alarming",
+      "duration": 2.0,
+      "promptInfluence": 0.6
+    },
+    {
+      "id": "lock",
+      "prompt": "heavy metal vault door bolt locking shut, deep satisfying clunk",
+      "duration": 1.2,
+      "promptInfluence": 0.7
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "text": "One apostrophe let anyone log in as anyone. Claude caught it in your login code.",
+      "minSeconds": 4.5
+    },
+    {
+      "id": "concat",
+      "text": "Your lookup pasted the email straight into the SQL. Whatever someone types becomes part of the query.",
+      "minSeconds": 5
+    },
+    {
+      "id": "payload",
+      "text": "Type quote OR one equals one. Now the WHERE clause reads: blank email, or one equals one. False or true. Always true.",
+      "minSeconds": 6
+    },
+    {
+      "id": "leak",
+      "text": "Every row matches, so the database hands back every user.",
+      "minSeconds": 4
+    },
+    {
+      "id": "fix",
+      "text": "Claude switched to a parameterized query. The SQL holds a placeholder, dollar one, and the email travels separately as pure data.",
+      "minSeconds": 6.5
+    },
+    {
+      "id": "takeaway",
+      "text": "Input is data, never code.",
+      "minSeconds": 3.5,
+      "padAfter": 1.0
+    }
+  ]
+}

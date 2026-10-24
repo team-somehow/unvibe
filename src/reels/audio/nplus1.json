@@ -1,7 +1,598 @@
 {
   "id": "nplus1",
-  "voice": null,
-  "scenes": [],
-  "music": null,
-  "sfx": {}
+  "voice": "iP95p4xoKVk53GoZ742B",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/nplus1/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.2,
+      "padAfter": 0.45,
+      "duration": 6.4,
+      "words": [
+        {
+          "text": "Your",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "text": "feed",
+          "start": 0.288,
+          "end": 0.48
+        },
+        {
+          "text": "was",
+          "start": 0.5,
+          "end": 0.56
+        },
+        {
+          "text": "making",
+          "start": 0.617,
+          "end": 0.96
+        },
+        {
+          "text": "fifty-one",
+          "start": 1.04,
+          "end": 1.92
+        },
+        {
+          "text": "database",
+          "start": 1.973,
+          "end": 2.4
+        },
+        {
+          "text": "queries",
+          "start": 2.47,
+          "end": 2.96
+        },
+        {
+          "text": "just",
+          "start": 3.04,
+          "end": 3.36
+        },
+        {
+          "text": "to",
+          "start": 3.387,
+          "end": 3.44
+        },
+        {
+          "text": "show",
+          "start": 3.504,
+          "end": 3.76
+        },
+        {
+          "text": "fifty",
+          "start": 3.8,
+          "end": 4
+        },
+        {
+          "text": "posts.",
+          "start": 4.093,
+          "end": 5.04
+        },
+        {
+          "text": "Claude",
+          "start": 5.109,
+          "end": 5.52
+        },
+        {
+          "text": "got",
+          "start": 5.56,
+          "end": 5.68
+        },
+        {
+          "text": "it",
+          "start": 5.707,
+          "end": 5.76
+        },
+        {
+          "text": "down",
+          "start": 5.792,
+          "end": 5.92
+        },
+        {
+          "text": "to",
+          "start": 5.947,
+          "end": 6
+        },
+        {
+          "text": "two.",
+          "start": 6.1,
+          "end": 6.4
+        }
+      ],
+      "hash": "303d281a4c6a"
+    },
+    {
+      "id": "loop",
+      "file": "audio/nplus1/loop.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.25,
+      "padAfter": 0.6,
+      "duration": 9.92,
+      "words": [
+        {
+          "text": "Here's",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "text": "what",
+          "start": 0.256,
+          "end": 0.32
+        },
+        {
+          "text": "happened.",
+          "start": 0.364,
+          "end": 1.04
+        },
+        {
+          "text": "One",
+          "start": 1.12,
+          "end": 1.36
+        },
+        {
+          "text": "query",
+          "start": 1.427,
+          "end": 1.76
+        },
+        {
+          "text": "fetched",
+          "start": 1.8,
+          "end": 2.08
+        },
+        {
+          "text": "the",
+          "start": 2.1,
+          "end": 2.16
+        },
+        {
+          "text": "posts.",
+          "start": 2.253,
+          "end": 2.8
+        },
+        {
+          "text": "Then,",
+          "start": 2.96,
+          "end": 4.08
+        },
+        {
+          "text": "for",
+          "start": 4.1,
+          "end": 4.16
+        },
+        {
+          "text": "every",
+          "start": 4.227,
+          "end": 4.56
+        },
+        {
+          "text": "single",
+          "start": 4.606,
+          "end": 4.88
+        },
+        {
+          "text": "post,",
+          "start": 4.976,
+          "end": 5.76
+        },
+        {
+          "text": "the",
+          "start": 5.78,
+          "end": 5.84
+        },
+        {
+          "text": "code",
+          "start": 5.888,
+          "end": 6.08
+        },
+        {
+          "text": "went",
+          "start": 6.096,
+          "end": 6.16
+        },
+        {
+          "text": "back",
+          "start": 6.208,
+          "end": 6.4
+        },
+        {
+          "text": "and",
+          "start": 6.42,
+          "end": 6.48
+        },
+        {
+          "text": "asked:",
+          "start": 6.547,
+          "end": 6.96
+        },
+        {
+          "text": "who",
+          "start": 7.08,
+          "end": 7.44
+        },
+        {
+          "text": "wrote",
+          "start": 7.48,
+          "end": 7.68
+        },
+        {
+          "text": "this?",
+          "start": 7.744,
+          "end": 8.08
+        },
+        {
+          "text": "That's",
+          "start": 8.224,
+          "end": 8.88
+        },
+        {
+          "text": "one,",
+          "start": 8.96,
+          "end": 9.4
+        },
+        {
+          "text": "plus",
+          "start": 9.44,
+          "end": 9.6
+        },
+        {
+          "text": "N.",
+          "start": 9.72,
+          "end": 9.92
+        }
+      ],
+      "hash": "795630637aee"
+    },
+    {
+      "id": "cost",
+      "file": "audio/nplus1/cost.mp3",
+      "minSeconds": 6.5,
+      "leadIn": 0.25,
+      "padAfter": 0.7,
+      "duration": 8.16,
+      "words": [
+        {
+          "text": "Each",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "text": "of",
+          "start": 0.187,
+          "end": 0.24
+        },
+        {
+          "text": "those",
+          "start": 0.307,
+          "end": 0.64
+        },
+        {
+          "text": "is",
+          "start": 0.693,
+          "end": 0.8
+        },
+        {
+          "text": "a",
+          "start": 0.88,
+          "end": 0.96
+        },
+        {
+          "text": "round",
+          "start": 1,
+          "end": 1.2
+        },
+        {
+          "text": "trip",
+          "start": 1.264,
+          "end": 1.52
+        },
+        {
+          "text": "to",
+          "start": 1.547,
+          "end": 1.6
+        },
+        {
+          "text": "the",
+          "start": 1.62,
+          "end": 1.68
+        },
+        {
+          "text": "database.",
+          "start": 1.751,
+          "end": 2.4
+        },
+        {
+          "text": "Eight",
+          "start": 2.52,
+          "end": 3.12
+        },
+        {
+          "text": "milliseconds",
+          "start": 3.163,
+          "end": 3.68
+        },
+        {
+          "text": "each,",
+          "start": 3.728,
+          "end": 4
+        },
+        {
+          "text": "times",
+          "start": 4.04,
+          "end": 4.24
+        },
+        {
+          "text": "fifty-one,",
+          "start": 4.293,
+          "end": 5.36
+        },
+        {
+          "text": "is",
+          "start": 5.413,
+          "end": 5.52
+        },
+        {
+          "text": "over",
+          "start": 5.568,
+          "end": 5.76
+        },
+        {
+          "text": "four",
+          "start": 5.824,
+          "end": 6.08
+        },
+        {
+          "text": "hundred",
+          "start": 6.12,
+          "end": 6.4
+        },
+        {
+          "text": "milliseconds",
+          "start": 6.449,
+          "end": 7.04
+        },
+        {
+          "text": "of",
+          "start": 7.067,
+          "end": 7.12
+        },
+        {
+          "text": "pure",
+          "start": 7.216,
+          "end": 7.6
+        },
+        {
+          "text": "waiting.",
+          "start": 7.66,
+          "end": 8.16
+        }
+      ],
+      "hash": "4de810eb333f"
+    },
+    {
+      "id": "fix",
+      "file": "audio/nplus1/fix.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.25,
+      "padAfter": 0.8,
+      "duration": 8.72,
+      "words": [
+        {
+          "text": "Claude's",
+          "start": 0,
+          "end": 0.32
+        },
+        {
+          "text": "fix:",
+          "start": 0.42,
+          "end": 1.2
+        },
+        {
+          "text": "collect",
+          "start": 1.24,
+          "end": 1.52
+        },
+        {
+          "text": "all",
+          "start": 1.58,
+          "end": 1.76
+        },
+        {
+          "text": "the",
+          "start": 1.78,
+          "end": 1.84
+        },
+        {
+          "text": "author",
+          "start": 1.886,
+          "end": 2.16
+        },
+        {
+          "text": "IDs",
+          "start": 2.26,
+          "end": 2.56
+        },
+        {
+          "text": "first,",
+          "start": 2.627,
+          "end": 3.28
+        },
+        {
+          "text": "then",
+          "start": 3.312,
+          "end": 3.44
+        },
+        {
+          "text": "fetch",
+          "start": 3.507,
+          "end": 3.84
+        },
+        {
+          "text": "every",
+          "start": 3.907,
+          "end": 4.24
+        },
+        {
+          "text": "author",
+          "start": 4.286,
+          "end": 4.56
+        },
+        {
+          "text": "in",
+          "start": 4.613,
+          "end": 4.72
+        },
+        {
+          "text": "one",
+          "start": 4.8,
+          "end": 5.04
+        },
+        {
+          "text": "single",
+          "start": 5.097,
+          "end": 5.44
+        },
+        {
+          "text": "query.",
+          "start": 5.533,
+          "end": 6.08
+        },
+        {
+          "text": "Two",
+          "start": 6.24,
+          "end": 6.72
+        },
+        {
+          "text": "trips.",
+          "start": 6.787,
+          "end": 7.2
+        },
+        {
+          "text": "Same",
+          "start": 7.312,
+          "end": 7.76
+        },
+        {
+          "text": "data.",
+          "start": 7.824,
+          "end": 8.72
+        }
+      ],
+      "hash": "6a8d7062a440"
+    },
+    {
+      "id": "takeaway",
+      "file": "audio/nplus1/takeaway.mp3",
+      "minSeconds": 4.5,
+      "leadIn": 0.25,
+      "padAfter": 1.3,
+      "duration": 4.96,
+      "words": [
+        {
+          "text": "So",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "text": "whenever",
+          "start": 0.196,
+          "end": 0.48
+        },
+        {
+          "text": "you",
+          "start": 0.52,
+          "end": 0.64
+        },
+        {
+          "text": "spot",
+          "start": 0.672,
+          "end": 0.8
+        },
+        {
+          "text": "a",
+          "start": 0.88,
+          "end": 0.96
+        },
+        {
+          "text": "query",
+          "start": 1.013,
+          "end": 1.28
+        },
+        {
+          "text": "inside",
+          "start": 1.326,
+          "end": 1.6
+        },
+        {
+          "text": "a",
+          "start": 1.64,
+          "end": 1.68
+        },
+        {
+          "text": "loop,",
+          "start": 1.728,
+          "end": 2.4
+        },
+        {
+          "text": "that's",
+          "start": 2.448,
+          "end": 2.72
+        },
+        {
+          "text": "your",
+          "start": 2.768,
+          "end": 2.96
+        },
+        {
+          "text": "N",
+          "start": 3.12,
+          "end": 3.28
+        },
+        {
+          "text": "plus",
+          "start": 3.328,
+          "end": 3.52
+        },
+        {
+          "text": "one.",
+          "start": 3.62,
+          "end": 4
+        },
+        {
+          "text": "Batch",
+          "start": 4.133,
+          "end": 4.8
+        },
+        {
+          "text": "it.",
+          "start": 4.827,
+          "end": 4.96
+        }
+      ],
+      "hash": "5297511340db"
+    }
+  ],
+  "music": {
+    "file": "audio/nplus1/music.mp3",
+    "duration": 45,
+    "hash": "de45445dff15"
+  },
+  "sfx": {
+    "flurry": {
+      "file": "audio/nplus1/sfx-flurry.mp3",
+      "duration": 2.4,
+      "hash": "140685ae35cc"
+    },
+    "snap": {
+      "file": "audio/nplus1/sfx-snap.mp3",
+      "duration": 0.7,
+      "hash": "50429109f0d5"
+    },
+    "boing": {
+      "file": "audio/nplus1/sfx-boing.mp3",
+      "duration": 0.6,
+      "hash": "c8eb7a7be0b3"
+    }
+  }
 }

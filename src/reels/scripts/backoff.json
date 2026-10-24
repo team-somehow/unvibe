@@ -1,13 +1,75 @@
 {
   "id": "backoff",
-  "voice": null,
-  "music": null,
-  "sfx": [],
+  "voice": {
+    "id": "bIHbv24MWmeRgasZH58o",
+    "name": "Will",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.32,
+      "speed": 1.08
+    }
+  },
+  "music": {
+    "prompt": "Chill jazz-hop beat, mellow Rhodes electric piano chords, soft upright bass, dusty laid-back boom bap drums with brushed snare, warm vinyl crackle, relaxed and optimistic, 82 bpm, no vocals, instrumental",
+    "minSeconds": 46
+  },
+  "sfx": [
+    {
+      "id": "stampede",
+      "prompt": "short rumbling stampede of a herd thundering past, deep and punchy, fading quickly",
+      "duration": 1.6,
+      "promptInfluence": 0.6
+    },
+    {
+      "id": "patter",
+      "prompt": "gentle sparse pitter-patter of soft wooden marimba notes scattering at random, calm",
+      "duration": 1.6,
+      "promptInfluence": 0.6
+    },
+    {
+      "id": "recover",
+      "prompt": "soft warm synth power-up swell that rises and settles into a calm hum, machine coming back online",
+      "duration": 1.4,
+      "promptInfluence": 0.6
+    }
+  ],
   "scenes": [
     {
-      "id": "todo",
-      "text": "",
-      "minSeconds": 5
+      "id": "hook",
+      "text": "Your payments provider had a two-second blip. Your app kept it down for ten minutes. Claude traced it to your retry loop.",
+      "minSeconds": 5,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "herd",
+      "text": "Every failed request retried instantly. Thousands of clients, all hitting the server at once. A thundering herd.",
+      "minSeconds": 6,
+      "padAfter": 0.4,
+      "leadIn": 0.15
+    },
+    {
+      "id": "backoff",
+      "text": "So Claude added exponential backoff: wait one second, then two, then four, then eight.",
+      "minSeconds": 5.5,
+      "padAfter": 0.5,
+      "leadIn": 0.15
+    },
+    {
+      "id": "jitter",
+      "text": "But if every client waits exactly one second, they all come back together. Random jitter spreads them out, and the server recovers.",
+      "minSeconds": 7,
+      "padAfter": 0.6,
+      "leadIn": 0.15
+    },
+    {
+      "id": "payoff",
+      "text": "And a cap of five tries, so nobody retries forever. Back off, add jitter, and know when to quit.",
+      "minSeconds": 5.5,
+      "padAfter": 1.0,
+      "leadIn": 0.15
     }
   ]
 }

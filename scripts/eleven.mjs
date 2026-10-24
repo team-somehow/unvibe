@@ -59,7 +59,17 @@ function toWords(alignment) {
     cur.end = e[i]
   })
   if (cur) words.push(cur)
-  return words.map((w) => ({ text: w.text, start: +w.start.toFixed(3), end: +w.end.toFixed(3) }))
+  // eleven_v3 audio tags like [whispers] are spoken directions, not words; keep them out of captions
+  let inTag = false
+  const spoken = words.filter((w) => {
+    const opens = w.text.startsWith('[')
+    const closes = w.text.endsWith(']')
+    if (opens && !closes) inTag = true
+    const drop = inTag || (opens && closes)
+    if (closes) inTag = false
+    return !drop
+  })
+  return spoken.map((w) => ({ text: w.text, start: +w.start.toFixed(3), end: +w.end.toFixed(3) }))
 }
 
 const manifest = { id, voice: script.voice?.id ?? null, scenes: [], music: null, sfx: {} }

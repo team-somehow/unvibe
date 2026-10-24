@@ -1,0 +1,554 @@
+{
+  "id": "jwt",
+  "voice": "cgSgspJ2msm6clMCkdW9",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/jwt/hook.mp3",
+      "minSeconds": 4.5,
+      "leadIn": 0.12,
+      "padAfter": 0.3,
+      "duration": 5.84,
+      "words": [
+        {
+          "text": "Your",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "text": "login",
+          "start": 0.213,
+          "end": 0.48
+        },
+        {
+          "text": "token",
+          "start": 0.533,
+          "end": 0.8
+        },
+        {
+          "text": "isn't",
+          "start": 0.84,
+          "end": 1.04
+        },
+        {
+          "text": "secret.",
+          "start": 1.097,
+          "end": 1.6
+        },
+        {
+          "text": "Anyone",
+          "start": 1.703,
+          "end": 2.32
+        },
+        {
+          "text": "can",
+          "start": 2.38,
+          "end": 2.56
+        },
+        {
+          "text": "read",
+          "start": 2.592,
+          "end": 2.72
+        },
+        {
+          "text": "it.",
+          "start": 2.773,
+          "end": 2.96
+        },
+        {
+          "text": "Claude",
+          "start": 3.097,
+          "end": 3.92
+        },
+        {
+          "text": "spotted",
+          "start": 3.96,
+          "end": 4.24
+        },
+        {
+          "text": "this",
+          "start": 4.304,
+          "end": 4.56
+        },
+        {
+          "text": "in",
+          "start": 4.613,
+          "end": 4.72
+        },
+        {
+          "text": "your",
+          "start": 4.768,
+          "end": 4.96
+        },
+        {
+          "text": "admin",
+          "start": 5.027,
+          "end": 5.36
+        },
+        {
+          "text": "route.",
+          "start": 5.413,
+          "end": 5.84
+        }
+      ],
+      "hash": "b1a003ac6b71"
+    },
+    {
+      "id": "parts",
+      "file": "audio/jwt/parts.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 6.48,
+      "words": [
+        {
+          "text": "A",
+          "start": 0,
+          "end": 0.08
+        },
+        {
+          "text": "JWT",
+          "start": 0.28,
+          "end": 0.88
+        },
+        {
+          "text": "is",
+          "start": 0.96,
+          "end": 1.12
+        },
+        {
+          "text": "three",
+          "start": 1.16,
+          "end": 1.36
+        },
+        {
+          "text": "chunks.",
+          "start": 1.429,
+          "end": 1.92
+        },
+        {
+          "text": "The",
+          "start": 2.04,
+          "end": 2.4
+        },
+        {
+          "text": "first",
+          "start": 2.453,
+          "end": 2.72
+        },
+        {
+          "text": "two",
+          "start": 2.78,
+          "end": 2.96
+        },
+        {
+          "text": "are",
+          "start": 3,
+          "end": 3.12
+        },
+        {
+          "text": "just",
+          "start": 3.168,
+          "end": 3.36
+        },
+        {
+          "text": "base",
+          "start": 3.408,
+          "end": 3.6
+        },
+        {
+          "text": "sixty-four:",
+          "start": 3.653,
+          "end": 4.72
+        },
+        {
+          "text": "encoded,",
+          "start": 4.78,
+          "end": 5.52
+        },
+        {
+          "text": "not",
+          "start": 5.58,
+          "end": 5.76
+        },
+        {
+          "text": "encrypted.",
+          "start": 5.808,
+          "end": 6.48
+        }
+      ],
+      "hash": "32e91cd6b066"
+    },
+    {
+      "id": "sign",
+      "file": "audio/jwt/sign.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 9.52,
+      "words": [
+        {
+          "text": "So",
+          "start": 0,
+          "end": 0.08
+        },
+        {
+          "text": "what",
+          "start": 0.128,
+          "end": 0.32
+        },
+        {
+          "text": "stops",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "text": "you",
+          "start": 0.86,
+          "end": 1.04
+        },
+        {
+          "text": "making",
+          "start": 1.097,
+          "end": 1.44
+        },
+        {
+          "text": "yourself",
+          "start": 1.493,
+          "end": 1.92
+        },
+        {
+          "text": "admin?",
+          "start": 2,
+          "end": 2.56
+        },
+        {
+          "text": "The",
+          "start": 2.86,
+          "end": 3.76
+        },
+        {
+          "text": "signature:",
+          "start": 3.816,
+          "end": 4.88
+        },
+        {
+          "text": "a",
+          "start": 4.92,
+          "end": 4.96
+        },
+        {
+          "text": "fingerprint",
+          "start": 5.02,
+          "end": 5.68
+        },
+        {
+          "text": "of",
+          "start": 5.733,
+          "end": 5.84
+        },
+        {
+          "text": "those",
+          "start": 5.88,
+          "end": 6.08
+        },
+        {
+          "text": "chunks,",
+          "start": 6.16,
+          "end": 7.04
+        },
+        {
+          "text": "made",
+          "start": 7.088,
+          "end": 7.28
+        },
+        {
+          "text": "with",
+          "start": 7.312,
+          "end": 7.44
+        },
+        {
+          "text": "a",
+          "start": 7.48,
+          "end": 7.52
+        },
+        {
+          "text": "secret",
+          "start": 7.589,
+          "end": 8
+        },
+        {
+          "text": "only",
+          "start": 8.08,
+          "end": 8.4
+        },
+        {
+          "text": "the",
+          "start": 8.44,
+          "end": 8.56
+        },
+        {
+          "text": "server",
+          "start": 8.617,
+          "end": 8.96
+        },
+        {
+          "text": "knows.",
+          "start": 9.04,
+          "end": 9.52
+        }
+      ],
+      "hash": "ea6bc7ace32c"
+    },
+    {
+      "id": "tamper",
+      "file": "audio/jwt/tamper.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.15,
+      "padAfter": 0.45,
+      "duration": 6,
+      "words": [
+        {
+          "text": "Change",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "text": "one",
+          "start": 0.3,
+          "end": 0.48
+        },
+        {
+          "text": "letter",
+          "start": 0.526,
+          "end": 0.8
+        },
+        {
+          "text": "and",
+          "start": 0.92,
+          "end": 1.28
+        },
+        {
+          "text": "the",
+          "start": 1.3,
+          "end": 1.36
+        },
+        {
+          "text": "fingerprint",
+          "start": 1.407,
+          "end": 1.92
+        },
+        {
+          "text": "breaks,",
+          "start": 1.989,
+          "end": 2.72
+        },
+        {
+          "text": "so",
+          "start": 2.773,
+          "end": 2.88
+        },
+        {
+          "text": "the",
+          "start": 2.9,
+          "end": 2.96
+        },
+        {
+          "text": "server",
+          "start": 3.017,
+          "end": 3.36
+        },
+        {
+          "text": "rejects",
+          "start": 3.42,
+          "end": 3.84
+        },
+        {
+          "text": "it.",
+          "start": 3.893,
+          "end": 4.16
+        },
+        {
+          "text": "If",
+          "start": 4.48,
+          "end": 5.12
+        },
+        {
+          "text": "it",
+          "start": 5.147,
+          "end": 5.2
+        },
+        {
+          "text": "checks.",
+          "start": 5.28,
+          "end": 6
+        }
+      ],
+      "hash": "48e7ef0862a8"
+    },
+    {
+      "id": "fix",
+      "file": "audio/jwt/fix.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 7.2,
+      "words": [
+        {
+          "text": "Your",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "text": "admin",
+          "start": 0.227,
+          "end": 0.56
+        },
+        {
+          "text": "route",
+          "start": 0.613,
+          "end": 0.88
+        },
+        {
+          "text": "never",
+          "start": 0.973,
+          "end": 1.44
+        },
+        {
+          "text": "did.",
+          "start": 1.54,
+          "end": 1.92
+        },
+        {
+          "text": "Claude",
+          "start": 2.057,
+          "end": 2.88
+        },
+        {
+          "text": "added",
+          "start": 2.933,
+          "end": 3.2
+        },
+        {
+          "text": "verification",
+          "start": 3.255,
+          "end": 3.92
+        },
+        {
+          "text": "on",
+          "start": 3.973,
+          "end": 4.08
+        },
+        {
+          "text": "every",
+          "start": 4.16,
+          "end": 4.56
+        },
+        {
+          "text": "request,",
+          "start": 4.63,
+          "end": 5.52
+        },
+        {
+          "text": "and",
+          "start": 5.54,
+          "end": 5.6
+        },
+        {
+          "text": "took",
+          "start": 5.632,
+          "end": 5.76
+        },
+        {
+          "text": "the",
+          "start": 5.78,
+          "end": 5.84
+        },
+        {
+          "text": "email",
+          "start": 5.907,
+          "end": 6.24
+        },
+        {
+          "text": "out",
+          "start": 6.28,
+          "end": 6.4
+        },
+        {
+          "text": "of",
+          "start": 6.427,
+          "end": 6.48
+        },
+        {
+          "text": "the",
+          "start": 6.5,
+          "end": 6.56
+        },
+        {
+          "text": "payload.",
+          "start": 6.63,
+          "end": 7.2
+        }
+      ],
+      "hash": "5188c8efdc40"
+    },
+    {
+      "id": "takeaway",
+      "file": "audio/jwt/takeaway.mp3",
+      "minSeconds": 3.6,
+      "leadIn": 0.15,
+      "padAfter": 0.9,
+      "duration": 3.68,
+      "words": [
+        {
+          "text": "Signed",
+          "start": 0,
+          "end": 0.56
+        },
+        {
+          "text": "means",
+          "start": 0.667,
+          "end": 1.2
+        },
+        {
+          "text": "tamper-proof.",
+          "start": 1.28,
+          "end": 2.24
+        },
+        {
+          "text": "Not",
+          "start": 2.42,
+          "end": 2.96
+        },
+        {
+          "text": "secret.",
+          "start": 3.04,
+          "end": 3.68
+        }
+      ],
+      "hash": "8a61fdf2f812"
+    }
+  ],
+  "music": {
+    "file": "audio/jwt/music.mp3",
+    "duration": 45,
+    "hash": "199adb64612e"
+  },
+  "sfx": {
+    "decode": {
+      "file": "audio/jwt/sfx-decode.mp3",
+      "duration": 1.2,
+      "hash": "e7de21136a09"
+    },
+    "seal": {
+      "file": "audio/jwt/sfx-seal.mp3",
+      "duration": 0.8,
+      "hash": "305179828af9"
+    },
+    "crack": {
+      "file": "audio/jwt/sfx-crack.mp3",
+      "duration": 0.9,
+      "hash": "aa86f2b51505"
+    }
+  }
+}

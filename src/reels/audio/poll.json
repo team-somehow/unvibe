@@ -1,0 +1,467 @@
+{
+  "id": "poll",
+  "voice": "EXAVITQu4vr4xnSDxMaL",
+  "scenes": [
+    {
+      "id": "ask",
+      "file": "audio/poll/ask.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.3,
+      "padAfter": 0.45,
+      "duration": 6.502,
+      "words": [
+        {
+          "text": "I've",
+          "start": 0,
+          "end": 0.221
+        },
+        {
+          "text": "paused",
+          "start": 0.267,
+          "end": 0.627
+        },
+        {
+          "text": "your",
+          "start": 0.662,
+          "end": 0.789
+        },
+        {
+          "text": "auth-service",
+          "start": 0.848,
+          "end": 1.474
+        },
+        {
+          "text": "session.",
+          "start": 1.498,
+          "end": 2.032
+        },
+        {
+          "text": "I",
+          "start": 2.357,
+          "end": 2.415
+        },
+        {
+          "text": "need",
+          "start": 2.496,
+          "end": 2.659
+        },
+        {
+          "text": "one",
+          "start": 2.728,
+          "end": 2.926
+        },
+        {
+          "text": "decision",
+          "start": 2.961,
+          "end": 3.355
+        },
+        {
+          "text": "from",
+          "start": 3.413,
+          "end": 3.564
+        },
+        {
+          "text": "you:",
+          "start": 3.622,
+          "end": 3.947
+        },
+        {
+          "text": "where",
+          "start": 4.272,
+          "end": 4.586
+        },
+        {
+          "text": "should",
+          "start": 4.632,
+          "end": 4.853
+        },
+        {
+          "text": "login",
+          "start": 4.911,
+          "end": 5.271
+        },
+        {
+          "text": "sessions",
+          "start": 5.352,
+          "end": 5.747
+        },
+        {
+          "text": "live?",
+          "start": 5.817,
+          "end": 6.502
+        }
+      ],
+      "hash": "d55b3350ca0b"
+    },
+    {
+      "id": "redis",
+      "file": "audio/poll/redis.mp3",
+      "minSeconds": 8,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 12.771,
+      "words": [
+        {
+          "text": "Option",
+          "start": 0,
+          "end": 0.383
+        },
+        {
+          "text": "one,",
+          "start": 0.453,
+          "end": 0.755
+        },
+        {
+          "text": "Redis.",
+          "start": 0.906,
+          "end": 1.579
+        },
+        {
+          "text": "Sessions",
+          "start": 1.904,
+          "end": 2.322
+        },
+        {
+          "text": "sit",
+          "start": 2.368,
+          "end": 2.519
+        },
+        {
+          "text": "in",
+          "start": 2.566,
+          "end": 2.612
+        },
+        {
+          "text": "memory,",
+          "start": 2.67,
+          "end": 3.17
+        },
+        {
+          "text": "so",
+          "start": 3.239,
+          "end": 3.495
+        },
+        {
+          "text": "lookups",
+          "start": 3.611,
+          "end": 4.029
+        },
+        {
+          "text": "are",
+          "start": 4.063,
+          "end": 4.191
+        },
+        {
+          "text": "very",
+          "start": 4.261,
+          "end": 4.551
+        },
+        {
+          "text": "fast,",
+          "start": 4.621,
+          "end": 5.166
+        },
+        {
+          "text": "and",
+          "start": 5.283,
+          "end": 5.445
+        },
+        {
+          "text": "each",
+          "start": 5.515,
+          "end": 5.712
+        },
+        {
+          "text": "one",
+          "start": 5.77,
+          "end": 5.933
+        },
+        {
+          "text": "has",
+          "start": 5.979,
+          "end": 6.107
+        },
+        {
+          "text": "a",
+          "start": 6.153,
+          "end": 6.177
+        },
+        {
+          "text": "timer,",
+          "start": 6.223,
+          "end": 6.838
+        },
+        {
+          "text": "so",
+          "start": 7.012,
+          "end": 7.233
+        },
+        {
+          "text": "expired",
+          "start": 7.326,
+          "end": 7.953
+        },
+        {
+          "text": "logins",
+          "start": 8.011,
+          "end": 8.499
+        },
+        {
+          "text": "clean",
+          "start": 8.568,
+          "end": 8.812
+        },
+        {
+          "text": "themselves",
+          "start": 8.858,
+          "end": 9.288
+        },
+        {
+          "text": "up.",
+          "start": 9.358,
+          "end": 9.764
+        },
+        {
+          "text": "The",
+          "start": 10.089,
+          "end": 10.205
+        },
+        {
+          "text": "catch:",
+          "start": 10.252,
+          "end": 10.762
+        },
+        {
+          "text": "one",
+          "start": 11.006,
+          "end": 11.238
+        },
+        {
+          "text": "more",
+          "start": 11.273,
+          "end": 11.471
+        },
+        {
+          "text": "service",
+          "start": 11.517,
+          "end": 11.912
+        },
+        {
+          "text": "to",
+          "start": 11.947,
+          "end": 12.028
+        },
+        {
+          "text": "run.",
+          "start": 12.109,
+          "end": 12.771
+        }
+      ],
+      "hash": "83c48b0be373"
+    },
+    {
+      "id": "postgres",
+      "file": "audio/poll/postgres.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 8.127,
+      "words": [
+        {
+          "text": "Option",
+          "start": 0,
+          "end": 0.43
+        },
+        {
+          "text": "two,",
+          "start": 0.488,
+          "end": 0.94
+        },
+        {
+          "text": "Postgres.",
+          "start": 1.115,
+          "end": 1.881
+        },
+        {
+          "text": "It's",
+          "start": 2.032,
+          "end": 2.241
+        },
+        {
+          "text": "already",
+          "start": 2.287,
+          "end": 2.682
+        },
+        {
+          "text": "in",
+          "start": 2.728,
+          "end": 2.786
+        },
+        {
+          "text": "your",
+          "start": 2.833,
+          "end": 2.949
+        },
+        {
+          "text": "stack,",
+          "start": 2.984,
+          "end": 3.344
+        },
+        {
+          "text": "and",
+          "start": 3.367,
+          "end": 3.495
+        },
+        {
+          "text": "sessions",
+          "start": 3.576,
+          "end": 4.005
+        },
+        {
+          "text": "survive",
+          "start": 4.052,
+          "end": 4.435
+        },
+        {
+          "text": "a",
+          "start": 4.47,
+          "end": 4.493
+        },
+        {
+          "text": "restart.",
+          "start": 4.551,
+          "end": 5.166
+        },
+        {
+          "text": "The",
+          "start": 5.375,
+          "end": 5.492
+        },
+        {
+          "text": "catch:",
+          "start": 5.538,
+          "end": 6.014
+        },
+        {
+          "text": "under",
+          "start": 6.188,
+          "end": 6.409
+        },
+        {
+          "text": "heavy",
+          "start": 6.467,
+          "end": 6.664
+        },
+        {
+          "text": "load,",
+          "start": 6.722,
+          "end": 7.047
+        },
+        {
+          "text": "it's",
+          "start": 7.094,
+          "end": 7.268
+        },
+        {
+          "text": "slower.",
+          "start": 7.314,
+          "end": 8.127
+        }
+      ],
+      "hash": "44c05750b0ff"
+    },
+    {
+      "id": "vote",
+      "file": "audio/poll/vote.mp3",
+      "minSeconds": 4.5,
+      "leadIn": 0.25,
+      "padAfter": 1.4,
+      "duration": 3.762,
+      "words": [
+        {
+          "text": "Both",
+          "start": 0,
+          "end": 0.29
+        },
+        {
+          "text": "are",
+          "start": 0.348,
+          "end": 0.488
+        },
+        {
+          "text": "solid.",
+          "start": 0.534,
+          "end": 1.057
+        },
+        {
+          "text": "Tap",
+          "start": 1.265,
+          "end": 1.533
+        },
+        {
+          "text": "your",
+          "start": 1.579,
+          "end": 1.683
+        },
+        {
+          "text": "answer",
+          "start": 1.73,
+          "end": 1.974
+        },
+        {
+          "text": "below,",
+          "start": 2.032,
+          "end": 2.426
+        },
+        {
+          "text": "and",
+          "start": 2.461,
+          "end": 2.577
+        },
+        {
+          "text": "I'll",
+          "start": 2.624,
+          "end": 2.74
+        },
+        {
+          "text": "carry",
+          "start": 2.775,
+          "end": 3.007
+        },
+        {
+          "text": "on",
+          "start": 3.077,
+          "end": 3.181
+        },
+        {
+          "text": "with",
+          "start": 3.228,
+          "end": 3.367
+        },
+        {
+          "text": "it.",
+          "start": 3.425,
+          "end": 3.762
+        }
+      ],
+      "hash": "f48b1f9a0464"
+    }
+  ],
+  "music": {
+    "file": "audio/poll/music.mp3",
+    "duration": 36,
+    "hash": "549b05233953"
+  },
+  "sfx": {
+    "clock": {
+      "file": "audio/poll/sfx-clock.mp3",
+      "duration": 3,
+      "hash": "4bd86e33997f"
+    },
+    "reveal": {
+      "file": "audio/poll/sfx-reveal.mp3",
+      "duration": 0.9,
+      "hash": "e7365ff1adf8"
+    }
+  }
+}

@@ -1,7 +1,553 @@
 {
   "id": "backoff",
-  "voice": null,
-  "scenes": [],
-  "music": null,
-  "sfx": {}
+  "voice": "bIHbv24MWmeRgasZH58o",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/backoff/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 7.384,
+      "words": [
+        {
+          "text": "Your",
+          "start": 0,
+          "end": 0.197
+        },
+        {
+          "text": "payments",
+          "start": 0.255,
+          "end": 0.592
+        },
+        {
+          "text": "provider",
+          "start": 0.627,
+          "end": 0.998
+        },
+        {
+          "text": "had",
+          "start": 1.057,
+          "end": 1.161
+        },
+        {
+          "text": "a",
+          "start": 1.196,
+          "end": 1.231
+        },
+        {
+          "text": "two-second",
+          "start": 1.289,
+          "end": 1.823
+        },
+        {
+          "text": "blip.",
+          "start": 1.869,
+          "end": 2.252
+        },
+        {
+          "text": "Your",
+          "start": 2.659,
+          "end": 2.844
+        },
+        {
+          "text": "app",
+          "start": 2.914,
+          "end": 3.123
+        },
+        {
+          "text": "kept",
+          "start": 3.181,
+          "end": 3.355
+        },
+        {
+          "text": "it",
+          "start": 3.402,
+          "end": 3.46
+        },
+        {
+          "text": "down",
+          "start": 3.495,
+          "end": 3.68
+        },
+        {
+          "text": "for",
+          "start": 3.738,
+          "end": 3.843
+        },
+        {
+          "text": "ten",
+          "start": 3.901,
+          "end": 4.075
+        },
+        {
+          "text": "minutes.",
+          "start": 4.133,
+          "end": 4.656
+        },
+        {
+          "text": "Claude",
+          "start": 5.062,
+          "end": 5.364
+        },
+        {
+          "text": "traced",
+          "start": 5.399,
+          "end": 5.7
+        },
+        {
+          "text": "it",
+          "start": 5.735,
+          "end": 5.805
+        },
+        {
+          "text": "to",
+          "start": 5.84,
+          "end": 5.886
+        },
+        {
+          "text": "your",
+          "start": 5.944,
+          "end": 6.049
+        },
+        {
+          "text": "retry",
+          "start": 6.118,
+          "end": 6.444
+        },
+        {
+          "text": "loop.",
+          "start": 6.502,
+          "end": 7.384
+        }
+      ],
+      "hash": "f1119b8578a6"
+    },
+    {
+      "id": "herd",
+      "file": "audio/backoff/herd.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.4,
+      "duration": 8.406,
+      "words": [
+        {
+          "text": "Every",
+          "start": 0,
+          "end": 0.348
+        },
+        {
+          "text": "failed",
+          "start": 0.418,
+          "end": 0.72
+        },
+        {
+          "text": "request",
+          "start": 0.766,
+          "end": 1.149
+        },
+        {
+          "text": "retried",
+          "start": 1.207,
+          "end": 1.625
+        },
+        {
+          "text": "instantly.",
+          "start": 1.695,
+          "end": 2.519
+        },
+        {
+          "text": "Thousands",
+          "start": 3.077,
+          "end": 3.518
+        },
+        {
+          "text": "of",
+          "start": 3.553,
+          "end": 3.599
+        },
+        {
+          "text": "clients,",
+          "start": 3.669,
+          "end": 4.214
+        },
+        {
+          "text": "all",
+          "start": 4.249,
+          "end": 4.516
+        },
+        {
+          "text": "hitting",
+          "start": 4.586,
+          "end": 4.807
+        },
+        {
+          "text": "the",
+          "start": 4.841,
+          "end": 4.911
+        },
+        {
+          "text": "server",
+          "start": 4.957,
+          "end": 5.259
+        },
+        {
+          "text": "at",
+          "start": 5.306,
+          "end": 5.375
+        },
+        {
+          "text": "once.",
+          "start": 5.445,
+          "end": 5.956
+        },
+        {
+          "text": "A",
+          "start": 6.258,
+          "end": 6.327
+        },
+        {
+          "text": "thundering",
+          "start": 6.49,
+          "end": 7.012
+        },
+        {
+          "text": "herd.",
+          "start": 7.082,
+          "end": 8.406
+        }
+      ],
+      "hash": "144991a1817a"
+    },
+    {
+      "id": "backoff",
+      "file": "audio/backoff/backoff.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.15,
+      "padAfter": 0.5,
+      "duration": 6.548,
+      "words": [
+        {
+          "text": "So",
+          "start": 0,
+          "end": 0.186
+        },
+        {
+          "text": "Claude",
+          "start": 0.267,
+          "end": 0.604
+        },
+        {
+          "text": "added",
+          "start": 0.639,
+          "end": 0.894
+        },
+        {
+          "text": "exponential",
+          "start": 0.964,
+          "end": 1.579
+        },
+        {
+          "text": "backoff:",
+          "start": 1.637,
+          "end": 2.345
+        },
+        {
+          "text": "wait",
+          "start": 2.995,
+          "end": 3.204
+        },
+        {
+          "text": "one",
+          "start": 3.274,
+          "end": 3.471
+        },
+        {
+          "text": "second,",
+          "start": 3.518,
+          "end": 3.878
+        },
+        {
+          "text": "then",
+          "start": 3.913,
+          "end": 4.122
+        },
+        {
+          "text": "two,",
+          "start": 4.191,
+          "end": 4.609
+        },
+        {
+          "text": "then",
+          "start": 4.667,
+          "end": 4.865
+        },
+        {
+          "text": "four,",
+          "start": 4.969,
+          "end": 5.364
+        },
+        {
+          "text": "then",
+          "start": 5.399,
+          "end": 5.596
+        },
+        {
+          "text": "eight.",
+          "start": 5.677,
+          "end": 6.548
+        }
+      ],
+      "hash": "0c0ad5a7f2d6"
+    },
+    {
+      "id": "jitter",
+      "file": "audio/backoff/jitter.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.15,
+      "padAfter": 0.6,
+      "duration": 8.127,
+      "words": [
+        {
+          "text": "But",
+          "start": 0,
+          "end": 0.151
+        },
+        {
+          "text": "if",
+          "start": 0.174,
+          "end": 0.232
+        },
+        {
+          "text": "every",
+          "start": 0.279,
+          "end": 0.453
+        },
+        {
+          "text": "client",
+          "start": 0.499,
+          "end": 0.789
+        },
+        {
+          "text": "waits",
+          "start": 0.836,
+          "end": 1.057
+        },
+        {
+          "text": "exactly",
+          "start": 1.115,
+          "end": 1.579
+        },
+        {
+          "text": "one",
+          "start": 1.649,
+          "end": 1.846
+        },
+        {
+          "text": "second,",
+          "start": 1.904,
+          "end": 2.438
+        },
+        {
+          "text": "they",
+          "start": 2.74,
+          "end": 2.891
+        },
+        {
+          "text": "all",
+          "start": 2.926,
+          "end": 3.03
+        },
+        {
+          "text": "come",
+          "start": 3.088,
+          "end": 3.228
+        },
+        {
+          "text": "back",
+          "start": 3.251,
+          "end": 3.425
+        },
+        {
+          "text": "together.",
+          "start": 3.471,
+          "end": 4.075
+        },
+        {
+          "text": "Random",
+          "start": 4.551,
+          "end": 4.865
+        },
+        {
+          "text": "jitter",
+          "start": 4.934,
+          "end": 5.201
+        },
+        {
+          "text": "spreads",
+          "start": 5.271,
+          "end": 5.619
+        },
+        {
+          "text": "them",
+          "start": 5.654,
+          "end": 5.77
+        },
+        {
+          "text": "out,",
+          "start": 5.828,
+          "end": 6.2
+        },
+        {
+          "text": "and",
+          "start": 6.269,
+          "end": 6.397
+        },
+        {
+          "text": "the",
+          "start": 6.444,
+          "end": 6.513
+        },
+        {
+          "text": "server",
+          "start": 6.56,
+          "end": 6.896
+        },
+        {
+          "text": "recovers.",
+          "start": 6.966,
+          "end": 8.127
+        }
+      ],
+      "hash": "68f42cb3b95d"
+    },
+    {
+      "id": "payoff",
+      "file": "audio/backoff/payoff.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.15,
+      "padAfter": 1,
+      "duration": 5.805,
+      "words": [
+        {
+          "text": "And",
+          "start": 0,
+          "end": 0.174
+        },
+        {
+          "text": "a",
+          "start": 0.221,
+          "end": 0.244
+        },
+        {
+          "text": "cap",
+          "start": 0.302,
+          "end": 0.522
+        },
+        {
+          "text": "of",
+          "start": 0.58,
+          "end": 0.639
+        },
+        {
+          "text": "five",
+          "start": 0.708,
+          "end": 0.964
+        },
+        {
+          "text": "tries,",
+          "start": 0.998,
+          "end": 1.393
+        },
+        {
+          "text": "so",
+          "start": 1.416,
+          "end": 1.509
+        },
+        {
+          "text": "nobody",
+          "start": 1.579,
+          "end": 1.858
+        },
+        {
+          "text": "retries",
+          "start": 1.916,
+          "end": 2.241
+        },
+        {
+          "text": "forever.",
+          "start": 2.287,
+          "end": 2.856
+        },
+        {
+          "text": "Back",
+          "start": 3.262,
+          "end": 3.506
+        },
+        {
+          "text": "off,",
+          "start": 3.576,
+          "end": 3.889
+        },
+        {
+          "text": "add",
+          "start": 3.959,
+          "end": 4.168
+        },
+        {
+          "text": "jitter,",
+          "start": 4.238,
+          "end": 4.632
+        },
+        {
+          "text": "and",
+          "start": 4.656,
+          "end": 4.807
+        },
+        {
+          "text": "know",
+          "start": 4.853,
+          "end": 4.981
+        },
+        {
+          "text": "when",
+          "start": 5.016,
+          "end": 5.12
+        },
+        {
+          "text": "to",
+          "start": 5.155,
+          "end": 5.201
+        },
+        {
+          "text": "quit.",
+          "start": 5.248,
+          "end": 5.805
+        }
+      ],
+      "hash": "fd9f04c9ddef"
+    }
+  ],
+  "music": {
+    "file": "audio/backoff/music.mp3",
+    "duration": 46,
+    "hash": "59348e525275"
+  },
+  "sfx": {
+    "stampede": {
+      "file": "audio/backoff/sfx-stampede.mp3",
+      "duration": 1.6,
+      "hash": "dee38944f628"
+    },
+    "patter": {
+      "file": "audio/backoff/sfx-patter.mp3",
+      "duration": 1.6,
+      "hash": "f1524a2f9bf1"
+    },
+    "recover": {
+      "file": "audio/backoff/sfx-recover.mp3",
+      "duration": 1.4,
+      "hash": "79bf7e615fc3"
+    }
+  }
 }

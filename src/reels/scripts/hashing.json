@@ -1,13 +1,82 @@
 {
   "id": "hashing",
-  "voice": null,
-  "music": null,
-  "sfx": [],
+  "voice": {
+    "id": "nPczCjzI2devNBz1zQrb",
+    "name": "Brian",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.55,
+      "similarity_boost": 0.8,
+      "style": 0.3,
+      "speed": 1.07
+    }
+  },
+  "music": {
+    "prompt": "Cinematic ambient instrumental, deep evolving analog synth pads, low sub-bass pulses, sparse distant piano notes, mysterious and slightly tense, slow 70 bpm, cyber-security documentary underscore, no vocals",
+    "minSeconds": 10
+  },
+  "sfx": [
+    {
+      "id": "gpu",
+      "prompt": "computer fans spinning up fast with rapid electronic data ticking, a code-cracking machine running at full speed",
+      "duration": 3,
+      "promptInfluence": 0.55
+    },
+    {
+      "id": "vault",
+      "prompt": "heavy steel vault lock clunk, deep, solid and resonant",
+      "duration": 1.2,
+      "promptInfluence": 0.7
+    },
+    {
+      "id": "dial",
+      "prompt": "mechanical safe dial turning with slow heavy ratcheting clicks",
+      "duration": 1.6,
+      "promptInfluence": 0.65
+    }
+  ],
   "scenes": [
     {
-      "id": "todo",
-      "text": "",
-      "minSeconds": 5
+      "id": "hook",
+      "text": "Claude found your signup code hashing passwords with plain SHA two fifty-six. Sounds safe. It isn't.",
+      "minSeconds": 5,
+      "leadIn": 0.12,
+      "padAfter": 0.3
+    },
+    {
+      "id": "gpu",
+      "text": "SHA is built for speed. One gaming GPU tries twenty billion guesses a second.",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "twins",
+      "text": "Worse, identical passwords give identical hashes, so one precomputed table cracks everyone who picked hunter2.",
+      "minSeconds": 6.5,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "salt",
+      "text": "Claude switched to bcrypt, which mixes a random salt into each password. Same password, different hash.",
+      "minSeconds": 6.5,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "cost",
+      "text": "And it's slow on purpose. At work factor twelve, that GPU drops from twenty billion guesses a second to about a thousand.",
+      "minSeconds": 7,
+      "padAfter": 0.7,
+      "leadIn": 0.15
+    },
+    {
+      "id": "takeaway",
+      "text": "Fast is the enemy. Salt it, and slow it down.",
+      "minSeconds": 4,
+      "padAfter": 0.9,
+      "leadIn": 0.15
     }
   ]
 }

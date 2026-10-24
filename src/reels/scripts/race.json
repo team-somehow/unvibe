@@ -1,0 +1,81 @@
+{
+  "id": "race",
+  "voice": {
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "name": "Liam",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.36,
+      "similarity_boost": 0.8,
+      "style": 0.5,
+      "speed": 1.1
+    }
+  },
+  "music": {
+    "prompt": "Fast energetic drum and bass, 174 bpm, rolling breakbeats, deep reese bass, tense staccato synth stabs, urgent and driving, modern tech explainer energy, no vocals, instrumental",
+    "minSeconds": 46
+  },
+  "sfx": [
+    {
+      "id": "tap",
+      "prompt": "two quick taps on a glass phone screen, crisp double tap, short UI touch clicks",
+      "duration": 0.6,
+      "promptInfluence": 0.75
+    },
+    {
+      "id": "cash",
+      "prompt": "short cash register cha-ching with coins, payment sound",
+      "duration": 1.0,
+      "promptInfluence": 0.7
+    },
+    {
+      "id": "lock",
+      "prompt": "heavy metal padlock snapping shut, solid mechanical clunk, short and punchy",
+      "duration": 0.7,
+      "promptInfluence": 0.75
+    },
+    {
+      "id": "declined",
+      "prompt": "card payment declined, short descending two-tone electronic beep from a payment terminal",
+      "duration": 0.8,
+      "promptInfluence": 0.75
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "text": "One double-tap on Pay, and a hundred-dollar wallet spent a hundred and sixty. Claude caught this in your wallet service.",
+      "minSeconds": 5,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "race",
+      "text": "Two requests, same moment. Both read a hundred. Both subtract eighty, and both write back twenty.",
+      "minSeconds": 5.5,
+      "padAfter": 0.3,
+      "leadIn": 0.15
+    },
+    {
+      "id": "lost",
+      "text": "The second write overwrites the first. Two charges, but the balance only dropped once. That's a lost update.",
+      "minSeconds": 6,
+      "padAfter": 0.35,
+      "leadIn": 0.15
+    },
+    {
+      "id": "lock",
+      "text": "Claude's fix: select for update. Request A locks the wallet row, so B has to wait. Then B reads twenty, and gets declined.",
+      "minSeconds": 7,
+      "padAfter": 0.5,
+      "leadIn": 0.15
+    },
+    {
+      "id": "payoff",
+      "text": "Plus an idempotency key, so a retried tap can't charge twice. Read, then write? Lock the row first.",
+      "minSeconds": 6,
+      "padAfter": 1.0,
+      "leadIn": 0.15
+    }
+  ]
+}

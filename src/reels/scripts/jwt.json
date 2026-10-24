@@ -1,0 +1,80 @@
+{
+  "id": "jwt",
+  "voice": {
+    "id": "cgSgspJ2msm6clMCkdW9",
+    "name": "Jessica",
+    "model": "eleven_v3",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8
+    }
+  },
+  "music": {
+    "prompt": "Bright bouncy synth-pop instrumental, plucky arpeggiated synths, light claps and finger snaps, a curious playful melody, 112 bpm, modern tech explainer, upbeat and friendly, no vocals",
+    "minSeconds": 10
+  },
+  "sfx": [
+    {
+      "id": "decode",
+      "prompt": "quick digital text scramble resolving into readable characters, sci-fi decoder, crisp and light",
+      "duration": 1.2,
+      "promptInfluence": 0.6
+    },
+    {
+      "id": "seal",
+      "prompt": "crisp stamp press with a soft metallic click, sealing a document, short",
+      "duration": 0.8,
+      "promptInfluence": 0.7
+    },
+    {
+      "id": "crack",
+      "prompt": "small glass seal cracking and shattering, crisp and short",
+      "duration": 0.9,
+      "promptInfluence": 0.7
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "text": "Your login token isn't secret. Anyone can read it. Claude spotted this in your admin route.",
+      "minSeconds": 4.5,
+      "leadIn": 0.12,
+      "padAfter": 0.3
+    },
+    {
+      "id": "parts",
+      "text": "A JWT is three chunks. The first two are just base sixty-four: encoded, not encrypted.",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "sign",
+      "text": "So what stops you making yourself admin? The signature: a fingerprint of those chunks, made with a secret only the server knows.",
+      "minSeconds": 7,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "tamper",
+      "text": "Change one letter and the fingerprint breaks, so the server rejects it. If it checks.",
+      "minSeconds": 5.5,
+      "padAfter": 0.45,
+      "leadIn": 0.15
+    },
+    {
+      "id": "fix",
+      "text": "Your admin route never did. Claude added verification on every request, and took the email out of the payload.",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.3
+    },
+    {
+      "id": "takeaway",
+      "text": "Signed means tamper-proof. Not secret.",
+      "minSeconds": 3.6,
+      "padAfter": 0.9,
+      "leadIn": 0.15
+    }
+  ]
+}

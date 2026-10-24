@@ -1,0 +1,17 @@
+{
+  "id": "session",
+  "voice": { "id": "SAz9YHcvj6GT2YYXdXww", "name": "River", "model": "eleven_multilingual_v2", "settings": { "stability": 0.5, "similarity_boost": 0.78, "style": 0.22, "speed": 1.05 } },
+  "music": { "prompt": "Uplifting ambient electronic, bright plucked synth arpeggios, soft warm pads, gentle steady pulse, airy and optimistic tech feel, 112 bpm, no vocals, instrumental", "minSeconds": 10 },
+  "sfx": [
+    { "id": "slide", "prompt": "smooth soft airy glide, a glass panel sliding sideways, subtle", "duration": 0.9, "promptInfluence": 0.6 },
+    { "id": "block", "prompt": "soft low muted digital thud, a gate shutting, request denied, short", "duration": 0.6, "promptInfluence": 0.7 },
+    { "id": "chime", "prompt": "gentle airy glass chime, single soft note, calm resolution", "duration": 1.2, "promptInfluence": 0.6 }
+  ],
+  "scenes": [
+    { "id": "intro", "text": "Here's what Claude just did in your session, and three ideas worth knowing.", "minSeconds": 5.2, "leadIn": 0.5, "padAfter": 0.5 },
+    { "id": "window", "text": "One: a sliding window. Count each client's requests in the last sixty seconds. The window moves with the clock, so there's no reset to burst through.", "minSeconds": 7, "padAfter": 0.7 },
+    { "id": "keys", "text": "Two: limit by IP and by user. IP stops one machine trying many accounts. User stops one account hit from many machines.", "minSeconds": 6.5, "padAfter": 0.7 },
+    { "id": "retry", "text": "Three: over the limit, the server replies four twenty-nine, Too Many Requests, with a Retry-After header saying when to come back.", "minSeconds": 6.5, "padAfter": 0.8 },
+    { "id": "outro", "text": "Three small ideas. Your API just got a lot harder to abuse.", "minSeconds": 4, "padAfter": 1.3 }
+  ]
+}

@@ -1,14 +1,49 @@
 {
   "id": "index",
-  "voice": { "id": "Xb7hH8MSUJpSbSDYk0k2", "name": "Alice", "model": "eleven_multilingual_v2", "settings": { "stability": 0.45, "similarity_boost": 0.8, "style": 0.35, "speed": 1.04 } },
-  "music": { "prompt": "Curious, light lo-fi piano with soft brushed drums and warm vinyl texture, educational documentary feel, 85 bpm, gentle and optimistic, instrumental", "minSeconds": 10 },
+  "voice": {
+    "id": "Xb7hH8MSUJpSbSDYk0k2",
+    "name": "Alice",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.45,
+      "similarity_boost": 0.8,
+      "style": 0.35,
+      "speed": 1.04
+    }
+  },
+  "music": {
+    "prompt": "Curious, light lo-fi piano with soft brushed drums and warm vinyl texture, educational documentary feel, 85 bpm, gentle and optimistic, instrumental",
+    "minSeconds": 10
+  },
   "sfx": [
-    { "id": "scan", "prompt": "rapid soft digital scanning ticks, like a cursor stepping through rows", "duration": 2.5, "promptInfluence": 0.6 }
+    {
+      "id": "scan",
+      "prompt": "rapid soft digital scanning ticks, like a cursor stepping through rows",
+      "duration": 2.5,
+      "promptInfluence": 0.6
+    }
   ],
   "scenes": [
-    { "id": "hook", "text": "Claude added one line to a migration, and the orders page went from almost two seconds to four milliseconds. Here's why.", "minSeconds": 4 },
-    { "id": "scan", "text": "Without an index, Postgres reads every single row, checking each one until it finds user forty-two.", "minSeconds": 5 },
-    { "id": "tree", "text": "An index keeps user IDs sorted in a tree. Postgres starts at the root, and only walks down the branch that can contain forty-two.", "minSeconds": 5.5 },
-    { "id": "payoff", "text": "Three steps instead of a full scan. At a million orders, that's about twenty steps, instead of a million.", "minSeconds": 4.5, "padAfter": 0.9 }
+    {
+      "id": "hook",
+      "text": "Claude added one line to a migration, and the orders page went from almost two seconds to four milliseconds. Here's why.",
+      "minSeconds": 4
+    },
+    {
+      "id": "scan",
+      "text": "Without an index, Postgres reads every single row, checking each one until it finds user forty-two.",
+      "minSeconds": 5
+    },
+    {
+      "id": "tree",
+      "text": "An index keeps user IDs sorted in a tree. Postgres starts at the root, and only walks down the branch that can contain forty-two.",
+      "minSeconds": 5.5
+    },
+    {
+      "id": "payoff",
+      "text": "Three steps instead of a full scan. At a million orders, that's about twenty steps, instead of a million.",
+      "minSeconds": 9,
+      "padAfter": 0.9
+    }
   ]
 }

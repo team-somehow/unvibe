@@ -1,7 +1,604 @@
 {
   "id": "xss",
-  "voice": null,
-  "scenes": [],
-  "music": null,
-  "sfx": {}
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/xss/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 7.36,
+      "words": [
+        {
+          "text": "This",
+          "start": 0,
+          "end": 0.32
+        },
+        {
+          "text": "innocent",
+          "start": 0.373,
+          "end": 0.8
+        },
+        {
+          "text": "little",
+          "start": 0.834,
+          "end": 1.04
+        },
+        {
+          "text": "profile",
+          "start": 1.1,
+          "end": 1.52
+        },
+        {
+          "text": "bio",
+          "start": 1.62,
+          "end": 1.92
+        },
+        {
+          "text": "could",
+          "start": 1.987,
+          "end": 2.32
+        },
+        {
+          "text": "steal",
+          "start": 2.387,
+          "end": 2.72
+        },
+        {
+          "text": "the",
+          "start": 2.76,
+          "end": 2.88
+        },
+        {
+          "text": "session",
+          "start": 2.94,
+          "end": 3.36
+        },
+        {
+          "text": "of",
+          "start": 3.413,
+          "end": 3.52
+        },
+        {
+          "text": "everyone",
+          "start": 3.591,
+          "end": 4.16
+        },
+        {
+          "text": "who",
+          "start": 4.2,
+          "end": 4.32
+        },
+        {
+          "text": "views",
+          "start": 4.373,
+          "end": 4.64
+        },
+        {
+          "text": "it.",
+          "start": 4.72,
+          "end": 5.32
+        },
+        {
+          "text": "Claude",
+          "start": 5.383,
+          "end": 5.76
+        },
+        {
+          "text": "caught",
+          "start": 5.783,
+          "end": 5.92
+        },
+        {
+          "text": "it",
+          "start": 5.973,
+          "end": 6.08
+        },
+        {
+          "text": "in",
+          "start": 6.107,
+          "end": 6.16
+        },
+        {
+          "text": "your",
+          "start": 6.192,
+          "end": 6.32
+        },
+        {
+          "text": "comments",
+          "start": 6.373,
+          "end": 6.8
+        },
+        {
+          "text": "feature.",
+          "start": 6.85,
+          "end": 7.36
+        }
+      ],
+      "hash": "b37d0b4a89be"
+    },
+    {
+      "id": "inject",
+      "file": "audio/xss/inject.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 7.44,
+      "words": [
+        {
+          "text": "Bios",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "text": "were",
+          "start": 0.432,
+          "end": 0.56
+        },
+        {
+          "text": "rendered",
+          "start": 0.604,
+          "end": 0.96
+        },
+        {
+          "text": "with",
+          "start": 0.992,
+          "end": 1.12
+        },
+        {
+          "text": "dangerously",
+          "start": 1.173,
+          "end": 1.76
+        },
+        {
+          "text": "set",
+          "start": 1.86,
+          "end": 2.16
+        },
+        {
+          "text": "inner",
+          "start": 2.2,
+          "end": 2.4
+        },
+        {
+          "text": "HTML,",
+          "start": 2.56,
+          "end": 3.44
+        },
+        {
+          "text": "so",
+          "start": 3.52,
+          "end": 3.68
+        },
+        {
+          "text": "any",
+          "start": 3.74,
+          "end": 3.92
+        },
+        {
+          "text": "HTML",
+          "start": 4.064,
+          "end": 4.64
+        },
+        {
+          "text": "in",
+          "start": 4.667,
+          "end": 4.72
+        },
+        {
+          "text": "a",
+          "start": 4.76,
+          "end": 4.8
+        },
+        {
+          "text": "bio",
+          "start": 4.94,
+          "end": 5.36
+        },
+        {
+          "text": "became",
+          "start": 5.417,
+          "end": 5.76
+        },
+        {
+          "text": "real",
+          "start": 5.824,
+          "end": 6.08
+        },
+        {
+          "text": "code",
+          "start": 6.16,
+          "end": 6.48
+        },
+        {
+          "text": "on",
+          "start": 6.507,
+          "end": 6.56
+        },
+        {
+          "text": "the",
+          "start": 6.6,
+          "end": 6.72
+        },
+        {
+          "text": "page.",
+          "start": 6.8,
+          "end": 7.44
+        }
+      ],
+      "hash": "c3000516cac1"
+    },
+    {
+      "id": "spread",
+      "file": "audio/xss/spread.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 6.8,
+      "words": [
+        {
+          "text": "Stored",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "text": "once",
+          "start": 0.288,
+          "end": 0.48
+        },
+        {
+          "text": "in",
+          "start": 0.507,
+          "end": 0.56
+        },
+        {
+          "text": "the",
+          "start": 0.6,
+          "end": 0.72
+        },
+        {
+          "text": "database,",
+          "start": 0.773,
+          "end": 1.28
+        },
+        {
+          "text": "it",
+          "start": 1.333,
+          "end": 1.44
+        },
+        {
+          "text": "runs",
+          "start": 1.504,
+          "end": 1.76
+        },
+        {
+          "text": "in",
+          "start": 1.813,
+          "end": 1.92
+        },
+        {
+          "text": "every",
+          "start": 1.973,
+          "end": 2.24
+        },
+        {
+          "text": "visitor's",
+          "start": 2.29,
+          "end": 2.72
+        },
+        {
+          "text": "browser,",
+          "start": 2.79,
+          "end": 3.36
+        },
+        {
+          "text": "and",
+          "start": 3.42,
+          "end": 3.6
+        },
+        {
+          "text": "quietly",
+          "start": 3.67,
+          "end": 4.16
+        },
+        {
+          "text": "ships",
+          "start": 4.213,
+          "end": 4.48
+        },
+        {
+          "text": "their",
+          "start": 4.52,
+          "end": 4.72
+        },
+        {
+          "text": "session",
+          "start": 4.76,
+          "end": 5.04
+        },
+        {
+          "text": "cookie",
+          "start": 5.109,
+          "end": 5.52
+        },
+        {
+          "text": "off",
+          "start": 5.58,
+          "end": 5.76
+        },
+        {
+          "text": "to",
+          "start": 5.787,
+          "end": 5.84
+        },
+        {
+          "text": "the",
+          "start": 5.86,
+          "end": 5.92
+        },
+        {
+          "text": "attacker.",
+          "start": 5.982,
+          "end": 6.8
+        }
+      ],
+      "hash": "cee3ae922b54"
+    },
+    {
+      "id": "escape",
+      "file": "audio/xss/escape.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 6.88,
+      "words": [
+        {
+          "text": "Claude",
+          "start": 0,
+          "end": 0.32
+        },
+        {
+          "text": "rendered",
+          "start": 0.356,
+          "end": 0.64
+        },
+        {
+          "text": "bios",
+          "start": 0.752,
+          "end": 1.2
+        },
+        {
+          "text": "as",
+          "start": 1.253,
+          "end": 1.36
+        },
+        {
+          "text": "plain",
+          "start": 1.413,
+          "end": 1.68
+        },
+        {
+          "text": "text.",
+          "start": 1.76,
+          "end": 2.08
+        },
+        {
+          "text": "React",
+          "start": 2.187,
+          "end": 2.72
+        },
+        {
+          "text": "escapes",
+          "start": 2.77,
+          "end": 3.12
+        },
+        {
+          "text": "the",
+          "start": 3.14,
+          "end": 3.2
+        },
+        {
+          "text": "angle",
+          "start": 3.24,
+          "end": 3.44
+        },
+        {
+          "text": "brackets,",
+          "start": 3.502,
+          "end": 4.16
+        },
+        {
+          "text": "so",
+          "start": 4.213,
+          "end": 4.32
+        },
+        {
+          "text": "the",
+          "start": 4.34,
+          "end": 4.4
+        },
+        {
+          "text": "tag",
+          "start": 4.48,
+          "end": 4.72
+        },
+        {
+          "text": "shows",
+          "start": 4.773,
+          "end": 5.04
+        },
+        {
+          "text": "up",
+          "start": 5.12,
+          "end": 5.28
+        },
+        {
+          "text": "as",
+          "start": 5.36,
+          "end": 5.52
+        },
+        {
+          "text": "harmless",
+          "start": 5.582,
+          "end": 6.08
+        },
+        {
+          "text": "words.",
+          "start": 6.16,
+          "end": 6.88
+        }
+      ],
+      "hash": "be91cb87ad92"
+    },
+    {
+      "id": "defense",
+      "file": "audio/xss/defense.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.25,
+      "padAfter": 0.45,
+      "duration": 6.88,
+      "words": [
+        {
+          "text": "Plus",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "text": "an",
+          "start": 0.453,
+          "end": 0.56
+        },
+        {
+          "text": "HttpOnly",
+          "start": 0.736,
+          "end": 1.76
+        },
+        {
+          "text": "cookie",
+          "start": 1.806,
+          "end": 2.08
+        },
+        {
+          "text": "that",
+          "start": 2.128,
+          "end": 2.32
+        },
+        {
+          "text": "scripts",
+          "start": 2.37,
+          "end": 2.72
+        },
+        {
+          "text": "can't",
+          "start": 2.76,
+          "end": 3.04
+        },
+        {
+          "text": "read,",
+          "start": 3.104,
+          "end": 3.76
+        },
+        {
+          "text": "and",
+          "start": 3.84,
+          "end": 4.08
+        },
+        {
+          "text": "a",
+          "start": 4.16,
+          "end": 4.24
+        },
+        {
+          "text": "content",
+          "start": 4.3,
+          "end": 4.72
+        },
+        {
+          "text": "security",
+          "start": 4.782,
+          "end": 5.28
+        },
+        {
+          "text": "policy",
+          "start": 5.371,
+          "end": 5.92
+        },
+        {
+          "text": "as",
+          "start": 6,
+          "end": 6.16
+        },
+        {
+          "text": "backup.",
+          "start": 6.24,
+          "end": 6.88
+        }
+      ],
+      "hash": "513076a3fbf0"
+    },
+    {
+      "id": "takeaway",
+      "file": "audio/xss/takeaway.mp3",
+      "minSeconds": 3,
+      "leadIn": 0.25,
+      "padAfter": 1,
+      "duration": 3.28,
+      "words": [
+        {
+          "text": "User",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "text": "content",
+          "start": 0.31,
+          "end": 0.8
+        },
+        {
+          "text": "is",
+          "start": 0.907,
+          "end": 1.12
+        },
+        {
+          "text": "text.",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "text": "Never",
+          "start": 1.693,
+          "end": 2.16
+        },
+        {
+          "text": "HTML.",
+          "start": 2.32,
+          "end": 3.28
+        }
+      ],
+      "hash": "f1e343184214"
+    }
+  ],
+  "music": {
+    "file": "audio/xss/music.mp3",
+    "duration": 45,
+    "hash": "1c6f1a503133"
+  },
+  "sfx": {
+    "hop": {
+      "file": "audio/xss/sfx-hop.mp3",
+      "duration": 1.5,
+      "hash": "31251b7398ae"
+    },
+    "swipe": {
+      "file": "audio/xss/sfx-swipe.mp3",
+      "duration": 0.8,
+      "hash": "91c4207975d9"
+    },
+    "shield": {
+      "file": "audio/xss/sfx-shield.mp3",
+      "duration": 1,
+      "hash": "8472b088c925"
+    }
+  }
 }

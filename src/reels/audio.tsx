@@ -74,10 +74,14 @@ export function useCue(word: string, fallback = 0) {
 export function Scene({ t, id, children, fade = 9 }: { t: Timeline; id: string; children: ReactNode; fade?: number }) {
   const s = t.byId[id]
   if (!s) throw new Error(`scene "${id}" missing from script`)
+  // Each scene overlaps the next by `fade` frames so the two cross-dissolve instead of dipping to black.
+  // The last scene holds through the loop tail and fades out at the very end.
+  const last = t.scenes[t.scenes.length - 1] === s
+  const span = last ? t.total - s.from : s.durationInFrames + fade
   return (
-    <Sequence from={s.from} durationInFrames={s.durationInFrames} name={id}>
+    <Sequence from={s.from} durationInFrames={span} name={id}>
       <SceneCtx.Provider value={s}>
-        <SceneFrame fade={fade} duration={s.durationInFrames}>
+        <SceneFrame fade={fade} outFrom={last ? span - fade : s.durationInFrames} outTo={last ? span : s.durationInFrames + fade} fadeIn={s.from > 0}>
           {children}
         </SceneFrame>
       </SceneCtx.Provider>
@@ -86,10 +90,10 @@ export function Scene({ t, id, children, fade = 9 }: { t: Timeline; id: string; 
 }
 
 // Soft cross-dissolve: each scene eases in with a slight zoom and blurs out as the next one arrives
-function SceneFrame({ children, fade, duration }: { children: ReactNode; fade: number; duration: number }) {
+function SceneFrame({ children, fade, outFrom, outTo, fadeIn }: { children: ReactNode; fade: number; outFrom: number; outTo: number; fadeIn: boolean }) {
   const f = useCurrentFrame()
-  const inP = interpolate(f, [0, fade], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
-  const outP = interpolate(f, [duration - fade, duration], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+  const inP = fadeIn ? interpolate(f, [0, fade], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) : 1
+  const outP = interpolate(f, [outFrom, outTo], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
   const o = Math.min(inP, outP)
   const scale = 1.015 - 0.015 * inP + (1 - outP) * 0.02
   return <AbsoluteFill style={{ opacity: o, transform: `scale(${scale})`, filter: outP < 1 ? `blur(${(1 - outP) * 6}px)` : undefined }}>{children}</AbsoluteFill>

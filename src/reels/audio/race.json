@@ -1,0 +1,563 @@
+{
+  "id": "race",
+  "voice": "TX3LPaxmHKxFdv7VOQHJ",
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "audio/race/hook.mp3",
+      "minSeconds": 5,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 6.455,
+      "words": [
+        {
+          "text": "One",
+          "start": 0,
+          "end": 0.163
+        },
+        {
+          "text": "double-tap",
+          "start": 0.197,
+          "end": 0.685
+        },
+        {
+          "text": "on",
+          "start": 0.755,
+          "end": 0.836
+        },
+        {
+          "text": "Pay,",
+          "start": 0.894,
+          "end": 1.242
+        },
+        {
+          "text": "and",
+          "start": 1.382,
+          "end": 1.533
+        },
+        {
+          "text": "a",
+          "start": 1.591,
+          "end": 1.625
+        },
+        {
+          "text": "hundred-dollar",
+          "start": 1.741,
+          "end": 2.322
+        },
+        {
+          "text": "wallet",
+          "start": 2.38,
+          "end": 2.67
+        },
+        {
+          "text": "spent",
+          "start": 2.705,
+          "end": 2.891
+        },
+        {
+          "text": "a",
+          "start": 2.926,
+          "end": 2.949
+        },
+        {
+          "text": "hundred",
+          "start": 3.03,
+          "end": 3.32
+        },
+        {
+          "text": "and",
+          "start": 3.355,
+          "end": 3.425
+        },
+        {
+          "text": "sixty.",
+          "start": 3.483,
+          "end": 3.994
+        },
+        {
+          "text": "Claude",
+          "start": 4.18,
+          "end": 4.481
+        },
+        {
+          "text": "caught",
+          "start": 4.516,
+          "end": 4.737
+        },
+        {
+          "text": "this",
+          "start": 4.772,
+          "end": 4.911
+        },
+        {
+          "text": "in",
+          "start": 4.957,
+          "end": 5.016
+        },
+        {
+          "text": "your",
+          "start": 5.062,
+          "end": 5.178
+        },
+        {
+          "text": "wallet",
+          "start": 5.236,
+          "end": 5.492
+        },
+        {
+          "text": "service.",
+          "start": 5.538,
+          "end": 6.455
+        }
+      ],
+      "hash": "9a5a435c3149"
+    },
+    {
+      "id": "race",
+      "file": "audio/race/race.mp3",
+      "minSeconds": 5.5,
+      "leadIn": 0.15,
+      "padAfter": 0.3,
+      "duration": 6.455,
+      "words": [
+        {
+          "text": "Two",
+          "start": 0,
+          "end": 0.174
+        },
+        {
+          "text": "requests,",
+          "start": 0.232,
+          "end": 0.848
+        },
+        {
+          "text": "same",
+          "start": 0.987,
+          "end": 1.231
+        },
+        {
+          "text": "moment.",
+          "start": 1.277,
+          "end": 1.695
+        },
+        {
+          "text": "Both",
+          "start": 2.043,
+          "end": 2.287
+        },
+        {
+          "text": "read",
+          "start": 2.345,
+          "end": 2.473
+        },
+        {
+          "text": "a",
+          "start": 2.496,
+          "end": 2.519
+        },
+        {
+          "text": "hundred.",
+          "start": 2.577,
+          "end": 3.019
+        },
+        {
+          "text": "Both",
+          "start": 3.367,
+          "end": 3.599
+        },
+        {
+          "text": "subtract",
+          "start": 3.657,
+          "end": 4.098
+        },
+        {
+          "text": "eighty,",
+          "start": 4.168,
+          "end": 4.644
+        },
+        {
+          "text": "and",
+          "start": 4.748,
+          "end": 4.888
+        },
+        {
+          "text": "both",
+          "start": 4.946,
+          "end": 5.143
+        },
+        {
+          "text": "write",
+          "start": 5.19,
+          "end": 5.41
+        },
+        {
+          "text": "back",
+          "start": 5.445,
+          "end": 5.619
+        },
+        {
+          "text": "twenty.",
+          "start": 5.677,
+          "end": 6.455
+        }
+      ],
+      "hash": "70b0c081b7a6"
+    },
+    {
+      "id": "lost",
+      "file": "audio/race/lost.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 0.35,
+      "duration": 7.105,
+      "words": [
+        {
+          "text": "The",
+          "start": 0,
+          "end": 0.174
+        },
+        {
+          "text": "second",
+          "start": 0.232,
+          "end": 0.511
+        },
+        {
+          "text": "write",
+          "start": 0.557,
+          "end": 0.789
+        },
+        {
+          "text": "overwrites",
+          "start": 0.836,
+          "end": 1.277
+        },
+        {
+          "text": "the",
+          "start": 1.324,
+          "end": 1.393
+        },
+        {
+          "text": "first.",
+          "start": 1.428,
+          "end": 1.869
+        },
+        {
+          "text": "Two",
+          "start": 2.508,
+          "end": 2.682
+        },
+        {
+          "text": "charges,",
+          "start": 2.74,
+          "end": 3.17
+        },
+        {
+          "text": "but",
+          "start": 3.204,
+          "end": 3.344
+        },
+        {
+          "text": "the",
+          "start": 3.39,
+          "end": 3.483
+        },
+        {
+          "text": "balance",
+          "start": 3.541,
+          "end": 3.889
+        },
+        {
+          "text": "only",
+          "start": 3.947,
+          "end": 4.18
+        },
+        {
+          "text": "dropped",
+          "start": 4.226,
+          "end": 4.516
+        },
+        {
+          "text": "once.",
+          "start": 4.574,
+          "end": 4.923
+        },
+        {
+          "text": "That's",
+          "start": 5.143,
+          "end": 5.375
+        },
+        {
+          "text": "a",
+          "start": 5.41,
+          "end": 5.433
+        },
+        {
+          "text": "lost",
+          "start": 5.48,
+          "end": 5.712
+        },
+        {
+          "text": "update.",
+          "start": 5.759,
+          "end": 7.105
+        }
+      ],
+      "hash": "78639aec8309"
+    },
+    {
+      "id": "lock",
+      "file": "audio/race/lock.mp3",
+      "minSeconds": 7,
+      "leadIn": 0.15,
+      "padAfter": 0.5,
+      "duration": 9.752,
+      "words": [
+        {
+          "text": "Claude's",
+          "start": 0,
+          "end": 0.383
+        },
+        {
+          "text": "fix:",
+          "start": 0.441,
+          "end": 0.929
+        },
+        {
+          "text": "select",
+          "start": 1.115,
+          "end": 1.486
+        },
+        {
+          "text": "for",
+          "start": 1.556,
+          "end": 1.707
+        },
+        {
+          "text": "update.",
+          "start": 1.811,
+          "end": 2.334
+        },
+        {
+          "text": "Request",
+          "start": 2.798,
+          "end": 3.181
+        },
+        {
+          "text": "A",
+          "start": 3.286,
+          "end": 3.471
+        },
+        {
+          "text": "locks",
+          "start": 3.611,
+          "end": 3.878
+        },
+        {
+          "text": "the",
+          "start": 3.913,
+          "end": 3.982
+        },
+        {
+          "text": "wallet",
+          "start": 4.04,
+          "end": 4.319
+        },
+        {
+          "text": "row,",
+          "start": 4.365,
+          "end": 4.644
+        },
+        {
+          "text": "so",
+          "start": 4.807,
+          "end": 4.957
+        },
+        {
+          "text": "B",
+          "start": 5.027,
+          "end": 5.108
+        },
+        {
+          "text": "has",
+          "start": 5.224,
+          "end": 5.387
+        },
+        {
+          "text": "to",
+          "start": 5.445,
+          "end": 5.515
+        },
+        {
+          "text": "wait.",
+          "start": 5.573,
+          "end": 5.933
+        },
+        {
+          "text": "Then",
+          "start": 6.571,
+          "end": 6.838
+        },
+        {
+          "text": "B",
+          "start": 6.908,
+          "end": 7.012
+        },
+        {
+          "text": "reads",
+          "start": 7.152,
+          "end": 7.396
+        },
+        {
+          "text": "twenty,",
+          "start": 7.442,
+          "end": 7.883
+        },
+        {
+          "text": "and",
+          "start": 7.964,
+          "end": 8.104
+        },
+        {
+          "text": "gets",
+          "start": 8.162,
+          "end": 8.336
+        },
+        {
+          "text": "declined.",
+          "start": 8.382,
+          "end": 9.752
+        }
+      ],
+      "hash": "6b4c54c99db7"
+    },
+    {
+      "id": "payoff",
+      "file": "audio/race/payoff.mp3",
+      "minSeconds": 6,
+      "leadIn": 0.15,
+      "padAfter": 1,
+      "duration": 7.43,
+      "words": [
+        {
+          "text": "Plus",
+          "start": 0,
+          "end": 0.267
+        },
+        {
+          "text": "an",
+          "start": 0.302,
+          "end": 0.36
+        },
+        {
+          "text": "idempotency",
+          "start": 0.418,
+          "end": 0.998
+        },
+        {
+          "text": "key,",
+          "start": 1.045,
+          "end": 1.277
+        },
+        {
+          "text": "so",
+          "start": 1.312,
+          "end": 1.533
+        },
+        {
+          "text": "a",
+          "start": 1.718,
+          "end": 1.823
+        },
+        {
+          "text": "retried",
+          "start": 1.892,
+          "end": 2.287
+        },
+        {
+          "text": "tap",
+          "start": 2.334,
+          "end": 2.566
+        },
+        {
+          "text": "can't",
+          "start": 2.624,
+          "end": 2.81
+        },
+        {
+          "text": "charge",
+          "start": 2.844,
+          "end": 3.088
+        },
+        {
+          "text": "twice.",
+          "start": 3.111,
+          "end": 3.599
+        },
+        {
+          "text": "Read,",
+          "start": 4.47,
+          "end": 4.83
+        },
+        {
+          "text": "then",
+          "start": 4.992,
+          "end": 5.166
+        },
+        {
+          "text": "write?",
+          "start": 5.213,
+          "end": 5.573
+        },
+        {
+          "text": "Lock",
+          "start": 6.211,
+          "end": 6.409
+        },
+        {
+          "text": "the",
+          "start": 6.467,
+          "end": 6.536
+        },
+        {
+          "text": "row",
+          "start": 6.583,
+          "end": 6.722
+        },
+        {
+          "text": "first.",
+          "start": 6.78,
+          "end": 7.43
+        }
+      ],
+      "hash": "ca97aa420b5a"
+    }
+  ],
+  "music": {
+    "file": "audio/race/music.mp3",
+    "duration": 46,
+    "hash": "3f6bcd9713e5"
+  },
+  "sfx": {
+    "tap": {
+      "file": "audio/race/sfx-tap.mp3",
+      "duration": 0.6,
+      "hash": "dbec2f879e2c"
+    },
+    "cash": {
+      "file": "audio/race/sfx-cash.mp3",
+      "duration": 1,
+      "hash": "a9fbfc7e98dd"
+    },
+    "lock": {
+      "file": "audio/race/sfx-lock.mp3",
+      "duration": 0.7,
+      "hash": "2024cd1792d6"
+    },
+    "declined": {
+      "file": "audio/race/sfx-declined.mp3",
+      "duration": 0.8,
+      "hash": "db5f3f7d43e5"
+    }
+  }
+}
